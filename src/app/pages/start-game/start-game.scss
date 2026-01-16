@@ -1,28 +1,57 @@
-main {
-    background-image: url('/assets/images-scene/main-scene.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
+.scene {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.layer {
+  position: absolute;
+  inset: -12%;
+  background-size: 105vw;
+  background-repeat: no-repeat;
+  background-position: center;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Ciel */
+.sky {
+  background-image: url('/assets/images-scene/parallax/sky.png');
+  z-index: 1;
+}
+
+/* Ville*/
+.city {
+  background-image: url('/assets/images-scene/parallax/city.png');
+  z-index: 2;
+}
+
+/* Avatar */
+.avatar {
+  background-image: url('/assets/images-scene/parallax/avatar.png');
+  z-index: 3;
+
+}
+
+.title-section,
+.button-section {
+  position: relative;
+  z-index: 10;
 }
 
 .title-section {
-        /* Test */
-    // border: 2px solid red;
-    padding-top: 1%;
-    padding-bottom: 25%;
-    display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+  padding-top: 1%;
+  padding-bottom: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .button-section {
-    /* Test */
-    // border: 2px solid var(--primary-color);
-
-    padding: 0%;
-    display: flex;
-        align-items: flex-end;
-        justify-content: center;        
+  padding: 0%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 4vh;
 }
