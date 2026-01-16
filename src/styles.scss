@@ -1,1 +1,60 @@
 /* You can add global styles to this file, and also import other style files */
+/* --- Couleurs --- */
+:root {
+  /* Couleurs du titre */
+  --primary-color: #B7CEF8;
+  --secondary-color: #9A6143;
+
+  /* Couleurs des éléments */
+  --element-primary-color: #D89A73;
+  --element-border-color: #683C2F;
+
+  --c-border: rgba(0, 0, 0, 0.12);
+
+  --radius: 6px;
+  /* ⚠️ A définir */
+  --shadow: 5px 5px 0;
+}
+
+/* --- Config des polices --- */
+@font-face {
+  font-family: 'Demon';
+  src: url('/assets/fonts/Demon-Flowing.woff2') format('woff2');
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Pixel';
+  src: url('/assets/fonts/Pixellari.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+.main-title-font {
+  font-family: 'Demon';
+  color: var(--primary-color);
+  font-size: 12em;
+  text-shadow: var(--shadow) var(--secondary-color);
+  margin: 0;
+}
+
+.sub-title-font {
+  font-family: 'Pixel';
+  color: var(--secondary-color);
+  font-size: 2em;
+  margin: 0;
+}
+
+/* --- Styles globaux --- */
+
+body {
+  margin: 0;
+}
+
+h2,h3 {
+  font-family: 'Pixel';
+  margin: 0;
+}
