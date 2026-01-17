@@ -17,19 +17,19 @@
 }
 
 /* Ciel */
-.sky {
+.far_distance {
   background-image: url('/assets/images-scene/parallax/sky.png');
   z-index: -3;
 }
 
 /* Ville*/
-.city {
+.med_distance {
   background-image: url('/assets/images-scene/parallax/city.png');
   z-index: -2;
 }
 
 /* Avatar */
-.avatar {
+.near_distance {
   background-image: url('/assets/images-scene/parallax/avatar.png');
   z-index: -1;
 

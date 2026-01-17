@@ -1,8 +1,8 @@
-<main class="scene" aria-label="Parallax scene" appParallax>
+<main class="scene" aria-label="Parallax scene" appParallax [parallaxRatios]="{ far: 0.8, med: 0.35, near: 0.15 }">
     <app-snow-effect />
-    <div class="layer sky" aria-hidden="true"></div>
-    <div class="layer city" aria-hidden="true"></div>
-    <div class="layer avatar" aria-hidden="true"></div>
+    <div class="layer far_distance" aria-hidden="true"></div>
+    <div class="layer med_distance" aria-hidden="true"></div>
+    <div class="layer near_distance" aria-hidden="true"></div>
 
     <section class="title-section">
         <h3 class="sub-title-font">Post apocalyptic Escape game</h3>
@@ -10,10 +10,10 @@
     </section>
 
     <nav>
-        <app-nuke-button label="PLAY" route="" width="10vw" [fontSize]="1.3"></app-nuke-button>
+        <app-nuke-button label="PLAY" route="/game-config" width="10vw" [fontSize]="1.3"></app-nuke-button>
         <app-nuke-button label="PROFILE" route="/profile" width="10vw" [fontSize]="1.3"></app-nuke-button>
         <app-nuke-button label="SETTINGS" route="/settings" width="10vw" [fontSize]="1.3"></app-nuke-button>
         <app-nuke-button label="BUG REPORT" route="/bug-report" width="10vw" [fontSize]="1.3"></app-nuke-button>
-        <app-nuke-button label="LOGOUT" route="/logout" width="10vw" [fontSize]="1.3"></app-nuke-button>
+        <app-nuke-button label="LOGOUT" route="" width="10vw" [fontSize]="1.3"></app-nuke-button>
     </nav>
 </main>

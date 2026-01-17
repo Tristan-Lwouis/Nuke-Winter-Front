@@ -149,7 +149,6 @@ export class SnowEffect implements AfterViewInit, OnDestroy {
     ctx.clearRect(0, 0, this.w, this.h);
 
     for (const f of this.flakes) {
-      // twinkle optionnel
       let opacity = f.o;
       if (this.useTwinkleEffect) {
         f.tw += dt * 3.5;
@@ -177,10 +176,8 @@ export class SnowEffect implements AfterViewInit, OnDestroy {
       }
 
       // draw
-      ctx.beginPath();
-      ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(255,255,255,${opacity})`;
-      ctx.fill();
+      ctx.fillRect(f.x - f.r, f.y - f.r, f.r * 2, f.r * 2);
     }
   }
 

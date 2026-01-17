@@ -1,13 +1,15 @@
-import { Directive, ElementRef, NgZone, AfterViewInit, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, NgZone, AfterViewInit, OnDestroy, Input } from '@angular/core';
 
 @Directive({
   selector: '[appParallax]',
   standalone: true
 })
 export class ParallaxDirective implements AfterViewInit, OnDestroy {
-  private skyEl?: HTMLElement | null;
-  private cityEl?: HTMLElement | null;
-  private avatarEl?: HTMLElement | null;
+  private far_distanceEl?: HTMLElement | null;
+  private med_distanceEl?: HTMLElement | null;
+  private near_distanceEl?: HTMLElement | null;
+
+  @Input() parallaxRatios = { far: 0.80, med: 0.35, near: 0.15 };
 
   private rafId: number | null = null;
 
@@ -40,14 +42,14 @@ export class ParallaxDirective implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     const root = this.host.nativeElement;
-    this.skyEl = root.querySelector('.sky');
-    this.cityEl = root.querySelector('.city');
-    this.avatarEl = root.querySelector('.avatar');
+    this.far_distanceEl = root.querySelector('.far_distance');
+    this.med_distanceEl = root.querySelector('.med_distance');
+    this.near_distanceEl = root.querySelector('.near_distance');
 
     // Petit boost CSS (à mettre idéalement en CSS, mais ok ici si besoin)
-    this.skyEl && (this.skyEl.style.willChange = 'transform');
-    this.cityEl && (this.cityEl.style.willChange = 'transform');
-    this.avatarEl && (this.avatarEl.style.willChange = 'transform');
+    this.far_distanceEl && (this.far_distanceEl.style.willChange = 'transform');
+    this.med_distanceEl && (this.med_distanceEl.style.willChange = 'transform');
+    this.near_distanceEl && (this.near_distanceEl.style.willChange = 'transform');
 
     this.zone.runOutsideAngular(() => {
       window.addEventListener('pointermove', this.onPointerMove, { passive: true });
@@ -59,9 +61,9 @@ export class ParallaxDirective implements AfterViewInit, OnDestroy {
     this.curX = this.curX + (this.targetX - this.curX) * this.ease;
     this.curY = this.curY + (this.targetY - this.curY) * this.ease;
 
-    this.applyParallax(this.skyEl, this.curX, this.curY, 0.80);
-    this.applyParallax(this.cityEl, this.curX, this.curY, 0.35);
-    this.applyParallax(this.avatarEl, this.curX, this.curY, 0.15);
+    this.applyParallax(this.far_distanceEl, this.curX, this.curY, this.parallaxRatios.far);
+    this.applyParallax(this.med_distanceEl, this.curX, this.curY, this.parallaxRatios.med);
+    this.applyParallax(this.near_distanceEl, this.curX, this.curY, this.parallaxRatios.near);
 
     const stillMoving =
       Math.abs(this.targetX - this.curX) > 0.05 ||
