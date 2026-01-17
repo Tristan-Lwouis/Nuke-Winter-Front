@@ -19,19 +19,19 @@
 /* Ciel */
 .sky {
   background-image: url('/assets/images-scene/parallax/sky.png');
-  z-index: 1;
+  z-index: -3;
 }
 
 /* Ville*/
 .city {
   background-image: url('/assets/images-scene/parallax/city.png');
-  z-index: 2;
+  z-index: -2;
 }
 
 /* Avatar */
 .avatar {
   background-image: url('/assets/images-scene/parallax/avatar.png');
-  z-index: 3;
+  z-index: -1;
 
 }
 

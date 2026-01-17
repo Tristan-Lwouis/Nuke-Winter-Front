@@ -1,4 +1,5 @@
 <main class="scene" aria-label="Parallax scene" appParallax>
+    <app-snow-effect />
     <div class="layer sky" aria-hidden="true"></div>
     <div class="layer city" aria-hidden="true"></div>
     <div class="layer avatar" aria-hidden="true"></div>
@@ -9,6 +10,7 @@
     </section>
 
     <section class="button-section">
-        <button routerLink="/menu">START GAME</button>
+        <app-nuke-button label="START GAME" route="/menu" width="12vw" [fontSize]="1.3"></app-nuke-button>
+
     </section>
 </main>

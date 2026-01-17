@@ -1,0 +1,32 @@
+
+/* TODO : 
+    - Mettre une ombre sur les boutons
+*/
+
+.nuke-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    img {
+        width: 10vw;
+        height: auto;
+    }
+
+    .label {
+        position: absolute;
+        z-index: 1;
+        font-family: 'Pixel';
+        color: white;
+        font-size: 1.5vw;
+        text-shadow: 2px 2px 0px black;
+    }
+}
