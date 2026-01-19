@@ -3,7 +3,7 @@ import { SnowEffect } from '../../components/snow-effect/snow-effect';
 import { NukeButton } from '../../components/nuke-button/nuke-button';
 import { RouterLink } from '@angular/router';
 import { ParallaxDirective } from '../../shared/directives/parallax.directive';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../core/services/api/api-service';
 
 @Component({
@@ -13,7 +13,7 @@ import { ApiService } from '../../core/services/api/api-service';
   styleUrl: './log-in.scss',
 })
 export class LogIn {
-  loginForm = new FormGroup({
+    loginForm = new FormGroup({
     pseudo: new FormControl(),
     password: new FormControl(),
   });

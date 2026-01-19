@@ -1,36 +1,35 @@
-
 .scene {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .layer {
-  position: absolute;
-  inset: -12%;
-  background-size: 105vw;
-  background-repeat: no-repeat;
-  background-position: center;
-  will-change: transform;
-  transform: translate3d(0, 0, 0);
+    position: absolute;
+    inset: -12%;
+    background-size: 105vw;
+    background-repeat: no-repeat;
+    background-position: center;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
 /* Ciel */
 .far_distance {
-  background-image: url('/assets/images-scene/parallax/sky.png');
-  z-index: -3;
+    background-image: url('/assets/images-scene/parallax/sky.png');
+    z-index: -3;
 }
 
 /* Ville*/
 .med_distance {
-  background-image: url('/assets/images-scene/parallax/city.png');
-  z-index: -2;
+    background-image: url('/assets/images-scene/parallax/city.png');
+    z-index: -2;
 }
 
 /* Avatar */
 .near_distance {
-  background-image: url('/assets/images-scene/parallax/avatar.png');
-  z-index: -1;
+    background-image: url('/assets/images-scene/parallax/avatar.png');
+    z-index: -1;
 }
 
 
@@ -40,23 +39,24 @@
     height: 80vh;
     display: flex;
     flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        gap: 1%;
+    align-items: center;
+    justify-content: center;
+    gap: 1%;
 }
 
 section {
-    border: 2px solid red ;
+    // border: 2px solid red;
     height: 100%;
     width: 100%;
     display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 1%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1%;
 
-    div {
-        background-color: var(--element-primary-color);
+    // Sélecteur pour les div de premier niveau
+    & > div {
+        background-color: var(--element-primary-color-transparent);
         border: 0.5vw solid var(--element-border-color);
         border-radius: var(--radius);
         width: 95%;
@@ -64,19 +64,19 @@ section {
 }
 
 .config-title {
-
-        font-family: 'Pixel';
-        color: var(--element-border-color);
-        color: var;
-        font-size: 2.5vw;
-        margin: 0;
+    font-family: 'Pixel';
+    color: var(--element-border-color);
+    color: var;
+    font-size: 2.5vw;
+    margin: 0;
 }
 
 
 // ==== AVATAR SECTION ====
 .avatar-section {
+    // height: 100%;
     #avatar-title {
-        height: 15%;
+        height: 10%;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -85,38 +85,98 @@ section {
 
         img {
             width: auto;
-            height: auto;
+            height: 70%;
         }
     }
 
-
     // TODO : optimiser les images
-    .avatar-image-container {
+    #avatar-image-container {
         // border: 2px solid green;
-        height: 70%;
+        height: 83%;
         display: flex;
         justify-content: center;
         align-items: center;
 
         img {
             width: auto;
-            height: 80%;
+            height: 85%;
         }
     }
-
-    
 }
 
 // ==== SCENARIO SECTION ====
 .scenario-section {
-    
+
+    #scenario-title {
+        text-align: center;
+        padding: 2%;
+        // height: 20%;
+    }
+
+    #scenario-slector-container {
+        height: 85%;
+        // flex-direction: row;
+    }
+
+    .scenario-selector {
+        margin: 2%;
+        border: 0.3vw solid var(--element-border-color);
+        border-radius: var(--radius);
+
+        p {
+            color: var(--element-border-color);
+            font-family: 'Pixel';
+            font-size: 1.2vw;
+            text-transform: uppercase;
+            margin-left: 3%;
+        }
+    }
+
+    .scenario-selector:hover {
+        cursor: pointer;
+        background-color: var(--secondary-color);
+        color: var(--font-primary-color);
+
+        p {
+            color: var(--font-primary-color);
+        }
+
+    }
 }
 
 // ==== DESCRIPTION SCENARIO SECTION ====
 .description-senario-section {
-    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    #scenario-image-container {
+        height: 27%;
+        img {
+
+            width: auto;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+
+        }
+    }
+
+    #scenario-description-container {
+        height: 50%;
+
+        p {
+            color: var(--element-border-color);
+            font-family: 'Pixel';
+            font-size: 1.2vw;
+            margin: 3%;
+        }
+    }
 }
 
+
+// ==== BUTTON CONTAINERS ====
 .button-containers {
     display: flex;
     flex-direction: row;
@@ -126,8 +186,6 @@ section {
 
     div {
         border: 2px solid green;
-        margin : 0 3%;
+        margin: 0 3%;
     }
 }
-
-
