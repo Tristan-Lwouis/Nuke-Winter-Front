@@ -1,1 +1,43 @@
-<p>game-config works!</p>
+<main class="scene" aria-label="Parallax scene" appParallax [parallaxRatios]="{ far: 0.8, med: 0.35, near: 0.15 }">
+    <app-snow-effect />
+    <div class="layer far_distance" aria-hidden="true"></div>
+    <div class="layer med_distance" aria-hidden="true"></div>
+    <div class="layer near_distance" aria-hidden="true"></div>
+
+    <div class="game-config-containers">
+        <!-- Choix de l'avatar -->
+        <section class="avatar-section">
+            <div class="config-title" id="avatar-title">
+                <img src="/assets/images/previous.png" alt="fleche-avatar-precedent">
+                <p>SARAH</p>
+                <img src="/assets/images/next.png" alt="fleche-avatar-suivant">
+            </div>
+            <div class="avatar-image-container">
+                <img src="/assets/images/avatar-sarah.png" alt="image-avatar">
+            </div>
+        </section>
+        
+        <!-- Choix du senario -->
+        <section class="scenario-section">
+            <div>
+                <p class="config-title">SCENARIO</p>
+            </div>
+            <div>
+
+            </div>
+            
+        </section>
+        
+        <!-- Description du senatio -->
+        <section class="description-senario-section">
+            <img src="" alt="">
+            <p></p>
+        </section>
+    </div>
+    <div class="button-containers">
+        <app-nuke-button label="CANCEL" route="/menu" width="10vw" [fontSize]="1.3"></app-nuke-button>
+        <app-nuke-button label="START" route="/game-config" width="10vw" [fontSize]="1.3"></app-nuke-button>
+    </div>
+
+
+</main>
