@@ -6,7 +6,8 @@
   --secondary-color: #9A6143;
 
   /* Couleurs des éléments */
-  --element-primary-color: #D89A73;
+  --font-primary-color: #e9c1a9;
+  --element-primary-color: rgb(216, 154, 115);
   --element-border-color: #683C2F;
 
   --c-border: rgba(0, 0, 0, 0.12);
@@ -37,6 +38,14 @@
   font-family: 'Demon';
   color: var(--primary-color);
   font-size: 12em;
+  text-shadow: var(--shadow) var(--secondary-color);
+  margin: 0;
+}
+
+.title-font {
+  font-family: 'Pixel';
+  color: var(--primary-color);
+  font-size: 6em;
   text-shadow: var(--shadow) var(--secondary-color);
   margin: 0;
 }
