@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LogIn } from './log-in';
+import { FormGroup } from '@angular/forms';
 
 describe('LogIn', () => {
   let component: LogIn;
@@ -20,4 +21,6 @@ describe('LogIn', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  
 });

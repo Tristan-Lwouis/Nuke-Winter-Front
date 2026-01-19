@@ -3,13 +3,23 @@ import { SnowEffect } from "../../components/snow-effect/snow-effect";
 import { NukeButton } from "../../components/nuke-button/nuke-button";
 import { RouterLink } from '@angular/router';
 import { ParallaxDirective } from '../../shared/directives/parallax.directive';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-log-in',
-  imports: [SnowEffect, NukeButton, RouterLink, ParallaxDirective],
+  imports: [SnowEffect, NukeButton, RouterLink, ParallaxDirective, ReactiveFormsModule],
   templateUrl: './log-in.html',
   styleUrl: './log-in.scss',
 })
+
 export class LogIn {
 
+loginForm = new FormGroup({
+  pseudo: new FormControl(),
+  password: new FormControl()
+});
+
+constructor(){}
+
+onSubmit(){}
 }
