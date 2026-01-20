@@ -12,12 +12,12 @@
         <!-- Choix de l'avatar -->
         <section class="avatar-section">
             <div class="config-title" id="avatar-title">
-                <a href="#"><img src="/assets/images/previous.png" alt="fleche-avatar-precedent"></a>
-                <p>SARAH</p>
-                <a href="#"><img src="/assets/images/next.png" alt="fleche-avatar-suivant"></a>
+                <a (click)="nextAvatar(-1)"><img src="/assets/images/previous.png" alt="fleche-avatar-precedent"></a>
+                <p>{{currentAvatar?.name}}</p>
+                <a (click)="nextAvatar(1)"><img src="/assets/images/next.png" alt="fleche-avatar-suivant"></a>
             </div>
             <div id="avatar-image-container">
-                <img src="/assets/images/avatar-sarah.png" alt="image-avatar">
+                <img src="{{currentAvatar?.image}}" alt="image-avatar">
             </div>
         </section>
         

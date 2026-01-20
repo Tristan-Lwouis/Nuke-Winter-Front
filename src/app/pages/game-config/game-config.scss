@@ -190,7 +190,6 @@ section {
         color: white;
     }
 
-    
 }
 
 // ==== DESCRIPTION SCENARIO SECTION ====
@@ -201,14 +200,12 @@ section {
     justify-content: flex-end;
 
     #scenario-image-container {
-        height: 27%;
+        height: 30%;
         img {
-
             width: auto;
             height: 100%;
             width: 100%;
             object-fit: cover;
-
         }
     }
 
@@ -235,5 +232,4 @@ section {
     & > app-nuke-button {
         margin-right: 2%;
     }
-
 }
