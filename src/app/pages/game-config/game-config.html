@@ -4,15 +4,19 @@
     <div class="layer med_distance" aria-hidden="true"></div>
     <div class="layer near_distance" aria-hidden="true"></div>
 
+    <div id="logo-title-container">
+        <p class="main-title-font" id="logo-title">Nuke-Winter</p>
+    </div>
+
     <div class="game-config-containers">
         <!-- Choix de l'avatar -->
         <section class="avatar-section">
             <div class="config-title" id="avatar-title">
-                <img src="/assets/images/previous.png" alt="fleche-avatar-precedent">
+                <a href="#"><img src="/assets/images/previous.png" alt="fleche-avatar-precedent"></a>
                 <p>SARAH</p>
-                <img src="/assets/images/next.png" alt="fleche-avatar-suivant">
+                <a href="#"><img src="/assets/images/next.png" alt="fleche-avatar-suivant"></a>
             </div>
-            <div class="avatar-image-container">
+            <div id="avatar-image-container">
                 <img src="/assets/images/avatar-sarah.png" alt="image-avatar">
             </div>
         </section>
@@ -20,18 +24,48 @@
         <!-- Choix du senario -->
         <section class="scenario-section">
             <div>
-                <p class="config-title">SCENARIO</p>
+                <p class="config-title" id="scenario-title">SCENARIO</p>
             </div>
-            <div>
-
+            <div id="scenario-selector-container">
+                <!-- TODO : Ici il faut faire un ngFor sur les senarios -->
+                 <div class="scenario-selector available">
+                    <p>Sur sa trace</p>
+                 </div>
+                 <div class="scenario-selector available">
+                    <p>La tempête</p>
+                 </div>
+                 <div class="scenario-selector not-available">
+                    <p>Fractale</p>
+                 </div>
+                <div class="scenario-selector not-available">
+                    <p>Sur sa trace</p>
+                 </div>
+                 <div class="scenario-selector available">
+                    <p>La tempête</p>
+                 </div>
+                 <div class="scenario-selector available">
+                    <p>Fractale</p>
+                 </div>
+                <div class="scenario-selector available">
+                    <p>Sur sa trace</p>
+                 </div>
+                 <div class="scenario-selector available">
+                    <p>La tempête</p>
+                 </div>
+                 <div class="scenario-selector not-available">
+                    <p>Fractale</p>
+                 </div>
             </div>
-            
         </section>
         
         <!-- Description du senatio -->
         <section class="description-senario-section">
-            <img src="" alt="">
-            <p></p>
+            <div id="scenario-image-container">
+                <img src="/assets/images-scene/sur-sa-trace.jpeg" alt="image-scenario">
+            </div>
+            <div id="scenario-description-container">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam veritatis doloremque voluptate rerum repudiandae, iure quasi quisquam ea sunt beatae? Accusantium distinctio ipsa quidem unde facilis cumque, eaque quis quibusdam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos eligendi velit eveniet. Quod fuga ipsam quidem voluptates minus provident sed, dolorem deserunt quo vero vel repellendus velit quasi, nam ea.</p>
+            </div>
         </section>
     </div>
     <div class="button-containers">
