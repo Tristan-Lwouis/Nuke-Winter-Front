@@ -90,3 +90,50 @@
         }
     }
 }
+
+.error{
+    color: red;
+}
+
+/* Overlay plein écran */
+.overlay {
+  position: fixed;
+  inset: 0; /* top/right/bottom/left: 0 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 9999;
+}
+
+/* Carte d’alerte */
+.alert-card {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 30px;
+  gap: 10px;
+
+  width: 600px;
+  min-height: 72px;
+
+  background: #D89A73;
+  border: 10px solid #683C2F;
+  border-radius: 5px;
+}
+
+/* Texte du message */
+.alert-msg {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+
+  font-family: 'Pixellari', sans-serif; /* [web:1] */
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.1;
+
+  color: #683C2F;
+}
