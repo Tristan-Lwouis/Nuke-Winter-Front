@@ -169,7 +169,7 @@ section {
         }
     }
 
-    .scenario-selector:hover {
+    .available:hover {
         cursor: pointer;
         background-color: var(--secondary-color);
         color: var(--font-primary-color);
@@ -177,8 +177,20 @@ section {
         p {
             color: var(--font-primary-color);
         }
-
     }
+
+    .not-available {
+        background-color: gray;
+        color: white;
+    }
+
+    .not-available:hover {
+        cursor: not-allowed;
+        background-color: gray;
+        color: white;
+    }
+
+    
 }
 
 // ==== DESCRIPTION SCENARIO SECTION ====
