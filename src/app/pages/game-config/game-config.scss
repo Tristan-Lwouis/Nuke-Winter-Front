@@ -32,6 +32,18 @@
     z-index: -1;
 }
 
+// Logo
+
+#logo-title-container {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+#logo-title {
+    font-size: 6em;
+}
+
 
 .game-config-containers {
     // border: 2px solid green;
@@ -83,9 +95,17 @@ section {
         align-items: center;
         // gap: 5%;
 
-        img {
+        a {
+            // margin: 0;
             width: auto;
-            height: 70%;
+            height: 100%;
+            display: flex;
+                align-items: center;
+
+            img {
+                // width: auto;
+                height: 70%;
+            }
         }
     }
 
@@ -113,8 +133,25 @@ section {
         // height: 20%;
     }
 
-    #scenario-slector-container {
+    #scenario-selector-container {
         height: 85%;
+        overflow-y: scroll;
+        scrollbar-width: thin;
+        scrollbar-color: var(--element-border-color) transparent;
+
+        &::-webkit-scrollbar {
+            width: 0.5vw;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--element-border-color);
+            border-radius: var(--radius);
+        }
+
         // flex-direction: row;
     }
 
@@ -180,12 +217,11 @@ section {
 .button-containers {
     display: flex;
     flex-direction: row;
-    // align-items: flex-end;
     justify-content: flex-end;
     width: 100%;
-
-    div {
-        border: 2px solid green;
-        margin: 0 3%;
+    margin-right: 2;
+    & > app-nuke-button {
+        margin-right: 2%;
     }
+
 }
