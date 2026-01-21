@@ -20,7 +20,7 @@ export class GameConfig implements OnInit {
 
   currentAvatarIndex = 0;
 
-  avatars: Avatar[] = [{ id: 2, name: 'KURT', image: '/assets/images/avatar-kurt.webp' }];
+  avatars: Avatar[] = [{ idAvatar: 2, name: 'KURT', image: '/assets/images/avatar-kurt.webp' },];
   scenarios: Scenario[] = [];
 
   // Au chargement du composant je récupère les listes d'avatars et de scénarios
