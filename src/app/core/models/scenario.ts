@@ -1,6 +1,9 @@
+import { Scene } from "../../pages/scene-multi/scene-multi";
+
 export interface Scenario {
-    id:number;
+    idScenario:number;
+    background:string;
     name:string;
-    background:string;   // String ?
-    firstSceneId:number; // Number ? 
+    description:string;
+    firstScene:Scene; // Number ? 
 }
