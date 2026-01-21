@@ -1,5 +1,5 @@
 export interface Avatar {
-    id:number;
+    idAvatar:number;
     name:string;
     image:string;
 }
