@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from '../api/api-service';
 import {  Observable } from 'rxjs';
+import { Account } from '../../models/account';
 
 const RESOURCE = 'account'
 
@@ -9,13 +10,14 @@ const RESOURCE = 'account'
 })
 export class AccountService {
    private apiService = inject(ApiService);
+   //private stor = inject(StorageService);
 
-  // Envoie uen requete de création de compte avec un identifiant
+  // Envoie une requete de création de compte avec un identifiant
   register(pseudo: string) : Observable<any> {
     return this.apiService.post(`${RESOURCE}/register`, { pseudo: pseudo });
   }
   
-  // Envoie uen requete de conexion avec un identifiant et s'il existe en base de donner le stock en local pour pouvoir etre identifié pour les prochaines requete
+  // Envoie une requete de conexion avec un identifiant et s'il existe en base de donner le stock en local pour pouvoir etre identifié pour les prochaines requete
   login(pseudo: string) : Observable<any> {
     return this.apiService.post(`${RESOURCE}/login`, { pseudo: pseudo });
   }

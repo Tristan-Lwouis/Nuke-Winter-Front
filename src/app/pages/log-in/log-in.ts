@@ -19,7 +19,7 @@ export class LogIn {
 
   // pour lier et avoir la main sur les input de la vue coté logique
   authForm = new FormGroup({
-    pseudo: new FormControl('', { nonNullable: true, validators: [Validators.required] }),// TODO: ajouter un validator pour autoriser que des caractere normaux
+    pseudo: new FormControl('', { nonNullable: true, validators: [Validators.required] }), // TODO: ajouter un validator pour autoriser que des caractere normaux
     //password: new FormControl(),
   });
 
@@ -52,29 +52,7 @@ export class LogIn {
       },
       error: (err) => console.error(err),
     });
+
   }
 
-  submitRegister() {
-    this.loading = true;
-
-    // on ne fait la requete que si le formualire est valid
-    if (!this.authForm.valid) {
-      this.loading = false;
-      return;
-    }
-
-    // on confirme à l'utilisateur que son compte est créé
-    this.accountService.register(this.authForm.controls.pseudo.value).subscribe({
-      next: (account: Account) => {
-        if (account) {
-          alert("Création de compte réussie");
-        } else {
-          // ajouter une erreur dans le authForm , pour l'invalider
-          this.authForm.controls.pseudo.setErrors({ notFound: true });
-        }
-        this.loading = false;
-      },
-      error: (err) => console.error(err),
-    });
-  }
 }
