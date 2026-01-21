@@ -12,13 +12,16 @@
         <!-- Choix de l'avatar -->
         <section class="avatar-section">
             <div class="config-title" id="avatar-title">
-                <a href="#"><img src="/assets/images/previous.png" alt="fleche-avatar-precedent"></a>
-                <p>SARAH</p>
-                <a href="#"><img src="/assets/images/next.png" alt="fleche-avatar-suivant"></a>
+                <a (click)="nextAvatar(-1)"><img src="/assets/images/previous.png" alt="fleche-avatar-precedent"></a>
+                <p>{{currentAvatar?.name}}</p>
+                <a (click)="nextAvatar(1)"><img src="/assets/images/next.png" alt="fleche-avatar-suivant"></a>
             </div>
-            <div id="avatar-image-container">
-                <img src="/assets/images/avatar-sarah.png" alt="image-avatar">
-            </div>
+            @if (currentAvatar != undefined) {
+                <div id="avatar-image-container">
+                    <img src="{{currentAvatar?.image}}" alt="image-avatar">
+                </div>
+            }
+
         </section>
         
         <!-- Choix du senario -->
@@ -27,11 +30,34 @@
                 <p class="config-title" id="scenario-title">SCENARIO</p>
             </div>
             <div id="scenario-selector-container">
-                <!-- TODO : Ici il faut faire un ngFor sur les senarios -->
-                 <div class="scenario-selector available">
-                    <p>Sur sa trace</p>
-                 </div>
-                 <div class="scenario-selector available">
+                @for (scenario of scenarios; track scenario.name) {
+                    <div class="scenario-selector available">
+                        <p>{{ scenario.name }}</p>
+                    </div>
+                    } @empty {
+                    <div class="scenario-selector available">
+                        <p> </p>
+                    </div>
+                    <div class="scenario-selector available">
+                        <p> </p>
+                    </div>
+                    <div class="scenario-selector available">
+                        <p> </p>
+                    </div>
+                    <div class="scenario-selector available">
+                        <p> </p>
+                    </div>
+                    <div class="scenario-selector available">
+                        <p> </p>
+                    </div>
+                    <div class="scenario-selector available">
+                        <p> </p>
+                    </div>
+                    
+                }
+                 
+
+                 <!-- <div class="scenario-selector available">
                     <p>La tempête</p>
                  </div>
                  <div class="scenario-selector not-available">
@@ -54,7 +80,7 @@
                  </div>
                  <div class="scenario-selector not-available">
                     <p>Fractale</p>
-                 </div>
+                 </div> -->
             </div>
         </section>
         

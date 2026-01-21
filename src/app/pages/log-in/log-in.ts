@@ -19,7 +19,7 @@ export class LogIn {
 
   // pour lier et avoir la main sur les input de la vue coté logique
   authForm = new FormGroup({
-    pseudo: new FormControl('', { nonNullable: true, validators: [Validators.required] }),// TODO: ajouter un validator pour autoriser que des caractere normaux
+    pseudo: new FormControl('', { nonNullable: true, validators: [Validators.required] }), // TODO: ajouter un validator pour autoriser que des caractere normaux
     //password: new FormControl(),
   });
 

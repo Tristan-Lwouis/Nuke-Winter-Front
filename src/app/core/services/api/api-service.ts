@@ -16,12 +16,12 @@ export class ApiService {
   }
 
   getAll(endpoint: string): Observable<any> {
-    return this.httpClient.get(`${API_URL}s/${endpoint}`).pipe(catchError(this.handleError));
+    return this.httpClient.get(`${API_URL}/${endpoint}/all`).pipe(catchError(this.handleError));
   }
 
   paginate(endpoint: string, paginate: Paginate): Observable<any> {
     return this.httpClient
-      .get(`${API_URL}/${endpoint}s?page=${paginate.page}&offset=${paginate.offset}`)
+      .get(`${API_URL}/${endpoint}/all?page=${paginate.page}&offset=${paginate.offset}`)
       .pipe(catchError(this.handleError));
   }
 
