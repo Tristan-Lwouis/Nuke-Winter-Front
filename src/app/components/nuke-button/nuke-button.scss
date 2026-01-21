@@ -6,7 +6,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+    
+    :hover {
+        cursor: url('/assets/images/custom-nuke-cursor-hand.png') 8 8, pointer;
+        transform: scale(1.05);
+        transition: transform 0.2s;
+    }
 
     a {
         position: relative;
@@ -14,6 +19,7 @@
         justify-content: center;
         align-items: center;
         text-decoration: none;
+
     }
 
     img {
@@ -25,7 +31,7 @@
         position: absolute;
         z-index: 1;
         font-family: 'Pixel';
-        color: white;
+        color: var(--font-primary-color);
         font-size: 1.5vw;
         text-shadow: 2px 2px 0px black;
     }

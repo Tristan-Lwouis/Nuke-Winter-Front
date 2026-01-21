@@ -6,7 +6,7 @@
   --secondary-color: #9A6143;
 
   /* Couleurs des éléments */
-  --font-primary-color: #e9c1a9;
+  --font-primary-color: #e9d3c5;
   --element-primary-color: rgb(216, 154, 115);
   --element-primary-color-transparent: rgb(216, 154, 115, 0.9);
   --element-border-color: #683C2F;
@@ -60,11 +60,16 @@
 
 /* --- Styles globaux --- */
 
+
 body {
   margin: 0;
+  cursor: url('/assets/images/custom-nuke-cursor-opti.png') 8 8, pointer;
+    // cursor: url('/assets/images/custom-nuke-cursor-hand.png') 8 8, pointer;
+  
 }
 
 h2,h3 {
   font-family: 'Pixel';
   margin: 0;
 }
+
