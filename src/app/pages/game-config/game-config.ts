@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SnowEffect } from '../../components/snow-effect/snow-effect';
 import { ParallaxDirective } from '../../shared/directives/parallax.directive';
 import { NukeButton } from '../../components/nuke-button/nuke-button';
@@ -16,10 +16,11 @@ import { Scenario } from '../../core/models/scenario';
 export class GameConfig implements OnInit {
   avatarService = inject(AvatarService);
   scenarioService = inject(ScenarioService);
+  cdr = inject(ChangeDetectorRef);
 
   currentAvatarIndex = 0;
 
-  avatars: Avatar[] = [{ id: 2, name: 'KURT', image: '/assets/images/avatar-kurt.webp' },];
+  avatars: Avatar[] = [{ id: 2, name: 'KURT', image: '/assets/images/avatar-kurt.webp' }];
   scenarios: Scenario[] = [];
 
   // Au chargement du composant je récupère les listes d'avatars et de scénarios
@@ -29,6 +30,7 @@ export class GameConfig implements OnInit {
       next: (data: Avatar[]) => {
         console.log('Avatars récupérés :', data);
         this.avatars = data;
+        this.cdr.detectChanges(); // Force le rechargement de la vue
       },
     });
     // ==== Récupère la liste des scénarios ====
@@ -36,16 +38,12 @@ export class GameConfig implements OnInit {
       next: (data: Scenario[]) => {
         console.log('Scénarios récupérés :', data);
         this.scenarios = data;
+        this.cdr.detectChanges(); // Force le rechargement de la vue
       },
     });
   }
 
-  // avatars: Avatar[] = [
-  //   { id: 1, name: 'SARAH', image: '/assets/images/avatar-sarah.png' },
-  //   { id: 2, name: 'KURT', image: '/assets/images/avatar-kurt.png' },
-  //   { id: 3, name: 'PEDRO', image: '/assets/images/avatar-pedro.png' },
-  // ];
-
+  // ==== AVATAR ====
   get currentAvatar(): Avatar | undefined {
     return this.avatars[this.currentAvatarIndex];
   }
@@ -66,4 +64,29 @@ export class GameConfig implements OnInit {
     const step = direction > 0 ? 1 : direction < 0 ? -1 : 0;
     this.currentAvatarIndex = (this.currentAvatarIndex + step + len) % len;
   }
+
+  selectedScenario: Scenario | undefined;
+
+  // ==== SCENARIO ====
+  /**
+   * Cette méthode permet de faire un toggle sur le scenario selectionné coté vue
+   * Elle permet de déterminer quel scenario est selectionné pour pouvoir afficher sa description et son image
+   */
+  scenarioSelect(scenario: Scenario) {
+    if (this.selectedScenario === scenario) {
+      this.selectedScenario = undefined;
+    } else {
+      this.selectedScenario = scenario;
+    }
+  }
+
+  // ==== START SCENARIO ====
+  /**
+   * Cette méthode permet de récupérer l'id du scenario selectionné au moment de l'appui sur le bouton START
+   * Elle permet de rediriger vers la page premier scene de jeu avec l'id du scenario selectionné
+   */
+  // startScenario() {
+  //   let idSceneStart = this.selectedScenario?.id
+  //   this.gameService.showScene(idSceneStart)
+  // }
 }

@@ -67,7 +67,7 @@ section {
     gap: 1%;
 
     // Sélecteur pour les div de premier niveau
-    & > div {
+    &>div {
         background-color: var(--element-primary-color-transparent);
         border: 0.5vw solid var(--element-border-color);
         border-radius: var(--radius);
@@ -81,13 +81,12 @@ section {
     color: var;
     font-size: 2.5vw;
     margin: 0;
-
-
 }
 
 
 // ==== AVATAR SECTION ====
 .avatar-section {
+
     // height: 100%;
     #avatar-title {
         height: 10%;
@@ -103,7 +102,7 @@ section {
             width: auto;
             height: 100%;
             display: flex;
-                align-items: center;
+            align-items: center;
 
             img {
                 // width: auto;
@@ -188,6 +187,15 @@ section {
         }
     }
 
+    .selected {
+        background-color: var(--secondary-color);
+        color: var(--font-primary-color);
+
+        p {
+            color: var(--font-primary-color);
+        }
+    }
+
     .not-available {
         background-color: gray;
         color: white;
@@ -210,6 +218,7 @@ section {
 
     #scenario-image-container {
         height: 30%;
+
         img {
             width: auto;
             height: 100%;
@@ -220,12 +229,29 @@ section {
 
     #scenario-description-container {
         height: 50%;
+        overflow-y: scroll;
+        scrollbar-width: thin;
+        scrollbar-color: var(--element-border-color) transparent;
+
+        &::-webkit-scrollbar {
+            width: 0.5vw;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--element-border-color);
+            border-radius: var(--radius);
+        }
 
         p {
             color: var(--element-border-color);
             font-family: 'Pixel';
             font-size: 1.2vw;
             margin: 3%;
+            white-space: pre-wrap;
         }
     }
 }
@@ -238,7 +264,8 @@ section {
     justify-content: flex-end;
     width: 100%;
     margin-right: 2;
-    & > app-nuke-button {
+
+    &>app-nuke-button {
         margin-right: 2%;
     }
 }
