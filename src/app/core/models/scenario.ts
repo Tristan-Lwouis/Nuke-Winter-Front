@@ -1,6 +1,7 @@
 export interface Scenario {
-    id:number;
-    name:string;
-    background:string;   // String ?
-    firstSceneId:number; // Number ? 
+  id: number;
+  name: string;
+  background: string; // String ?
+  firstSceneId: number; // Number ?
+  description?: string;
 }

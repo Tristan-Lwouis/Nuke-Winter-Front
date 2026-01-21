@@ -17,13 +17,13 @@
                 <a (click)="nextAvatar(1)"><img src="/assets/images/next.png" alt="fleche-avatar-suivant"></a>
             </div>
             @if (currentAvatar != undefined) {
-                <div id="avatar-image-container">
-                    <img src="{{currentAvatar?.image}}" alt="image-avatar">
-                </div>
+            <div id="avatar-image-container">
+                <img src="{{currentAvatar.image}}" alt="image-avatar">
+            </div>
             }
 
         </section>
-        
+
         <!-- Choix du senario -->
         <section class="scenario-section">
             <div>
@@ -31,66 +31,41 @@
             </div>
             <div id="scenario-selector-container">
                 @for (scenario of scenarios; track scenario.name) {
-                    <div class="scenario-selector available">
-                        <p>{{ scenario.name }}</p>
-                    </div>
-                    } @empty {
-                    <div class="scenario-selector available">
-                        <p> </p>
-                    </div>
-                    <div class="scenario-selector available">
-                        <p> </p>
-                    </div>
-                    <div class="scenario-selector available">
-                        <p> </p>
-                    </div>
-                    <div class="scenario-selector available">
-                        <p> </p>
-                    </div>
-                    <div class="scenario-selector available">
-                        <p> </p>
-                    </div>
-                    <div class="scenario-selector available">
-                        <p> </p>
-                    </div>
-                    
-                }
-                 
-
-                 <!-- <div class="scenario-selector available">
-                    <p>La tempête</p>
-                 </div>
-                 <div class="scenario-selector not-available">
-                    <p>Fractale</p>
-                 </div>
-                <div class="scenario-selector not-available">
-                    <p>Sur sa trace</p>
-                 </div>
-                 <div class="scenario-selector available">
-                    <p>La tempête</p>
-                 </div>
-                 <div class="scenario-selector available">
-                    <p>Fractale</p>
-                 </div>
+                <div class="scenario-selector available" [class.selected]="selectedScenario === scenario"
+                    (click)="scenarioSelect(scenario)">
+                    <p>{{ scenario.name }}</p>
+                </div>
+                } @empty {
                 <div class="scenario-selector available">
-                    <p>Sur sa trace</p>
-                 </div>
-                 <div class="scenario-selector available">
-                    <p>La tempête</p>
-                 </div>
-                 <div class="scenario-selector not-available">
-                    <p>Fractale</p>
-                 </div> -->
+                    <p>ㅤ</p>
+                </div>
+                <div class="scenario-selector available">
+                    <p>ㅤ</p>
+                </div>
+                <div class="scenario-selector available">
+                    <p>ㅤ</p>
+                </div>
+                <div class="scenario-selector available">
+                    <p>ㅤ</p>
+                </div>
+                <div class="scenario-selector available">
+                    <p>ㅤ</p>
+                </div>
+                <div class="scenario-selector available">
+                    <p>ㅤ</p>
+                </div>
+                }
             </div>
         </section>
-        
+
         <!-- Description du senatio -->
         <section class="description-senario-section">
             <div id="scenario-image-container">
-                <img src="/assets/images-scene/sur-sa-trace.jpeg" alt="image-scenario">
+                <img [src]="selectedScenario?.background ? selectedScenario?.background : '/assets/images-scene/sur-sa-trace.jpeg'"
+                    alt="image-scenario">
             </div>
             <div id="scenario-description-container">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam veritatis doloremque voluptate rerum repudiandae, iure quasi quisquam ea sunt beatae? Accusantium distinctio ipsa quidem unde facilis cumque, eaque quis quibusdam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos eligendi velit eveniet. Quod fuga ipsam quidem voluptates minus provident sed, dolorem deserunt quo vero vel repellendus velit quasi, nam ea.</p>
+                <p>{{ selectedScenario?.description ?? 'Sélectionnez un scénario' }}</p>
             </div>
         </section>
     </div>
