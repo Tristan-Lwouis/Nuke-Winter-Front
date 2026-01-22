@@ -1,5 +1,5 @@
 export interface Account {
-    id:number;
+    idAccount:number;
     pseudo:string;
     image:string;
 }

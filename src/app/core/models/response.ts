@@ -1,6 +1,8 @@
+import { Scene } from "./scene";
+
 export interface Response {
     idResponse:string;
     name:string;
-    nextScene:number;
+    nextScene:Scene;
     damage:number;
 }

@@ -1,5 +1,5 @@
+import { TypeScene } from "./type-scene";
 import { Response } from "./response";
-import { TypeScene } from "./TypeScene";
 
 export interface Scene {
     idScene:string;
