@@ -7,6 +7,7 @@ import { Register } from './pages/register/register';
 import { SceneDescription } from './pages/scene-description/scene-description';
 import { SceneResolver } from './pages/scene-resolver/scene-resolver';
 import { SceneMulti } from './pages/scene-multi/scene-multi';
+import { Game } from './pages/game/game';
 
 export const routes: Routes = [
     { path: '', component: StartGame },
@@ -16,5 +17,6 @@ export const routes: Routes = [
     { path: 'register', component: Register },
     { path: 'scene-multi', component: SceneMulti },
     { path: 'scene-description', component: SceneDescription },
-    { path: 'scene-resolver', component: SceneResolver }
+    { path: 'scene-resolver', component: SceneResolver },
+    { path: 'game', component: Game }
 ];

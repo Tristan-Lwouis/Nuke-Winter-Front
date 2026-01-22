@@ -24,5 +24,11 @@ export class AccountService {
 
   // Envoie une requete de deconexion et vide le storage
   logout() : Observable<any> {
-    return this.apiService.get(`${RESOURCE}/logout`);}
+    return this.apiService.get(`${RESOURCE}/logout`);
+  }
+
+  // Envoie une requete de deconexion et vide le storage
+  read() : Observable<any> {
+    return this.apiService.get(`${RESOURCE}/read`);
+  }
 }
