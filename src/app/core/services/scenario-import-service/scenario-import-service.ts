@@ -20,7 +20,15 @@ export class ScenarioImportService {
   }
 
   loadImages(images: File[]) {
-    console.log(images);
-    return this.apiService.post('api/images/uploads', images);
+
+    const formData = new FormData();
+
+    // nettoyage des images polués par le webkitdirectory
+    images.forEach((image) => {
+      const cleanFile = new File([image], image.name, { type: image.type });
+      formData.append('image', cleanFile);
+    });
+
+    return this.apiService.post('api/images/uploads', formData);
   }
 }
