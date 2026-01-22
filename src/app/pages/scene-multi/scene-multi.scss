@@ -31,18 +31,35 @@
 }
 
 .card-description,
-.card-question, .card-responses {
+.card-question,
+.card-responses {
   width: 100%;
   padding: 1vw;
 }
 
 .card-description {
   visibility: visible;
+ 
 }
 
-.card-responses {
-  display: flex;
-  flex-direction: column;
+.description{
+   height: 16.2vh;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--element-border-color) transparent;
+
+  &::-webkit-scrollbar {
+    width: 0.5vw;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--element-border-color);
+    border-radius: var(--radius);
+  }
 }
 
 .question-responses {
@@ -52,12 +69,35 @@
   width: 100%;
 }
 
+.card-responses {
+  display: flex;
+  flex-direction: column;
+}
 .response:hover {
   background-color: #9a6143;
   cursor: var(--cursor-hand);
-  
 }
 
 .selected {
   background-color: #9a6143;
+}
+
+#scenario-selector-container {
+  height: 85%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--element-border-color) transparent;
+
+  &::-webkit-scrollbar {
+    width: 0.5vw;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--element-border-color);
+    border-radius: var(--radius);
+  }
 }

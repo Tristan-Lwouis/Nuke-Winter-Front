@@ -3,3 +3,7 @@ export interface TypeScene {
     name:string;
     rule:string;
 }
+
+// export enum TypeScene{
+//     MULTI
+// }

@@ -16,7 +16,7 @@ export class SceneMulti implements OnInit {
 
   // Gestion de l'écriture de la description
   displayedDescription = '';
-  speed = 60;
+  speed = 30;
   index = 0;
 
   isQuestionResponseDisplayed = false;
