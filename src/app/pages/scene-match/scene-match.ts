@@ -2,18 +2,24 @@ import { ChangeDetectorRef, Component, inject, OnInit, ViewEncapsulation } from 
 import { Scene } from '../../core/models/scene';
 import { SceneService } from '../../core/services/scene/scene-service';
 import { Response } from '../../core/models/response';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NukeButton } from "../../components/nuke-button/nuke-button";
 
-
-//ce composant est utilisé pour les types multi, yes no (réponses figées) et description (question null et réponse figée)
 @Component({
-  selector: 'app-scene-multi',
-  imports: [],
-  templateUrl: './scene-multi.html',
-  styleUrl: './scene-multi.scss',
-  encapsulation: ViewEncapsulation.None,
+  selector: 'app-scene-match',
+  imports: [NukeButton, ReactiveFormsModule],
+  templateUrl: './scene-match.html',
+  styleUrl: './scene-match.scss',
 })
-export class SceneMulti implements OnInit {
-  selectedResponse: Response | undefined;
+export class SceneMatch implements OnInit {
+
+  // pour lier et avoir la main sur les input de la vue coté logique
+    matchForm = new FormGroup({
+    response: new FormControl('', { nonNullable: true, validators: [Validators.required] }), // TODO: ajouter un validator pour autoriser que des caractere normaux
+  })
+  
+  //Attributs du composant
+  //@Input scene: Scene | undefined;
   scene: Scene | undefined;
 
   // Gestion de l'écriture de la description
@@ -22,10 +28,10 @@ export class SceneMulti implements OnInit {
   index = 0;
 
   isQuestionResponseDisplayed = false;
-  isUIDisplayed = true;
 
   sceneService = inject(SceneService);
   cdr = inject(ChangeDetectorRef);
+response: any;
 
   ngOnInit(): void {
     //TODO: reflechir à la maniere dont on récupère la premiere scene
@@ -39,16 +45,11 @@ export class SceneMulti implements OnInit {
     });
   }
 
-  toggleUI() {
-    this.isUIDisplayed = !this.isUIDisplayed;
-  }
-  //TODO: Methode de giveUp
-  giveUp() {}
 
   // nous permet de lancer une scene
   startScene(scene: Scene) {
     this.scene = scene;
-    this.displayedDescription = '';
+    this.displayedDescription = ''; 
     this.isQuestionResponseDisplayed = false;
     this.index = 0;
     this.typeWriter();
@@ -57,6 +58,19 @@ export class SceneMulti implements OnInit {
   skipDescription() {
     this.displayedDescription = this.scene!.description;
     this.isQuestionResponseDisplayed = true;
+  }
+
+      submitForm(){
+        let formResponse:string|undefined ;
+        const trueResponse:string = this.scene!.responses[0].name;
+        formResponse = this.matchForm.value.response;
+        
+        if(formResponse === trueResponse){
+          this.startScene(this.scene!.responses[0].nextScene);
+        }else{
+          //TODO : Prendre des dégats
+          this.startScene(this.scene!);
+        }
   }
 
   selectResponse(response: Response) {
@@ -80,7 +94,7 @@ export class SceneMulti implements OnInit {
         setTimeout(() => this.typeWriter(), this.speed);
       }
     } else {
-      //execute cette methode après avoir écris tous les caracteres pour dire d'affciher la question et les reposnes
+      //execute cette methode après avoir écris tous les caracteres pour dire d'affciher la question et les reponses
       this.onTypingFinished();
     }
   }

@@ -84,8 +84,6 @@ export class GameConfig implements OnInit {
 
   selectedScenario: Scenario | undefined;
 
-
-
   // ==== SCENARIO ====
   /**
    * Cette méthode permet de faire un toggle sur le scenario selectionné coté vue
@@ -143,18 +141,17 @@ export class GameConfig implements OnInit {
     this.gameService.readGame(selectedAvatar!, selectedScenario!, account!).subscribe({
       next: (response: Game) => {
         console.log("🔥response.status = " + response.status)
-        console.log("🔥GameStatusEnum.NEW = " + GameStatusEnum.NEW)
         
-        if((response.status) === GameStatusEnum.NEW.toString()){
+        if(response.status.includes("nouveau") ){
           console.log("Nouvelle partie, redirection vers la première scène du scénario.", response);
           console.log("FirstSceneId : " + response.scenario.firstScene.idScene);
           //TODO : Rediriger vers la première scène du scénario
-          
         }
         else{
           console.log("Partie en cours, afficher une modale pour demander si on veut reprendre ou recommencer.", response);
           this.currentGame = response;
           this.resumeOrRestartGame();
+          this.cdr.detectChanges();
         }
       },
     });
