@@ -1,7 +1,9 @@
+import { Scene } from "./scene";
+
 export interface Scenario {
-  id: number;
+  idScenario: number;
   name: string;
-  background: string; // String ?
-  firstSceneId: number; // Number ?
-  description?: string;
+  background: string;
+  description: string;
+  firstScene: Scene;
 }

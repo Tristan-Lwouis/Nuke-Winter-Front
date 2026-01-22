@@ -1,13 +1,19 @@
 import { Account } from "./account";
+import { Avatar } from "./avatar";
+import { GameStatusEnum } from "./enums/gameStatusEnum";
+import { Scenario } from "./scenario";
+import { Scene } from "./scene";
 
-//Game incomplet pour le moment, c'était pour avoir les points de vie
+
 export interface Game {
-id:number;
-account:Account;
-
-health : number;
-
-nbTry : number;
-nbSucces : number;
-
+    id: number;
+    account:Account;
+    avatar:Avatar;
+    scenario:Scenario;
+    health : number;
+    currentScene : Scene;
+    status:GameStatusEnum;
+    // nbTry : int (calculable);
+    // nbSucces : int (calculable);
 }
+
