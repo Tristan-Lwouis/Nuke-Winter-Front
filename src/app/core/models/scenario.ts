@@ -1,7 +1,7 @@
 import { SceneMulti } from "../../pages/scene-multi/scene-multi";
 
 export interface Scenario {
-  //id: number;
+  idScenario: number;
   background: string; // String ?
   name: string;
   description: string;
