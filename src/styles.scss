@@ -16,8 +16,12 @@
   --radius: 8px;
   /* ⚠️ A définir */
   --shadow: 5px 5px 0;
+  --cursor-hand: url('/assets/images/custom-nuke-cursor-hand.png') 8 8, pointer;
+}
 
-  --cursor-hand :url('/assets/images/custom-nuke-cursor-hand.png') 8 8, pointer;
+::selection {
+  background-color: #ca6229;
+  color: var(--font-primary-color);
 }
 
 /* --- Config des polices --- */
@@ -60,13 +64,13 @@
   margin: 0;
 }
 
-.text-md{
+.text-md {
   font-family: 'Pixel';
   font-size: 2em;
-  color: #dddad8;;
+  color: #dddad8;
 }
 
-.text-lg{
+.text-lg {
   font-family: 'Pixel';
   font-size: 2.5em;
   color: #dddad8;
@@ -79,12 +83,14 @@
 body {
   margin: 0;
   cursor: url('/assets/images/custom-nuke-cursor-opti.png') 8 8, pointer;
-    // cursor: url('/assets/images/custom-nuke-cursor-hand.png') 8 8, pointer;
-  
+  // cursor: url('/assets/images/custom-nuke-cursor-hand.png') 8 8, pointer;
+
 }
 
 h2,h3 {
   font-family: 'Pixel';
   margin: 0;
 }
+
+
 

@@ -18,7 +18,6 @@ import { Scenario } from '../../core/models/scenario';
 import { Game } from '../../core/models/game';
 import { GameStatusEnum } from '../../core/models/enums/gameStatusEnum';
 import { GameService } from '../../core/services/game/game-service';
-import { RouterLink } from '@angular/router';
 
 
 @Component({

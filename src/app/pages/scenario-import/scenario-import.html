@@ -1,0 +1,81 @@
+<main class="scene" aria-label="Parallax scene" appParallax [parallaxRatios]="{ far: 0.8, med: 0.35, near: 0.15 }">
+    <app-snow-effect />
+    <div class="layer far_distance" aria-hidden="true"></div>
+    <div class="layer med_distance" aria-hidden="true"></div>
+    <div class="layer near_distance" aria-hidden="true"></div>
+
+    <div class="scenario-import-containers">
+        <!-- ==== LOAD SECTION ==== -->
+        <section class="load-section">
+            <div id="load-title-container">
+                <p class="config-title">IMPORT YOUR SCENARIO</p>
+            </div>
+            <div id="load-content-container">
+                <!-- (change)="onFileSelected($event)" -->
+                <h2 class="sub-title">Import from my computer</h2>
+
+                <div class="file-drop-area">
+                    @if (file) {
+                        <img src="/assets/images/imported-icon.png" alt="import-icon">
+                        <span class="file-msg">{{ file.name }}</span>
+                    }
+                    @else {
+                        <img src="/assets/images/import-icon.png" alt="import-icon">
+                        <span class="file-msg">Drag and drop or select file</span>
+                    }
+ 
+                    <input class="file-input" type="file" accept=".json" id="fileInput"
+                        (change)="onFileSelected($event)" />
+                </div>
+
+                <!-- TODO : Ajouter l'import via un lien de téléchargement -->
+                <h2 class="sub-title">Import from a link</h2>
+                <input type="text" id="linkInput" placeholder="   https://example.com/scenario1.json" />
+            </div>
+        </section>
+
+        <!-- ==== PREVIEW SECTION ==== -->
+        <section class="preview-section">
+            <div id="preview-title-container">
+                <p class="config-title">PREVIEW</p>
+            </div>
+            <div id="preview-content-container">
+                @if (jsonContent) {
+                <pre>{{ jsonContent | json }}</pre>
+                }
+                @else {
+                <p>No file selected</p>
+                }
+
+            </div>
+        </section>
+
+        <!-- ==== STATUS SECTION ==== -->
+        <section class="status-section">
+            <div id="status-title-container">
+                <p class="config-title">STATUS</p>
+            </div>
+            <div id="status-content-container">
+                <div>
+                    <p>Status : {{ importStatus }}</p>
+                    @if (importErrorDetail != "") {
+                    <p>Error details : {{ importErrorDetail }}</p>
+                    }
+                    @if (importStatus == "Success") {
+                    <p>Scenario imported successfully</p>
+                    <p>Scenario name : {{ jsonContent.name }}</p>
+                    <p>Scenario description : {{ jsonContent.description }}</p>
+                    <p>Scenario image : {{ jsonContent.image }}</p>
+                    <p>Scenario firstScene : {{ jsonContent.firstScene }}</p>
+
+                    }
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="button-containers">
+        <app-nuke-button label="CANCEL" route="/menu" width="10vw" [fontSize]="1.3"></app-nuke-button>
+        <app-nuke-button label="IMPORT" (click)="onImport()" width="10vw" [fontSize]="1.3"></app-nuke-button>
+    </div>
+
+</main>

@@ -27,7 +27,7 @@ type Flake = {
 })
 export class SnowEffect implements AfterViewInit, OnDestroy {
 
-  @Input() zIndex: number = 9999;
+  @Input() zIndex: number = 2000;
 
   @ViewChild('canvas', { static: true }) private canvasRef!: ElementRef<HTMLCanvasElement>;
 
