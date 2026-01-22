@@ -16,15 +16,15 @@
 
                 <div class="file-drop-area">
                     @if (file) {
-                        <img src="/assets/images/imported-icon.png" alt="import-icon">
-                        <span class="file-msg">{{ file.name }}</span>
+                    <img src="/assets/images/imported-icon.png" alt="import-icon">
+                    <span class="file-msg">{{ folderName }}</span>
                     }
                     @else {
-                        <img src="/assets/images/import-icon.png" alt="import-icon">
-                        <span class="file-msg">Drag and drop or select file</span>
+                    <img src="/assets/images/import-icon.png" alt="import-icon">
+                    <span class="file-msg">Drag and drop or select folder</span>
                     }
- 
-                    <input class="file-input" type="file" accept=".json" id="fileInput"
+                    <!-- webkitdirectory permet de récupérer un dossier -->
+                    <input class="file-input" type="file" webkitdirectory directory multiple id="fileInput"
                         (change)="onFileSelected($event)" />
                 </div>
 
