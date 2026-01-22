@@ -13,7 +13,6 @@
             <div id="load-content-container">
                 <!-- (change)="onFileSelected($event)" -->
                 <h2 class="sub-title">Import from my computer</h2>
-
                 <div class="file-drop-area">
                     @if (file) {
                     <img src="/assets/images/imported-icon.png" alt="import-icon">
@@ -24,7 +23,7 @@
                     <span class="file-msg">Drag and drop or select folder</span>
                     }
                     <!-- webkitdirectory permet de récupérer un dossier -->
-                    <input class="file-input" type="file" webkitdirectory directory multiple id="fileInput"
+                    <input class="file-input" type="file" webkitdirectory directory id="fileInput"
                         (change)="onFileSelected($event)" />
                 </div>
 
@@ -56,20 +55,9 @@
                 <p class="config-title">STATUS</p>
             </div>
             <div id="status-content-container">
-                <div>
-                    <p>Status : {{ importStatus }}</p>
-                    @if (importErrorDetail != "") {
-                    <p>Error details : {{ importErrorDetail }}</p>
-                    }
-                    @if (importStatus == "Success") {
-                    <p>Scenario imported successfully</p>
-                    <p>Scenario name : {{ jsonContent.name }}</p>
-                    <p>Scenario description : {{ jsonContent.description }}</p>
-                    <p>Scenario image : {{ jsonContent.image }}</p>
-                    <p>Scenario firstScene : {{ jsonContent.firstScene }}</p>
-
-                    }
-                </div>
+                @for (log of importLogs; track $index) {
+                <p>{{ log }}</p>
+                }
             </div>
         </section>
     </div>

@@ -203,7 +203,22 @@ p, pre {
 
     #status-content-container {
         height: 85%;
-        // padding: 2%;
+        overflow-y: scroll;
+        scrollbar-width: thin;
+        scrollbar-color: var(--element-border-color) transparent;
+
+        &::-webkit-scrollbar {
+            width: 0.5vw;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--element-border-color);
+            border-radius: var(--radius);
+        }
     }
 }
 

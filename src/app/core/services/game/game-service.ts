@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { ApiService } from '../api/api-service';
-import { Game } from '../../models/game';
 import { Account } from '../../models/account';
 import { Scenario } from '../../models/scenario';
 import { Avatar } from '../../models/avatar';
@@ -35,20 +34,11 @@ export class GameService {
 
     // (DTO)
     const JsonGame: any = {
-      // id: null,
-      // health: 100,
-      // currentScene: scenario.firstScene,
-      // status: GameStatus.PENDING,
-
       avatar: avatar,
       scenario: scenario,
       account: account,
     };
 
     return this.apiService.post(RESOURCE+"/read", JsonGame);
-
-    //récupère la dernière partie de ce scénario en cours
-    // getLastPendingGameWithThisScenario(){
-    // }
   }
 }

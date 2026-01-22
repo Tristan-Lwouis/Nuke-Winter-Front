@@ -16,79 +16,119 @@ export class ScenarioImport {
   scenarioImportService = inject(ScenarioImportService);
 
   // ATTRIBUTS DU FICHIER
-  file: File | null = null;
-  folderName: string | null = null;
-  jsonContent: any = null;
-  importStatus: string = 'Waiting for import';
-  importErrorDetail: string = '';
+  folderName: string | null = null; // Nom du dossier racine
+  manifestFile: File | null = null; // Fichier manifest.json
+  jsonContent: any = null; // Contenu du fichier manifest.json
+
+  file: File | null = null; // Fichier 'en cours'
+  imageFiles: File[] = []; // Fichiers images
+  importLogs: string[] = []; // Logs de l'import
+
+  // Injection de dépendances
   cdr = inject(ChangeDetectorRef);
 
+  addLog(message: string) {
+    this.importLogs.push(message);
+    this.cdr.detectChanges();
+  }
+
+  clearLogs() {
+    this.importLogs = [];
+    this.cdr.detectChanges();
+  }
+
+  //Fonction appelée lorsqu'un fichier est sélectionné
   onFileSelected(event: any) {
+    this.clearLogs();
     const files: FileList = event.target.files;
 
+    // Reset si on change de dossier
+    this.manifestFile = null;
+    this.imageFiles = [];
+    this.folderName = null;
+    this.jsonContent = null;
+    this.file = null;
+
+    // Vérification que le fichier est non null
     if (files.length > 0) {
-      // Extraction du nom du dossier à partir du premier fichier
-      const firstFile = files[0];
-      if (firstFile.webkitRelativePath) {
-        this.folderName = firstFile.webkitRelativePath.split('/')[0];
+      // On détermine le nom du dossier racine à partir du premier fichier
+      const firstPath = files[0].webkitRelativePath;
+
+      // Sécurité : s'assurer qu'il y a bien un dossier
+      if (!firstPath || firstPath.indexOf('/') === -1) {
+        this.addLog('Error: Sélectionnez un dossier, pas un fichier.');
+        return;
+      } else {
+        // Si c'est un dossier, on récupère le nom du dossier racine dans folderName
+        this.folderName = firstPath.split('/')[0];
       }
 
-      let manifestFile: File | undefined = undefined;
-
-      // Recherche du fichier manifest.json
+      // tri des fichiers selon la structure imposée
       for (let i = 0; i < files.length; i++) {
-        if (files[i].name.toLowerCase() === 'manifest.json') {
-          manifestFile = files[i];
-          break;
+        const file = files[i];
+        const path = file.webkitRelativePath;
+
+        // Le manifest doit être directement à la racine du dossier
+        if (path === `${this.folderName}/manifest.json`) {
+          this.manifestFile = file;
+        }
+        // Les images doivent être dans le sous-dossier "images"
+        else if (path.startsWith(`${this.folderName}/images/`)) {
+          this.imageFiles.push(file);
         }
       }
 
-      if (manifestFile) {
-        this.file = manifestFile;
+      // Traitement du manifest
+      if (this.manifestFile) {
+        this.file = this.manifestFile;
 
         const reader = new FileReader();
         reader.onload = (e: any) => {
           try {
             this.jsonContent = JSON.parse(e.target.result);
-            console.log('Contenu JSON récupéré :', this.jsonContent);
-            this.importStatus = 'Manifest found';
-            this.importErrorDetail = '';
-            this.cdr.detectChanges();
+            this.addLog('Manifest found');
+            this.addLog('Image count : ' + this.imageFiles.length);
+            for (let image of this.imageFiles) this.addLog('   - Image found : ' + image.name);
           } catch (error) {
-            console.error('Erreur lors de la lecture du fichier JSON', error);
+            this.addLog('Error: Invalid manifest.json file');
             this.jsonContent = null;
-            this.importStatus = 'Error';
-            this.importErrorDetail = 'Invalid manifest.json file';
-            this.cdr.detectChanges();
           }
         };
-        reader.readAsText(manifestFile);
+        reader.readAsText(this.manifestFile);
       } else {
-        console.warn('Aucun fichier manifest.json trouvé dans le dossier.');
-        this.file = null;
-        this.jsonContent = null;
-        this.importStatus = 'Error';
-        this.importErrorDetail = 'No manifest.json found in directory';
-        this.cdr.detectChanges();
+        this.addLog(`Error: No manifest.json found in the root directory '${this.folderName}'`);
       }
     }
   }
 
   // Au clic sur le bouton import
   onImport() {
-    console.log('Import scenario');
-    // Verifier que le fichier est non null
-    if (!this.file) {
-      alert('Aucun fichier sélectionné');
+    this.addLog('Importing scenario...');
+    // Verifier que le fichier manifest est non null
+    if (!this.jsonContent) {
+      this.addLog('Error: No manifest found');
       return;
     } else {
-      console.log('Fichier sélectionné :', this.file.name);
-      // TODO : Appel au service pour importer le scenario dans le back
-      this.scenarioImportService.loadScenario(this.file).subscribe({
+
+      // ==== IMPORT MANIFEST ====
+      this.scenarioImportService.loadScenario(this.jsonContent).subscribe({
         next: (response: any) => {
-          console.log('Scenario importé :', response);
+          this.addLog('Success: ✅ manifest imported successfully!');
+        },
+        error: (err: any) => {
+          this.addLog('Error: ❌ Manifest import failed.');
         },
       });
     }
+
+    // ==== IMPORT IMAGES ====
+    this.scenarioImportService.loadImages(this.imageFiles).subscribe({
+      next: (response: any) => {
+        this.addLog('Success: ✅ images imported successfully!');
+      },
+      error: (err: any) => {
+        this.addLog('Error: ❌ Images import failed.');
+      },
+    });
   }
 }
