@@ -2,7 +2,7 @@ import { TypeScene } from "./type-scene";
 import { Response } from "./response";
 
 export interface Scene {
-    idScene:string;
+    idScene:number;
     background:string;
     //music:string; //v2
     description:string;
