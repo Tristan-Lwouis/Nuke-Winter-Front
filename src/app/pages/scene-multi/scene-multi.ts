@@ -20,6 +20,7 @@ export class SceneMulti implements OnInit {
   index = 0;
 
   isQuestionResponseDisplayed = false;
+  isUIDisplayed = true;
 
   sceneService = inject(SceneService);
   cdr = inject(ChangeDetectorRef);
@@ -36,10 +37,16 @@ export class SceneMulti implements OnInit {
     });
   }
 
+  toggleUI() {
+    this.isUIDisplayed = !this.isUIDisplayed;
+  }
+  //TODO: Methode de giveUp
+  giveUp() {}
+
   // nous permet de lancer une scene
   startScene(scene: Scene) {
     this.scene = scene;
-    this.displayedDescription = ''; 
+    this.displayedDescription = '';
     this.isQuestionResponseDisplayed = false;
     this.index = 0;
     this.typeWriter();
