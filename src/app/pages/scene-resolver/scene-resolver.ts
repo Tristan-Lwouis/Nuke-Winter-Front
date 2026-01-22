@@ -16,6 +16,6 @@ export class SceneResolver implements OnInit {
   constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
-    this.game = this.gameService.createGame();
+    // this.game = this.gameService.readGame();
   }
 }
