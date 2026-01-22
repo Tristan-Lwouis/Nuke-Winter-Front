@@ -1,8 +1,8 @@
 export enum GameStatusEnum{
 
-    PENDING,
-    FAILED,
-    SUCCEED, 
-    NEW
+    PENDING = "en cours",
+    FAILED = "échec",
+    NEW = "nouveau",
+    SUCCEED = "réussite"
 
 }

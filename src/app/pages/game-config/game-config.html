@@ -4,6 +4,10 @@
     <div class="layer med_distance" aria-hidden="true"></div>
     <div class="layer near_distance" aria-hidden="true"></div>
 
+    @if (showResumeModal) {
+        <app-resume-modal (choice)="onResumeChoice($event)"></app-resume-modal>
+    }
+
     <div id="logo-title-container">
         <p class="main-title-font" id="logo-title">Nuke-Winter</p>
     </div>
