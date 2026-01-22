@@ -1,0 +1,16 @@
+<div class="modal-background">
+  <div class="modal-box">
+    <h2>Une partie est deja en cours !</h2>
+    <span>Une partie est déjà en cours pour ce scénario avec cette avatar.<br>
+      Que souhaitez-vous faire ?</span>
+    <span id="close-button" (click)="close()">X</span>
+    <div class="modal-image">
+      <img src="/assets/images-scene/sur-sa-trace.jpeg" alt="image de la scène en cours">
+    </div>
+    <div class="modal-actions">
+      <app-nuke-button label="Annuler" (click)="close()" [fontSize]="1.2"></app-nuke-button>
+      <app-nuke-button label="Recommencer" (click)="restart()" [fontSize]="1.2"></app-nuke-button>
+      <app-nuke-button label="Reprendre" (click)="resume()" [fontSize]="1.2"></app-nuke-button>
+    </div>
+  </div>
+</div>

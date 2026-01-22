@@ -1,19 +1,29 @@
+// Angular
 import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { StorageService } from '../../core/services/storage/storage-service';
+// Components & Directives
 import { SnowEffect } from '../../components/snow-effect/snow-effect';
 import { ParallaxDirective } from '../../shared/directives/parallax.directive';
 import { NukeButton } from '../../components/nuke-button/nuke-button';
+import { ResumeModal } from '../../components/resume-modal/resume-modal';
+
+import { Account } from '../../core/models/account';
+
 import { Avatar } from '../../core/models/avatar';
 import { AvatarService } from '../../core/services/avatar/avatar-service';
+
 import { ScenarioService } from '../../core/services/scenario/scenario-service';
 import { Scenario } from '../../core/models/scenario';
-import { GameService } from '../../core/services/game/game-service';
-import { StorageService } from '../../core/services/storage/storage-service';
-import { Account } from '../../core/models/account';
+
 import { Game } from '../../core/models/game';
+import { GameStatusEnum } from '../../core/models/enums/gameStatusEnum';
+import { GameService } from '../../core/services/game/game-service';
+import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-game-config',
-  imports: [SnowEffect, ParallaxDirective, NukeButton],
+  imports: [SnowEffect, ParallaxDirective, NukeButton, ResumeModal],
   templateUrl: './game-config.html',
   styleUrl: './game-config.scss',
 })
@@ -24,8 +34,10 @@ export class GameConfig implements OnInit {
   cdr = inject(ChangeDetectorRef);
   storageService = inject(StorageService);
 
+  // Variables
   currentAvatarIndex = 0;
-
+  showResumeModal: boolean = false;
+  currentGame: Game | undefined;
   avatars: Avatar[] = [{ idAvatar: 2, name: 'KURT', image: '/assets/images/avatar-kurt.webp' },];
   scenarios: Scenario[] = [];
 
@@ -73,6 +85,8 @@ export class GameConfig implements OnInit {
 
   selectedScenario: Scenario | undefined;
 
+
+
   // ==== SCENARIO ====
   /**
    * Cette méthode permet de faire un toggle sur le scenario selectionné coté vue
@@ -85,6 +99,28 @@ export class GameConfig implements OnInit {
       this.selectedScenario = scenario;
       console.log('Scénario sélectionné :', this.selectedScenario);
       console.log('Id du scénario sélectionné :', this.selectedScenario.idScenario);
+    }
+  }
+
+  resumeOrRestartGame(): void {
+    this.showResumeModal = true;
+  }
+
+  onResumeChoice(choice: 'continue' | 'restart' | 'close'): void {
+    this.showResumeModal = false;
+    switch (choice) {
+      case 'continue':
+        console.log('Reprise de la partie, redirection vers la scène courante.');
+        console.log('CurrentSceneId :', this.currentGame?.currentScene.idScene);
+        // TODO: Rediriger vers la scène courante
+        break;
+      case 'restart':
+        console.log('Recommencer la partie, redirection vers la première scène.');
+        console.log('FirstSceneId :', this.currentGame?.scenario.firstScene.idScene);
+        // TODO: Rediriger vers la première scène
+        break;
+      case 'close':
+        break;
     }
   }
 
@@ -107,7 +143,20 @@ export class GameConfig implements OnInit {
     // Appel de la méthode de création de partie dans le game service
     this.gameService.readGame(selectedAvatar!, selectedScenario!, account!).subscribe({
       next: (response: Game) => {
-        console.log('Partie créée avec succès :', response);
+        console.log("🔥response.status = " + response.status)
+        console.log("🔥GameStatusEnum.NEW = " + GameStatusEnum.NEW)
+        
+        if((response.status) === GameStatusEnum.NEW.toString()){
+          console.log("Nouvelle partie, redirection vers la première scène du scénario.", response);
+          console.log("FirstSceneId : " + response.scenario.firstScene.idScene);
+          //TODO : Rediriger vers la première scène du scénario
+          
+        }
+        else{
+          console.log("Partie en cours, afficher une modale pour demander si on veut reprendre ou recommencer.", response);
+          this.currentGame = response;
+          this.resumeOrRestartGame();
+        }
       },
     });
 
@@ -117,9 +166,9 @@ export class GameConfig implements OnInit {
     // - avec l'id de l'account courant ✅
     //     - Le back crée la game ou la récupere si elle existe déja ✅
     //     - Le back me renvoi cet objet game ✅
-    // - Verifier si la game est nouvelle grace a son status (NEW ou PENDING)
-    //     - Si nouvelle game, aller a la premiere scene du scenario
-    //     - Si la game est en cours, afficher une modale pour demander si on veut reprendre la partie ou recommencer
+    // - Verifier si la game est nouvelle grace a son status (NEW ou PENDING)✅
+    //     - Si nouvelle game, aller a la premiere scene du scenario ⛔
+    //     - Si la game est en cours, afficher une modale pour demander si on veut reprendre la partie ou recommencer✅
     //        - Si reprise de la partie
     //            - Aller a la scene courante de l'objet game reçu
     //     - Sinon aller a la premiere scene du scenario
