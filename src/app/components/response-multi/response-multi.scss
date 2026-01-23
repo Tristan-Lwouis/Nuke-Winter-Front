@@ -1,13 +1,12 @@
-
-// ? A garder ? 
-.selected {
-  background-color: #9a6143;
-}
-
-.card-responses {
+:host{
   display: flex;
   flex-direction: column;
-  // height: auto;
+  width: 100%;
+  background: hsl(from var(--color-secondary) h s l / 0.8);
+  border: solid var(--color-primary) var(--border-width);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .response{
@@ -15,7 +14,8 @@
     margin: 0;
   }
 }
-.response:hover {
+
+:hover {
   background-color: #9a6143;
   cursor: var(--cursor-hand);
 }

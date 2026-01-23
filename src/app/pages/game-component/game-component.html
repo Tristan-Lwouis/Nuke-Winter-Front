@@ -1,59 +1,43 @@
-<main class="scene scene-multi text-md" [style.background-image]="'url(http://localhost:8080/api/images/' + scene?.background + ')'">
-    
-    @if (showResumeModal) {
+<main
+  class="scene scene-multi text-md"
+  [style.background-image]="'url(http://localhost:8080/api/images/' + scene?.background + ')'"
+>
+  @if (showResumeModal) {
     <app-menu-modal (choice)="onMenuChoice($event)"></app-menu-modal>
-    }
+  }
 
-    <!-- Bouton clear UI -->
-     <img src="/assets/images/clearUI.png" alt="bouton clearUI" (click)="toggleUI()" id="clearUI">
+  <!-- Bouton clear UI -->
+  <img src="/assets/images/clearUI.png" alt="bouton clearUI" (click)="toggleUI()" id="clearUI" />
 
-    <!-- Bouton menu -->
-     <img src="/assets/images/menu.png" alt="bouton menu" (click)="toggleMenu()" id="menu">
+  <!-- Bouton menu -->
+  <img src="/assets/images/menu.png" alt="bouton menu" (click)="toggleMenu()" id="menu" />
 
-
-    <!-- BLOC PRINCIPAL -->
-        <!--@if (isUIDisplayed) {-->
-        <!-- DESCRIPTION -->
-        <div class="card card-description">
-            <div class="description" #descriptionContainer (click)="skipDescription()">
-                {{ displayedDescription }}
-            </div>
+@if (isUIDisplayed) {
+    <div class="card card-description">
+    <div class="description" #descriptionContainer (click)="skipDescription()">
+      {{ displayedDescription }}
+    </div>
+  </div>
+  @if (isQuestionResponseDisplayed) {
+    <div class="question-responses">
+      @if (scene?.question) {
+        <div class="card card-question">
+          <div class="question">{{ scene?.question }}</div>
         </div>
-     
-            
-
-    
-             @if (isQuestionResponseDisplayed === true ) { 
-                <app-response-multi [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-multi>
-            <!-- QUESTION -->
-            <div class="question-responses">
-                @if (scene!.question && isQuestionResponseDisplayed) {
-                <div class="card card-question">
-                    <div class="question">{{ scene!.question }}</div>
-                </div>
-                
-                }
-            </div> 
-        
-            <!-- RESPONSE -->
-            <!-- Dans réponse on affiche conditionellement les types de réponses
-            en fonction du type de scene -->
-            <div>
-                @switch (scene!.type.name) { 
-                    <!-- Va permetre d'afficher la reponse de type multiypeMulti -->
-                     @case ('scene-multi') { 
-                        <app-response-multi [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-multi>
-                    }
-
-                    @case ('scene-match') {
-
-                    }
-
-                    @default {
-                        <app-response-multi [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-multi>
-                    }
-                }
-            </div>  
-      <!--}-->
-    }
+      }
+      @if (scene?.responses?.length) {
+        <div class="card-reponses" style="width: 100%">
+          @switch (scene?.type?.name) {
+            @case ("multi"){
+              <app-response-multi style="width: 100%" [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-multi> 
+            }
+            @default {
+              <app-response-multi style="width: 100%" [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-multi> 
+            }
+          }
+        </div>
+      }
+    </div>
+  }
+}
 </main>

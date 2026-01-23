@@ -1,8 +1,5 @@
-
-<div class="card card-responses">
-      @for (response of scene?.responses; track response.name) {
-      <div class="response" (click)="selectResponse(response)">
-        <p>{{ response.name }}</p>
-      </div>
-      }
-</div>
+@for (response of scene?.responses; track response.name) {
+  <div class="response" (click)="selectResponse(response)">
+    <p>{{ response.name }}</p>
+  </div>
+}

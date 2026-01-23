@@ -6,6 +6,7 @@ import {
   ViewEncapsulation,
   ViewChild,
   ElementRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Scene } from '../../core/models/scene';
 import { SceneService } from '../../core/services/scene/scene-service';
@@ -19,6 +20,7 @@ import { ResponseMulti } from "../../components/response-multi/response-multi";
   templateUrl: './game-component.html',
   styleUrl: './game-component.scss',
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class GameComponent implements OnInit {
   
