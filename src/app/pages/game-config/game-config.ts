@@ -110,6 +110,9 @@ export class GameConfig implements OnInit {
         console.log('Reprise de la partie, redirection vers la scène courante.');
         console.log('CurrentSceneId :', this.currentGame?.currentScene.idScene);
         // TODO: Rediriger vers la scène courante
+        console.log("#######CONFIG########");
+        console.log(this.currentGame);
+        this.gameService.startGame(this.currentGame!);
         break;
       case 'restart':
         console.log('Recommencer la partie, redirection vers la première scène.');
@@ -146,6 +149,10 @@ export class GameConfig implements OnInit {
           console.log("Nouvelle partie, redirection vers la première scène du scénario.", response);
           console.log("FirstSceneId : " + response.scenario.firstScene.idScene);
           //TODO : Rediriger vers la première scène du scénario
+        console.log("#######CONFIG########");
+        this.currentGame = response;
+        console.log(this.currentGame);
+        this.gameService.startGame(this.currentGame!);
         }
         else{
           console.log("Partie en cours, afficher une modale pour demander si on veut reprendre ou recommencer.", response);
@@ -153,6 +160,7 @@ export class GameConfig implements OnInit {
           this.resumeOrRestartGame();
           this.cdr.detectChanges();
         }
+
       },
     });
 

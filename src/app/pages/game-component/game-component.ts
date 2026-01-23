@@ -13,6 +13,8 @@ import { SceneService } from '../../core/services/scene/scene-service';
 import { Response } from '../../core/models/response';
 import { MenuModal } from "../../components/menu-modal/menu-modal";
 import { ResponseMulti } from "../../components/response-multi/response-multi";
+import { GameService } from '../../core/services/game/game-service';
+import { Game } from '../../core/models/game';
 
 
 @Component({
@@ -23,7 +25,7 @@ import { ResponseMulti } from "../../components/response-multi/response-multi";
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class GameComponent implements OnInit {
-  
+  game: Game | undefined;
   // Attributs
   selectedResponse: Response | undefined;
   scene: Scene | undefined;
@@ -40,18 +42,26 @@ export class GameComponent implements OnInit {
   isUIDisplayed = true;
 
   sceneService = inject(SceneService);
+  gameService = inject(GameService);
   cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     //TODO: reflechir à la maniere dont on récupère la premiere scene
-    this.sceneService.read('s1s1').subscribe({
-      next: (scene: Scene) => {
-        if (scene) {
-          this.startScene(scene);
-        }
-      },
-      error: (err) => console.error(err),
-    });
+    // this.sceneService.read('s1s1').subscribe({
+    //   next: (scene: Scene) => {
+    //     if (scene) {
+    //       this.startScene(scene);
+    //     }
+    //   },
+    //   error: (err) => console.error(err),
+    // });
+    // 
+
+    const newGame = this.gameService.getGame()
+    if (newGame) {
+      this.startScene(newGame.currentScene);
+      this.game = newGame;
+    }
   }
 
   toggleUI() {

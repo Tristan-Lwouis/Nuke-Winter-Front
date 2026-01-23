@@ -3,6 +3,11 @@ import { ApiService } from '../api/api-service';
 import { Account } from '../../models/account';
 import { Scenario } from '../../models/scenario';
 import { Avatar } from '../../models/avatar';
+import { Scene } from '../../models/scene';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { SceneService } from '../scene/scene-service';
+import { Game } from '../../models/game';
 
 const RESOURCE = 'game';
 
@@ -11,6 +16,11 @@ const RESOURCE = 'game';
 })
 export class GameService {
   private apiService = inject(ApiService);
+  private sceneservice = inject(SceneService);
+  private router = inject(Router);
+
+  private game : Game | undefined;
+  //private _game$ = new BehaviorSubject<Game| undefined>(undefined);
 
   //initialisation ici pour tester les points de vie
   // createGameTest(): Game {
@@ -30,7 +40,7 @@ export class GameService {
    * @param pseudo 
    * @returns 
    */
-  readGame(avatar: Avatar, scenario: Scenario, account: Account): any {
+  readGame(avatar: Avatar, scenario: Scenario, account: Account): Game | any {
 
     // (DTO)
     const JsonGame: any = {
@@ -41,4 +51,25 @@ export class GameService {
 
     return this.apiService.post(RESOURCE+"/read", JsonGame);
   }
+
+  startGame(game:Game){
+    this.game = game;
+    console.log("#######Service########");
+    console.log(this.game);
+    this.router.navigate(["/game-component"]);
+  }
+
+
+  setGame(game:Game){
+    this.game =game;
+  }
+  
+  public getGame() : Game | undefined {
+    return this.game;
+  }
+  
+
+  // getGame(): Observable<Game | undefined>{
+  //   ///return this._game$;
+  // }
 }
