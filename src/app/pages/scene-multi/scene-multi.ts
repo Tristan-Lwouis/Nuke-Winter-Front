@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Scene } from '../../core/models/scene';
 import { SceneService } from '../../core/services/scene/scene-service';
 import { Response } from '../../core/models/response';
@@ -14,7 +14,7 @@ import { Response } from '../../core/models/response';
 })
 export class SceneMulti implements OnInit {
   selectedResponse: Response | undefined;
-  scene: Scene | undefined;
+  @Input() scene: Scene | undefined;
 
   // Gestion de l'écriture de la description
   displayedDescription = '';
@@ -29,7 +29,7 @@ export class SceneMulti implements OnInit {
 
   ngOnInit(): void {
     //TODO: reflechir à la maniere dont on récupère la premiere scene
-    this.sceneService.read('s1s1').subscribe({
+    this.sceneService.read(this.scene!.idScene).subscribe({
       next: (scene: Scene) => {
         if (scene) {
           this.startScene(scene);

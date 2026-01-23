@@ -6,6 +6,6 @@ export interface Scenario {
   background: string; // String ?
   name: string;
   description: string;
-  firstScene: Scene; // Number ?
+  firstSceneId: Scene; // Number ?
   // firstSceneId: number; // Number ?
 }
