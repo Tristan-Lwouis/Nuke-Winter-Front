@@ -87,6 +87,10 @@ body {
 
 }
 
+.clickable{
+  cursor: var(--cursor-hand);
+}
+
 h2,h3 {
   font-family: 'Pixel';
   margin: 0;

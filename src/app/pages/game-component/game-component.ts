@@ -10,17 +10,23 @@ import {
 import { Scene } from '../../core/models/scene';
 import { SceneService } from '../../core/services/scene/scene-service';
 import { Response } from '../../core/models/response';
+import { MenuModal } from "../../components/menu-modal/menu-modal";
+import { ResponseMulti } from "../../components/response-multi/response-multi";
+import { ResponseMulti } from "../../components/response-multi/response-multi";
 
 @Component({
-  selector: 'app-scene-global',
-  imports: [],
-  templateUrl: './scene-global.html',
-  styleUrl: './scene-global.scss',
+  imports: [MenuModal, ResponseMulti]component',
+  imports: [MenuModal, ResponseMulti],
+  templateUrl: './game-component.html',
+  styleUrl: './game-component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class SceneGlobal implements OnInit {
+export class GameComponent implements OnInit {
+  
+  // Attributs
   selectedResponse: Response | undefined;
-  scene : Scene | undefined;
+  scene: Scene | undefined;
+  showResumeModal: boolean = false;
 
   @ViewChild('descriptionContainer') descriptionContainer!: ElementRef;
 
@@ -50,6 +56,29 @@ export class SceneGlobal implements OnInit {
   toggleUI() {
     this.isUIDisplayed = !this.isUIDisplayed;
   }
+
+  toggleMenu() {
+    this.showResumeModal = true;
+  }
+
+  onMenuChoice(choice : 'resume' | 'giveUp' | 'options' | 'saveAndExit' | 'close'):void {
+    this.showResumeModal = false;
+    switch (choice) {
+      case 'giveUp':
+        //TODO: implementer la methode giveUp
+        // Update game status failed
+        break;
+      case 'options':
+        //TODO: implementer la methode options
+        // Affichage modale options
+        break;
+      case 'saveAndExit':
+        //TODO: implementer la methode saveAndExit
+        // Update game (laisser le status en 'pending')
+        break;
+    }
+  }
+  
   //TODO: Methode de giveUp
   giveUp() {}
 

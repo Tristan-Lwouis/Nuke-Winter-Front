@@ -39,7 +39,7 @@ export class SceneResolver implements OnInit {
 
   // nous permet de lancer une scene
   startScene(scene: Scene) {
-    this.scene = scene;
+    this.game!.currentScene = scene;
     this.displayedDescription = ''; 
     this.isQuestionResponseDisplayed = false;
     this.index = 0;

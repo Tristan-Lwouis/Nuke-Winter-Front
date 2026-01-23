@@ -11,6 +11,7 @@ import { Game } from './pages/game/game';
 import { SceneMatch } from './pages/scene-match/scene-match';
 import { ScenarioImport } from './pages/scenario-import/scenario-import';
 import { SceneGlobal } from './pages/scene-global/scene-global';
+import { GameComponent } from './pages/game-component/game-component';
 
 export const routes: Routes = [
     { path: '', component: StartGame },
@@ -24,5 +25,6 @@ export const routes: Routes = [
     { path: 'game', component: Game },
     { path: 'scenario-import', component: ScenarioImport },
     { path: 'scene-match', component: SceneMatch },
-    { path: 'scene-global', component: SceneGlobal }
+    { path: 'scene-global', component: SceneGlobal },
+    { path: 'game-component', component: GameComponent }
 ];

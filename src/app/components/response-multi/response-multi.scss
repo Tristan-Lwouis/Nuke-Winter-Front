@@ -1,0 +1,21 @@
+
+// ? A garder ? 
+.selected {
+  background-color: #9a6143;
+}
+
+.card-responses {
+  display: flex;
+  flex-direction: column;
+  // height: auto;
+}
+
+.response{
+  p{
+    margin: 0;
+  }
+}
+.response:hover {
+  background-color: #9a6143;
+  cursor: var(--cursor-hand);
+}
