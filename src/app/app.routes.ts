@@ -7,7 +7,6 @@ import { Register } from './pages/register/register';
 import { SceneDescription } from './pages/scene-description/scene-description';
 import { SceneResolver } from './pages/scene-resolver/scene-resolver';
 import { SceneMulti } from './pages/scene-multi/scene-multi';
-import { Game } from './pages/game/game';
 import { SceneMatch } from './pages/scene-match/scene-match';
 import { ScenarioImport } from './pages/scenario-import/scenario-import';
 import { SceneGlobal } from './pages/scene-global/scene-global';
@@ -22,7 +21,6 @@ export const routes: Routes = [
     { path: 'scene-multi', component: SceneMulti },
     { path: 'scene-description', component: SceneDescription },
     { path: 'scene-resolver', component: SceneResolver },
-    { path: 'game', component: Game },
     { path: 'scenario-import', component: ScenarioImport },
     { path: 'scene-match', component: SceneMatch },
     { path: 'scene-global', component: SceneGlobal },
