@@ -12,10 +12,9 @@ import { SceneService } from '../../core/services/scene/scene-service';
 import { Response } from '../../core/models/response';
 import { MenuModal } from "../../components/menu-modal/menu-modal";
 import { ResponseMulti } from "../../components/response-multi/response-multi";
-import { ResponseMulti } from "../../components/response-multi/response-multi";
+
 
 @Component({
-  imports: [MenuModal, ResponseMulti]component',
   imports: [MenuModal, ResponseMulti],
   templateUrl: './game-component.html',
   styleUrl: './game-component.scss',

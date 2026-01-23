@@ -12,42 +12,48 @@
 
 
     <!-- BLOC PRINCIPAL -->
-        @if (isUIDisplayed) {
+        <!--@if (isUIDisplayed) {-->
         <!-- DESCRIPTION -->
         <div class="card card-description">
             <div class="description" #descriptionContainer (click)="skipDescription()">
                 {{ displayedDescription }}
             </div>
         </div>
+     
+            
 
-
-        @if (isQuestionResponseDisplayed && scene!) {
-                <!-- QUESTION -->
+    
+             @if (isQuestionResponseDisplayed === true ) { 
+                <app-response-multi [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-multi>
+            <!-- QUESTION -->
             <div class="question-responses">
                 @if (scene!.question && isQuestionResponseDisplayed) {
-                <div class="card card-question"></div>
-                <div class="question">{{ scene!.question }}</div>
+                <div class="card card-question">
+                    <div class="question">{{ scene!.question }}</div>
+                </div>
+                
                 }
-            </div>
-        <!-- RESPONSE -->
-        <!-- Dans réponse on affiche conditionellement les types de réponses
-        en fonction du type de scene -->
-        <div>
-            @switch (scene.type.name) {
-                <!-- Va permetre d'afficher la reponse de type multiypeMulti -->
-                @case ('scene-multi') {
-                    <app-response-multi [scene]="scene" (selectResponse)="selectResponse($event)"></app-response-multi>
+            </div> 
+        
+            <!-- RESPONSE -->
+            <!-- Dans réponse on affiche conditionellement les types de réponses
+            en fonction du type de scene -->
+            <div>
+                @switch (scene!.type.name) { 
+                    <!-- Va permetre d'afficher la reponse de type multiypeMulti -->
+                     @case ('scene-multi') { 
+                        <app-response-multi [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-multi>
+                    }
+
+                    @case ('scene-match') {
+
+                    }
+
+                    @default {
+                        <app-response-multi [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-multi>
+                    }
                 }
-
-                @case ('scene-match') {
-
-                }
-
-                @default {
-
-                }
-            }
-        </div>  
-        }
+            </div>  
+      <!--}-->
     }
 </main>

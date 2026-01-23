@@ -11,7 +11,7 @@ import { Response } from '../../core/models/response';
 export class ResponseMulti {
 
   // Attribut selectedResponse
-  selectedResponse: Response | undefined;
+ // selectedResponse: Response | undefined;
 
   @Input() scene: Scene | undefined;
 
