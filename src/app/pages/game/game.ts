@@ -16,7 +16,7 @@ import { GameStatusEnum } from '../../core/models/enums/gameStatusEnum';
   templateUrl: './game.html',
   styleUrl: './game.scss',
 })
-export class Game implements OnInit{
+export class Game{
   
   game : GameModel|undefined;
   gameService = inject(GameService);
@@ -31,7 +31,7 @@ export class Game implements OnInit{
   // this.scene=scene;
 
 
-
+/*
 
  ngOnInit(): void {
 
@@ -57,7 +57,6 @@ export class Game implements OnInit{
       
   };
 
-  
-
-  
+*/
+ 
 }
