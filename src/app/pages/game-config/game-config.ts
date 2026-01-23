@@ -142,7 +142,7 @@ export class GameConfig implements OnInit {
       next: (response: Game) => {
         console.log("🔥response.status = " + response.status)
         
-        if(response.status.includes("nouveau") ){
+        if(response.status.includes("NEW") ){
           console.log("Nouvelle partie, redirection vers la première scène du scénario.", response);
           console.log("FirstSceneId : " + response.scenario.firstScene.idScene);
           //TODO : Rediriger vers la première scène du scénario

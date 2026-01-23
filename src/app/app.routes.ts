@@ -9,6 +9,7 @@ import { SceneResolver } from './pages/scene-resolver/scene-resolver';
 import { SceneMulti } from './pages/scene-multi/scene-multi';
 import { SceneMatch } from './pages/scene-match/scene-match';
 import { ScenarioImport } from './pages/scenario-import/scenario-import';
+import { SceneGlobal } from './pages/scene-global/scene-global';
 
 export const routes: Routes = [
     { path: '', component: StartGame },
@@ -20,5 +21,6 @@ export const routes: Routes = [
     { path: 'scene-description', component: SceneDescription },
     { path: 'scene-resolver', component: SceneResolver },
     { path: 'scenario-import', component: ScenarioImport },
-    { path: 'scene-match', component: SceneMatch }
+    { path: 'scene-match', component: SceneMatch },
+    { path: 'scene-global', component: SceneGlobal }
 ];
