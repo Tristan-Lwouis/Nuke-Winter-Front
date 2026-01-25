@@ -45,6 +45,7 @@ export class GameConfig implements OnInit {
     // ==== Récupère la liste des avatars ====
     this.avatarService.getAllAvatars().subscribe({
       next: (data: Avatar[]) => {
+        this.avatarService.addPathToImages(data);
         console.log('Avatars récupérés :', data);
         this.avatars = data;
         this.cdr.detectChanges(); // Force le rechargement de la vue
@@ -53,6 +54,7 @@ export class GameConfig implements OnInit {
     // ==== Récupère la liste des scénarios ====
     this.scenarioService.getAllScenarios().subscribe({
       next: (data: Scenario[]) => {
+        this.scenarioService.addPathToImages(data);
         console.log('Scénarios récupérés :', data);
         this.scenarios = data;
         this.cdr.detectChanges(); // Force le rechargement de la vue
@@ -141,6 +143,8 @@ export class GameConfig implements OnInit {
     const account: Account = accountJson ? JSON.parse(accountJson) : null;
 
     // Appel de la méthode de création de partie dans le game service
+    console.log("TRY STARTING GAME", selectedScenario);
+
     this.gameService.readGame(selectedAvatar!, selectedScenario!, account!).subscribe({
       next: (response: Game) => {
         console.log("🔥response.status = " + response.status)

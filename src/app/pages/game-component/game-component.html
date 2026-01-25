@@ -1,9 +1,6 @@
-<main
-  class="scene scene-multi text-md"
-  [style.background-image]="'url(http://localhost:8080/api/images/' + scene?.background + ')'"
->
+<main class="scene scene-multi text-md" [style.background-image]="'url(' + imageApiUrl + scene?.background + ')'">
   @if (showResumeModal) {
-    <app-menu-modal (choice)="onMenuChoice($event)"></app-menu-modal>
+  <app-menu-modal (choice)="onMenuChoice($event)"></app-menu-modal>
   }
 
   <!-- Bouton clear UI -->
@@ -12,32 +9,50 @@
   <!-- Bouton menu -->
   <img src="/assets/images/menu.png" alt="bouton menu" (click)="toggleMenu()" id="menu" />
 
-@if (isUIDisplayed) {
-    <div class="card card-description">
+  @if (isUIDisplayed) {
+  <div class="card card-description">
     <div class="description" #descriptionContainer (click)="skipDescription()">
       {{ displayedDescription }}
     </div>
   </div>
   @if (isQuestionResponseDisplayed) {
-    <div class="question-responses">
-      @if (scene?.question) {
-        <div class="card card-question">
-          <div class="question">{{ scene?.question }}</div>
-        </div>
+  <div class="question-responses">
+    @if (scene?.question) {
+    <div class="card card-question">
+      <div class="question">{{ scene?.question }}</div>
+    </div>
+    }
+    @if (scene?.responses?.length) {
+    <div class="card-reponses" style="width: 100%">
+      @switch (scene?.typeScene) {
+
+      <!-- * Va couvrir le cas multichoice, description et binaires -->
+      @case (typeSceneEnum.MULTICHOICE){
+      <app-response-multi [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-multi>
       }
-      @if (scene?.responses?.length) {
-        <div class="card-reponses" style="width: 100%">
-          @switch (scene?.type?.name) {
-            @case ("multi"){
-              <app-response-multi style="width: 100%" [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-multi> 
-            }
-            @default {
-              <app-response-multi style="width: 100%" [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-multi> 
-            }
-          }
-        </div>
+
+      <!-- @case (typeSceneEnum.MULTICHOICE){ -->
+      <!-- <app-response-match style="width: 100%" [scene]="scene" -->
+      <!-- (selectedResponse)="selectResponse($event)"></app-response-match> -->
+      <!-- }  -->
+
+      <!-- @case ("IMAGEMATCH"){ -->
+      <!-- <app-response-imagematch style="width: 100%" [scene]="scene" -->
+      <!-- (selectedResponse)="selectResponse($event)"></app-response-imagematch> -->
+      <!-- } -->
+
+      <!-- @case (typeSceneEnum.MULTICHOICE){ -->
+      <!-- <app-response-code [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-code> -->
+      <!-- } -->
+
+      @default {
+      <p style="color: red;">Type de scène inconnu : {{scene?.typeScene}}</p>
+      }
+
       }
     </div>
+    }
+  </div>
   }
-}
+  }
 </main>

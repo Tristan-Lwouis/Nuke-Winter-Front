@@ -7,5 +7,6 @@ export interface Scenario {
   name: string;
   description: string;
   firstScene: Scene; // Number ?
-  // firstSceneId: number; // Number ?
+  author : String;
+  version : String;
 }

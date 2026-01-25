@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { ApiService } from '../api/api-service';
 import { Scene } from '../../models/scene';
 import { Router } from '@angular/router';
-import { TypeScene } from '../../models/type-scene';
 
 const RESOURCE = 'scene';
 @Injectable({

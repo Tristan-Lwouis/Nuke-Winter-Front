@@ -11,18 +11,22 @@ import {
 import { Scene } from '../../core/models/scene';
 import { SceneService } from '../../core/services/scene/scene-service';
 import { Response } from '../../core/models/response';
-import { MenuModal } from "../../components/menu-modal/menu-modal";
-import { ResponseMulti } from "../../components/response-multi/response-multi";
+import { MenuModal } from '../../components/menu-modal/menu-modal';
+import { ResponseMulti } from '../../components/response-multi/response-multi';
+import { ResponseMatch } from '../../components/response-match/response-match';
+import { ResponseCode } from '../../components/response-code/response-code';
+import { ResponseImageMatch } from '../../components/response-image-match/response-image-match';
 import { GameService } from '../../core/services/game/game-service';
 import { Game } from '../../core/models/game';
-
+import { environment } from '../../../environments/environment';
+import { TypeSceneEnum } from '../../core/models/enums/TypeSceneEnum';
 
 @Component({
-  imports: [MenuModal, ResponseMulti],
+  imports: [MenuModal, ResponseMulti, ResponseMatch, ResponseCode, ResponseImageMatch],
   templateUrl: './game-component.html',
   styleUrl: './game-component.scss',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class GameComponent implements OnInit {
   game: Game | undefined;
@@ -30,6 +34,8 @@ export class GameComponent implements OnInit {
   selectedResponse: Response | undefined;
   scene: Scene | undefined;
   showResumeModal: boolean = false;
+  imageApiUrl = environment.imageApiUrl;
+  typeSceneEnum = TypeSceneEnum;
 
   @ViewChild('descriptionContainer') descriptionContainer!: ElementRef;
 
@@ -55,9 +61,9 @@ export class GameComponent implements OnInit {
     //   },
     //   error: (err) => console.error(err),
     // });
-    // 
+    //
 
-    const newGame = this.gameService.getGame()
+    const newGame = this.gameService.getGame();
     if (newGame) {
       this.startScene(newGame.currentScene);
       this.game = newGame;
@@ -72,7 +78,7 @@ export class GameComponent implements OnInit {
     this.showResumeModal = true;
   }
 
-  onMenuChoice(choice : 'resume' | 'giveUp' | 'options' | 'saveAndExit' | 'close'):void {
+  onMenuChoice(choice: 'resume' | 'giveUp' | 'options' | 'saveAndExit' | 'close'): void {
     this.showResumeModal = false;
     switch (choice) {
       case 'giveUp':
@@ -89,7 +95,7 @@ export class GameComponent implements OnInit {
         break;
     }
   }
-  
+
   //TODO: Methode de giveUp
   giveUp() {}
 

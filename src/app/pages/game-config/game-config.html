@@ -65,11 +65,19 @@
         <!-- Description du senatio -->
         <section class="description-senario-section">
             <div id="scenario-image-container">
+                <!-- TODO : Changer l'image de fallback -->
                 <img [src]="selectedScenario?.background ? selectedScenario?.background : '/assets/images-scene/sur-sa-trace.jpeg'"
                     alt="image-scenario">
             </div>
             <div id="scenario-description-container">
-                <p>{{ selectedScenario?.description ?? 'Sélectionnez un scénario' }}</p>
+                @if (selectedScenario != undefined) {
+                    <p><u>Auteur</u> : <br>{{ selectedScenario.author }}</p>
+                    <p><u>Version</u> : <br>{{ selectedScenario.version }}</p>
+                    <p><u>Description</u> : <br>{{ selectedScenario.description}}</p>
+                }
+                @else {
+                <p>Sélectionnez un scenario.</p>
+                }
             </div>
         </section>
     </div>

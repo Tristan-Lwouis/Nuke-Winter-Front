@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Paginate } from '../../models/paginate';
 
-const API_URL = 'http://localhost:8080';
+import { environment } from '../../../../environments/environment';
+
+const API_URL = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root',
