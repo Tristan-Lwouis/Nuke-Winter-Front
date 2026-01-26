@@ -22,7 +22,7 @@
       <div class="question">{{ scene?.question }}</div>
     </div>
     }
-    @if (scene?.responses?.length) {
+    @if (scene?.responses) { <!-- ? Pourquoi .lenght ? -->
     <div class="card-reponses" style="width: 100%">
       @switch (scene?.typeScene) {
 

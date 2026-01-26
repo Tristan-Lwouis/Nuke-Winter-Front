@@ -147,7 +147,7 @@ export class GameConfig implements OnInit {
 
     this.gameService.readGame(selectedAvatar!, selectedScenario!, account!).subscribe({
       next: (response: Game) => {
-        console.log("🔥response.status = " + response.status)
+        // console.log("🔥response.status = " + response.status)
         
         if(response.status.includes("NEW") ){
           console.log("Nouvelle partie, redirection vers la première scène du scénario.", response);

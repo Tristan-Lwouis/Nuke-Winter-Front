@@ -114,14 +114,30 @@ export class GameComponent implements OnInit {
   }
 
   selectResponse(response: Response) {
-    this.startScene(response.nextScene);
+    console.log('Next Script Info :', response.nextScene);
+
+    let idScene: string;
+
+    if (typeof response.nextScene === 'string') {
+      // console.log("response.nextScene est un string")
+      idScene = response.nextScene;
+    } else {
+      // console.log("response.nextScene est un object")
+      idScene = response.nextScene.idScene;
+    }
+
+    console.log('Fetching scene details for ID:', idScene);
+    this.sceneService.read(idScene).subscribe((scene: any) => {
+      this.startScene(scene);
+    });
   }
 
   // pour ecrire la description en mode lettre par lettre
   private typeWriter() {
     if (!this.scene) return;
-
     const description = this.scene.description;
+    console.log('Description :', description);
+    // const description = this.scene.description || '';
 
     if (this.index < description.length) {
       this.displayedDescription += description.charAt(this.index);

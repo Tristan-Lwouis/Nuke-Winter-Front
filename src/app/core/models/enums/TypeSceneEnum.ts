@@ -8,5 +8,4 @@ export enum TypeSceneEnum {
     MATCH = "MATCH",
     IMAGEMATCH = "IMAGEMATCH",
     CODE = "CODE",
-
 }

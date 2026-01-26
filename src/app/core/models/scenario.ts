@@ -1,4 +1,3 @@
-import { SceneMulti } from "../../pages/scene-multi/scene-multi";
 import { Scene } from "./scene";
 
 export interface Scenario {

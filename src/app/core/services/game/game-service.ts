@@ -54,8 +54,6 @@ export class GameService {
 
   startGame(game:Game){
     this.game = game;
-    console.log("#######Service########");
-    console.log(this.game);
     this.router.navigate(["/game-component"]);
   }
 

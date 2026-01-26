@@ -4,12 +4,7 @@ import { Menu } from './pages/menu/menu';
 import { GameConfig } from './pages/game-config/game-config';
 import { LogIn } from './pages/log-in/log-in';
 import { Register } from './pages/register/register';
-import { SceneDescription } from './pages/scene-description/scene-description';
-import { SceneResolver } from './pages/scene-resolver/scene-resolver';
-import { SceneMulti } from './pages/scene-multi/scene-multi';
-import { SceneMatch } from './pages/scene-match/scene-match';
 import { ScenarioImport } from './pages/scenario-import/scenario-import';
-import { SceneGlobal } from './pages/scene-global/scene-global';
 import { GameComponent } from './pages/game-component/game-component';
 
 export const routes: Routes = [
@@ -18,11 +13,6 @@ export const routes: Routes = [
     { path: 'game-config', component: GameConfig },
     { path: 'log-in', component: LogIn },
     { path: 'register', component: Register },
-    { path: 'scene-multi', component: SceneMulti },
-    { path: 'scene-description', component: SceneDescription },
-    { path: 'scene-resolver', component: SceneResolver },
     { path: 'scenario-import', component: ScenarioImport },
-    { path: 'scene-match', component: SceneMatch },
-    { path: 'scene-global', component: SceneGlobal },
     { path: 'game-component', component: GameComponent }
 ];
