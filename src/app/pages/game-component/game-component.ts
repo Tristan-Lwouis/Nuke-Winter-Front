@@ -15,14 +15,13 @@ import { MenuModal } from '../../components/menu-modal/menu-modal';
 import { ResponseMulti } from '../../components/response-multi/response-multi';
 import { ResponseMatch } from '../../components/response-match/response-match';
 import { ResponseCode } from '../../components/response-code/response-code';
-import { ResponseImageMatch } from '../../components/response-image-match/response-image-match';
 import { GameService } from '../../core/services/game/game-service';
 import { Game } from '../../core/models/game';
 import { environment } from '../../../environments/environment';
 import { TypeSceneEnum } from '../../core/models/enums/TypeSceneEnum';
 
 @Component({
-  imports: [MenuModal, ResponseMulti, ResponseMatch, ResponseCode, ResponseImageMatch],
+  imports: [MenuModal, ResponseMulti, ResponseMatch, ResponseCode],
   templateUrl: './game-component.html',
   styleUrl: './game-component.scss',
   encapsulation: ViewEncapsulation.None,
