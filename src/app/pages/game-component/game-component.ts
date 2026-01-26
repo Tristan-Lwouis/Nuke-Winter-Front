@@ -147,7 +147,13 @@ export class GameComponent implements OnInit {
     //si la next scene est de type resolver ou si health <=0
     //redirect to la page scène resolver
     if(response.nextScene.typeScene == 'RESOLVER'||this.game!.health<=0){
-      this.router.navigate(['/scene-resolver'])
+      //passe le gameId dans app-route
+      //TODO : utile ?
+      if(this.game==null||this.game== undefined){
+    this.router.navigate(['/scene-resolver'])
+      }else{
+        this.router.navigate(['/scene-resolver',this.game.idGame])
+      }
 
     }else{
 
