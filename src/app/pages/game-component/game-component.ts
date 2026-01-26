@@ -19,6 +19,7 @@ import { GameService } from '../../core/services/game/game-service';
 import { Game } from '../../core/models/game';
 import { environment } from '../../../environments/environment';
 import { TypeSceneEnum } from '../../core/models/enums/TypeSceneEnum';
+import { Router } from '@angular/router';
 
 @Component({
   imports: [MenuModal, ResponseMulti, ResponseMatch, ResponseCode],
@@ -35,6 +36,8 @@ export class GameComponent implements OnInit {
   showResumeModal: boolean = false;
   imageApiUrl = environment.imageApiUrl;
   typeSceneEnum = TypeSceneEnum;
+
+  private router = inject(Router);
 
   @ViewChild('descriptionContainer') descriptionContainer!: ElementRef;
 
@@ -95,6 +98,8 @@ export class GameComponent implements OnInit {
     }
   }
 
+ 
+
   //TODO: Methode de giveUp
   giveUp() {}
 
@@ -112,6 +117,16 @@ export class GameComponent implements OnInit {
     this.isQuestionResponseDisplayed = true;
   }
 
+  //compter les points de vie
+  healthCount(response: Response){
+    if (this.game!.health>0){
+      this.game!.health -= response.damage
+
+    }else{
+      //redirection vers la page de mort
+    }
+  }
+
   selectResponse(response: Response) {
     console.log('Next Script Info :', response.nextScene);
 
@@ -120,15 +135,28 @@ export class GameComponent implements OnInit {
     if (typeof response.nextScene === 'string') {
       // console.log("response.nextScene est un string")
       idScene = response.nextScene;
+    
     } else {
       // console.log("response.nextScene est un object")
       idScene = response.nextScene.idScene;
     }
 
-    console.log('Fetching scene details for ID:', idScene);
-    this.sceneService.read(idScene).subscribe((scene: any) => {
-      this.startScene(scene);
-    });
+    //actualise les points de vie du game
+    this.healthCount(response);
+
+    //si la next scene est de type resolver ou si health <=0
+    //redirect to la page scène resolver
+    if(response.nextScene.typeScene == 'RESOLVER'||this.game!.health<=0){
+      this.router.navigate(['/scene-resolver'])
+
+    }else{
+
+      //sinon débuter la next scene
+      console.log('Fetching scene details for ID:', idScene);
+      this.sceneService.read(idScene).subscribe((scene: any) => {
+        this.startScene(scene);
+      });
+    }
   }
 
   // pour ecrire la description en mode lettre par lettre

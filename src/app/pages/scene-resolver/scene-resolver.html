@@ -1,5 +1,4 @@
-<p>scene-resolver works!</p>
-@if(game?.health===0){
+@if(game!.health<=0){
               
     <main class="scene scene-resolver loose">
         <div class="layer far_distance" aria-hidden="true"></div>
@@ -21,7 +20,7 @@
     </main>
 }
 
- @if(game?.health!==0){
+ @if(game!.health>0){
 <main class="scene scene-resolver victory">
   <div class="layer far_distance" aria-hidden="true"></div>
   <div class="layer med_distance" aria-hidden="true"></div>

@@ -6,6 +6,7 @@ import { LogIn } from './pages/log-in/log-in';
 import { Register } from './pages/register/register';
 import { ScenarioImport } from './pages/scenario-import/scenario-import';
 import { GameComponent } from './pages/game-component/game-component';
+import { SceneResolver } from './pages/scene-resolver/scene-resolver';
 
 export const routes: Routes = [
     { path: '', component: StartGame },
@@ -14,5 +15,6 @@ export const routes: Routes = [
     { path: 'log-in', component: LogIn },
     { path: 'register', component: Register },
     { path: 'scenario-import', component: ScenarioImport },
-    { path: 'game-component', component: GameComponent }
+    { path: 'game-component', component: GameComponent },
+    { path: 'scene-resolver', component: SceneResolver }
 ];
