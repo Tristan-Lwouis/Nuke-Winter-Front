@@ -19,9 +19,10 @@ import { GameService } from '../../core/services/game/game-service';
 import { Game } from '../../core/models/game';
 import { environment } from '../../../environments/environment';
 import { TypeSceneEnum } from '../../core/models/enums/TypeSceneEnum';
+import { HealthBar } from '../../components/health-bar/health-bar';
 
 @Component({
-  imports: [MenuModal, ResponseMulti, ResponseMatch, ResponseCode],
+  imports: [MenuModal, ResponseMulti, ResponseMatch, ResponseCode, HealthBar],
   templateUrl: './game-component.html',
   styleUrl: './game-component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -30,6 +31,7 @@ import { TypeSceneEnum } from '../../core/models/enums/TypeSceneEnum';
 export class GameComponent implements OnInit {
   game: Game | undefined;
   // Attributs
+  healthDamage = 0;
   selectedResponse: Response | undefined;
   scene: Scene | undefined;
   showResumeModal: boolean = false;
@@ -127,6 +129,10 @@ export class GameComponent implements OnInit {
 
     console.log('Fetching scene details for ID:', idScene);
     this.sceneService.read(idScene).subscribe((scene: any) => {
+      // Mise a jour de la vie
+      this.healthDamage = this.healthDamage + response.damage;
+      console.log("Damages : " + response.damage)
+      console.log("CurrentHealth :" + this.healthDamage)
       this.startScene(scene);
     });
   }

@@ -1,0 +1,28 @@
+.health-bar-position {
+    // border: 1px solid red;
+    position: absolute;
+    top: -2%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25vw;
+}
+
+#health-bar-empty {
+    position: relative;
+    display: block;
+    width: 25vw;
+    z-index: 1;
+}
+
+#health-bar-full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    transition: clip-path 0.5s ease;
+}
