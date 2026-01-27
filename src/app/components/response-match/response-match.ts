@@ -33,7 +33,7 @@ export class ResponseMatch {
         //Réponse amenant à une scène : la bonne ou toute autre réponse qui devient "Wrong"
         let transferedResponse:String;
 
-        if(formResponse === trueResponse){
+        if(formResponse?.toLowerCase() === trueResponse.toLowerCase()){
           transferedResponse = trueResponse;
         }else{
           transferedResponse = "*";
