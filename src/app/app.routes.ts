@@ -16,6 +16,5 @@ export const routes: Routes = [
     { path: 'register', component: Register },
     { path: 'scenario-import', component: ScenarioImport },
     { path: 'game-component', component: GameComponent },
-    { path: 'scene-resolver/:gameId', component: SceneResolver },
     { path: 'scene-resolver', component: SceneResolver }
 ];

@@ -11,7 +11,7 @@ export interface Game {
     avatar:Avatar;
     scenario:Scenario;
     health : number;
-    currentScene : Scene;
+    currentScene : Scene |null;
     status:GameStatusEnum;
     // nbTry : int (calculable);
     // nbSucces : int (calculable);
