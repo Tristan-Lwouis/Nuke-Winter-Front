@@ -100,4 +100,25 @@ export class GameService {
       game
     );
   }
+  startGame(game:Game){
+    this.game = game;
+    this.router.navigate(["/game-component"]);
+  }
+
+  getGameByid(idGame:number):Game| any{
+    return this.apiService.get(RESOURCE+"/read/"+idGame);
+  }
+
+  setGame(game:Game){
+    this.game =game;
+  }
+  
+  public getGame() : Game | undefined {
+    return this.game;
+  }
+  
+
+  // getGame(): Observable<Game | undefined>{
+  //   ///return this._game$;
+  // }
 }
