@@ -58,65 +58,46 @@ export class GameComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameService.game$.subscribe((game: Game | null) => {
-      console.log("##########GAMECOPONENT#########");
-      console.log(game);
       this.game = game;
-      this.startScene()
-    })
+      this.startScene();
+    });
   }
-
 
   onMenuChoice(choice: 'resume' | 'giveUp' | 'options' | 'saveAndExit' | 'close'): void {
     this.showResumeModal = false;
     switch (choice) {
       case 'giveUp':
-        //TODO: implementer la methode giveUp
-        // Update game status failed
-        this.giveUp()
+        this.giveUp();
         break;
       case 'options':
         //TODO: implementer la methode options
         // Affichage modale options
         break;
       case 'saveAndExit':
-        //TODO: implementer la methode saveAndExit
-        // Update game (laisser le status en 'pending')
+          this.router.navigate(['/game-config']);
         break;
     }
   }
 
-  //TODO: Methode de giveUp
   giveUp() {
     this.game!.status = GameStatusEnum.FAILED;
     console.log(this.gameService.currentGame?.status);
-
     this.gameService.save().subscribe();
+    this.router.navigate(['/game-config']);
   }
 
   // nous permet de lancer une scene
   startScene() {
-    //old: this.scene = scene;
-    //this.game!.currentScene = scene;
     this.displayedDescription = '';
     this.isQuestionResponseDisplayed = false;
     this.index = 0;
-    this.isUIDisplayed = false;
+    this.isUIDisplayed = true;
 
-    // Permet d'afficher l'UI au bout de 2 secondes
-    if (this.startTimeout) {
-      clearTimeout(this.startTimeout);
-    }
-    this.startTimeout = setTimeout(() => {
-      this.isUIDisplayed = true;
-      this.typeWriter();
-      this.cdr.detectChanges();
-    }, 1000);
+    this.typeWriter();
+    this.cdr.detectChanges();
   }
 
   skipDescription() {
-    if (this.startTimeout) {
-      clearTimeout(this.startTimeout);
-    }
     this.isUIDisplayed = true;
     this.displayedDescription = this.game!.currentScene!.description;
     this.isQuestionResponseDisplayed = true;
@@ -125,7 +106,8 @@ export class GameComponent implements OnInit {
   //compter les points de vie
   healthCount(response: Response) {
     if (this.game!.health > 0) {
-      this.game!.health -= response.damage
+      this.game!.health -= response.damage;
+      this.healthDamage += response.damage;
     }
   }
 
@@ -149,19 +131,19 @@ export class GameComponent implements OnInit {
     //redirect to la page scène resolver
     if (response.nextScene.typeScene == 'RESOLVER' || this.game!.health <= 0) {
       //passe le gameId dans app-route
-      this.router.navigate(['/scene-resolver'])
+      this.router.navigate(['/scene-resolver']);
     } else {
       //sinon débuter la next scene
       console.log('Fetching scene details for ID:', idScene);
       this.sceneService.read(idScene).subscribe((scene: Scene) => {
         this.game!.currentScene = scene;
         this.game!.status = GameStatusEnum.PENDING;
-        this.gameService.save().subscribe()
+        this.gameService.save().subscribe();
         this.startScene();
       });
     }
   }
-  
+
   // ============= UI =============
   // pour ecrire la description en mode lettre par lettre
   private typeWriter() {
@@ -205,4 +187,3 @@ export class GameComponent implements OnInit {
     this.showResumeModal = true;
   }
 }
-

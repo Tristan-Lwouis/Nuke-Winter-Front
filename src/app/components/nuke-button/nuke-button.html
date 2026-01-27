@@ -1,6 +1,6 @@
 <div class="nuke-button">
     <!-- Si on ne précise pas la route, le bouton sera disabled -->
-    <a [routerLink]="route || null" [class.disabled]="!route">
+    <a [routerLink]="route || null" [class.disabled]="!route" (click)="playClickSound()">
         <img src="/assets/images/button.png" alt="bouton-style-8bit" [style.width]="width">
 
         <span class="label" [style.font-size.vw]="fontSize">{{ label }}</span>

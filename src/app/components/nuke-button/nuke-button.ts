@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AudioService } from '../../core/services/audio/audio-service';
 
 @Component({
   selector: 'app-nuke-button',
@@ -12,4 +13,10 @@ export class NukeButton {
   @Input() route: string = '';
   @Input() width: string = '';
   @Input() fontSize: number = 1.5;
+
+  constructor(private audioService: AudioService) {}
+
+  playClickSound() {
+    this.audioService.play('/assets/sounds/click.mp3');
+  }
 }
