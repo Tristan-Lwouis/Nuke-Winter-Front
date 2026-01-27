@@ -56,3 +56,18 @@ nav {
     gap: 1vh;
 }
 
+#current-user {
+
+  position: absolute;
+  top: 0%;
+  right: 0.5%;
+  
+  p {
+    font-size: 1vw;
+    font-family: Pixel;
+    color: var(--primary-color);
+  }
+  
+}
+
+

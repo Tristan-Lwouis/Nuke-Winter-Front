@@ -45,6 +45,9 @@ export class GameConfig implements OnInit {
 
   // Au chargement du composant je récupère les listes d'avatars et de scénarios
   ngOnInit(): void {
+    // Lancer la musique de fond
+    this.audioService.playBackground(this.audioService.mainMusicPath);
+
     const account = this.storageService.read('account');
     if (account) {
       this.connectedAccount = JSON.parse(account);
@@ -126,24 +129,24 @@ export class GameConfig implements OnInit {
         break;
       case 'restart':
         console.log('Recommencer la partie, redirection vers la première scène.');
-        console.log('FirstSceneId :',this.gameService.currentGame?.scenario.firstScene.idScene);
+        console.log('FirstSceneId :', this.gameService.currentGame?.scenario.firstScene.idScene);
         // TODO: Rediriger vers la première scène
-        // mettre le status de la game à fail pour la sortir des games trouvé 
-      this.gameService.currentGame!.status = GameStatusEnum.FAILED;
-      console.log("###GAME-TROUVE###");
-      console.log(this.gameService.currentGame!.status);
-      
-      this.gameService.save().subscribe(()=>{
-        this.gameService
-          .readOrSave(this.currentAvatar, this.selectedScenario!, this.connectedAccount!)
-          .subscribe({
-            next: (game: Game) => {
-              this.gameService.updateGame(game);
-              this.gameService.startGame()
-            },
-          });
-      });
-                break;
+        // mettre le status de la game à fail pour la sortir des games trouvé
+        this.gameService.currentGame!.status = GameStatusEnum.FAILED;
+        // console.log('###GAME-TROUVE###');
+        // console.log(this.gameService.currentGame!.status);
+
+        this.gameService.save().subscribe(() => {
+          this.gameService
+            .readOrSave(this.currentAvatar, this.selectedScenario!, this.connectedAccount!)
+            .subscribe({
+              next: (game: Game) => {
+                this.gameService.updateGame(game);
+                this.gameService.startGame();
+              },
+            });
+        });
+        break;
       case 'close':
         break;
     }
@@ -173,8 +176,8 @@ export class GameConfig implements OnInit {
         this.gameService.updateGame(response);
         // console.log("🔥response.status = " + response.status)
         console.log('#######CONFIG-ROS########');
-        
-        if (response.status.toString() == "NEW") {
+
+        if (response.status.toString() == 'NEW') {
           console.log('Nouvelle partie, redirection vers la première scène du scénario.', response);
           console.log('FirstSceneId : ' + response.scenario.firstScene.idScene);
           //TODO : Rediriger vers la première scène du scénario
