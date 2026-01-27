@@ -36,7 +36,7 @@ export class ResponseMatch {
         if(formResponse === trueResponse){
           transferedResponse = trueResponse;
         }else{
-          transferedResponse = "Wrong";
+          transferedResponse = "*";
         }
         
       
