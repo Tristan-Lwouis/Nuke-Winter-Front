@@ -1,3 +1,4 @@
+<!--quand on enlève un if ça s'affiche car pour l'instant il nous manque l'observable du game-->
 @if(game!.health<=0){
               
     <main class="scene scene-resolver loose">
@@ -20,7 +21,8 @@
     </main>
 }
 
- @if(game!.health>0){
+
+@if(game!.health>0){
 <main class="scene scene-resolver victory">
   <div class="layer far_distance" aria-hidden="true"></div>
   <div class="layer med_distance" aria-hidden="true"></div>
