@@ -57,28 +57,14 @@ export class GameComponent implements OnInit {
   cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
-    this.gameService.game$.subscribe((game:Game | null)=>{
+    this.gameService.game$.subscribe((game: Game | null) => {
       console.log("##########GAMECOPONENT#########");
       console.log(game);
       this.game = game;
       this.startScene()
     })
-    
-
-    // const newGame = this.gameService.getGame();
-    // if (newGame) {
-    //   this.startScene(newGame.currentScene);
-    //   this.game = newGame;
-    // }
   }
 
-  // toggleUI() {
-  //   this.isUIDisplayed = !this.isUIDisplayed;
-  // }
-
-  // toggleMenu() {
-  //   this.showResumeModal = true;
-  // }
 
   onMenuChoice(choice: 'resume' | 'giveUp' | 'options' | 'saveAndExit' | 'close'): void {
     this.showResumeModal = false;
@@ -103,7 +89,7 @@ export class GameComponent implements OnInit {
   giveUp() {
     this.game!.status = GameStatusEnum.FAILED;
     console.log(this.gameService.currentGame?.status);
-    
+
     this.gameService.save().subscribe();
   }
 
@@ -136,9 +122,9 @@ export class GameComponent implements OnInit {
     this.isQuestionResponseDisplayed = true;
   }
 
-    //compter les points de vie
-  healthCount(response: Response){
-    if (this.game!.health>0){
+  //compter les points de vie
+  healthCount(response: Response) {
+    if (this.game!.health > 0) {
       this.game!.health -= response.damage
     }
   }
@@ -161,19 +147,21 @@ export class GameComponent implements OnInit {
 
     //si la next scene est de type resolver ou si health <=0
     //redirect to la page scène resolver
-    if(response.nextScene.typeScene == 'RESOLVER'||this.game!.health<=0){
+    if (response.nextScene.typeScene == 'RESOLVER' || this.game!.health <= 0) {
       //passe le gameId dans app-route
-        this.router.navigate(['/scene-resolver'])
-      } else{
+      this.router.navigate(['/scene-resolver'])
+    } else {
       //sinon débuter la next scene
       console.log('Fetching scene details for ID:', idScene);
       this.sceneService.read(idScene).subscribe((scene: Scene) => {
-      this.game!.currentScene = scene;
-      this.game!.status = GameStatusEnum.PENDING;
-      this.gameService.save().subscribe()        
-      this.startScene();
-    });
-}
+        this.game!.currentScene = scene;
+        this.game!.status = GameStatusEnum.PENDING;
+        this.gameService.save().subscribe()
+        this.startScene();
+      });
+    }
+  }
+  
   // ============= UI =============
   // pour ecrire la description en mode lettre par lettre
   private typeWriter() {
@@ -197,10 +185,11 @@ export class GameComponent implements OnInit {
       if (!this.isQuestionResponseDisplayed) {
         setTimeout(() => this.typeWriter(), this.speed);
       } else {
-      //execute cette methode après avoir écris tous les caracteres pour dire d'affciher la question et les reposnes
-      this.onTypingFinished();
+        //execute cette methode après avoir écris tous les caracteres pour dire d'affciher la question et les reposnes
+        this.onTypingFinished();
+      }
     }
-  }}  
+  }
 
   // quand l''écriture de la déscription est terminé on affiche la question et les reponses
   onTypingFinished() {
@@ -216,3 +205,4 @@ export class GameComponent implements OnInit {
     this.showResumeModal = true;
   }
 }
+

@@ -17,8 +17,8 @@
             <small class="error">
                 @if(authForm.controls.pseudo.touched && authForm.controls.pseudo.errors?.['required']){
                 Le pseudo est obligatoire
-                } @else if(authForm.controls.pseudo.errors?.['notFound']){
-                Le compte n'existe pas
+                } @else if(authForm.controls.pseudo.errors?.['found']){
+                Le compte existe deja
                 } @else {
                 <span style="opacity: 0">A</span>
                 }

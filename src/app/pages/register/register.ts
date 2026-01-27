@@ -47,7 +47,7 @@ export class Register {
            this.router.navigate(['/log-in']);
         } else {
           // ajouter une erreur dans le authForm , pour l'invalider
-          this.authForm.controls.pseudo.setErrors({ notFound: true });
+          this.authForm.controls.pseudo.setErrors({ found: true });
         }
         this.loading = false;
       },
