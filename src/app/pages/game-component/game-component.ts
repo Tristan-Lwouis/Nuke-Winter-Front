@@ -157,14 +157,18 @@ export class GameComponent implements OnInit {
     //si la next scene est de type resolver ou si health <=0
     //redirect to la page scène resolver
     if(response.nextScene.typeScene == 'RESOLVER'||this.game!.health<=0){
-      //passe le gameId dans app-route
-      //TODO : utile ?
-      if(this.game==null||this.game== undefined){
-    this.router.navigate(['/scene-resolver'])
-      }else{
-        this.router.navigate(['/scene-resolver',this.game.idGame])
-      }
+        this.game!.status = GameStatusEnum.FAILED;
+        this.gameService.save().subscribe(()=>{
+        
+      })
 
+      //redirection vers la page scene-resolver (mort ou succès)
+      if(this.game==null||this.game== undefined){
+        this.router.navigate(['/'])
+        }else{
+          this.router.navigate(['/scene-resolver'])
+        }
+  
     }else{
 
       //sinon débuter la next scene
