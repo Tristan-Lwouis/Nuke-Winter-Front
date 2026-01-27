@@ -17,6 +17,6 @@ export class NukeButton {
   constructor(private audioService: AudioService) {}
 
   playClickSound() {
-    this.audioService.play('/assets/sounds/click.mp3');
+    this.audioService.play(this.audioService.clickSoundPath);
   }
 }

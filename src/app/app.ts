@@ -1,12 +1,19 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { AudioService } from './core/services/audio/audio-service';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('Nuke-Winter');
+  private audioService = inject(AudioService);
+
+  ngOnInit() {
+    this.audioService.preload(this.audioService.mainMusicPath);
+    this.audioService.preload(this.audioService.clickSoundPath);
+  }
 }

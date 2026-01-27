@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { AudioService } from '../audio/audio-service';
 import { ApiService } from '../api/api-service';
 import { Account } from '../../models/account';
 import { Scenario } from '../../models/scenario';
@@ -19,34 +20,34 @@ export class GameService {
   private apiService = inject(ApiService);
   private sceneservice = inject(SceneService);
   private router = inject(Router);
+  private audioService = inject(AudioService);
 
-
-  private gameSubject = new BehaviorSubject<Game | null>(null)
+  private gameSubject = new BehaviorSubject<Game | null>(null);
   game$ = this.gameSubject.asObservable();
 
-  get currentGame() : Game | null {
+  get currentGame(): Game | null {
     return this.gameSubject.value;
   }
 
-  updateGame(game:Game){
-    console.log("GAMESERVICE-UPDATE#####");
+  updateGame(game: Game) {
+    console.log('GAMESERVICE-UPDATE#####');
     console.log(game);
     this.gameSubject.next(game);
   }
 
-  startGame(){
-    this.router.navigate(["/game-component"]);
+  startGame() {
+    this.audioService.stopBackground();
+    this.router.navigate(['/game-component']);
   }
 
   /**
    * Création d'un Json de type Game et envoi au backend
-   * @param numberIdAvatar 
-   * @param numberIdScenario 
-   * @param pseudo 
-   * @returns 
+   * @param numberIdAvatar
+   * @param numberIdScenario
+   * @param pseudo
+   * @returns
    */
   readGame(avatar: Avatar, scenario: Scenario, account: Account): Game | any {
-
     // (DTO)
     const JsonGame: any = {
       avatar: avatar,
@@ -54,7 +55,7 @@ export class GameService {
       account: account,
     };
 
-    return this.apiService.post(RESOURCE+"/read", JsonGame);
+    return this.apiService.post(RESOURCE + '/read', JsonGame);
   }
 
   // route pour récupérr un game ou en créer une si elle n'existe pas
@@ -75,33 +76,29 @@ export class GameService {
 
   // route pour sauvegarder un game
   save(): Game | any {
-    
-    const game =  {
-        "account": {
-            "idAccount": this.currentGame?.account.idAccount
-        },
-        "avatar": {
-            "idAvatar":  this.currentGame?.avatar.idAvatar
-        },
-        "currentScene": {
-            "idScene":  this.currentGame?.currentScene?.idScene
-            },
-        "health": this.currentGame?.health,
-        "idGame": this.currentGame?.idGame,
-        "scenario": {"idScenario": this.currentGame?.scenario.idScenario},
-        "status": this.currentGame?.status
-      }
+    const game = {
+      account: {
+        idAccount: this.currentGame?.account.idAccount,
+      },
+      avatar: {
+        idAvatar: this.currentGame?.avatar.idAvatar,
+      },
+      currentScene: {
+        idScene: this.currentGame?.currentScene?.idScene,
+      },
+      health: this.currentGame?.health,
+      idGame: this.currentGame?.idGame,
+      scenario: { idScenario: this.currentGame?.scenario.idScenario },
+      status: this.currentGame?.status,
+    };
 
-      
-      console.log("###SAVE-EN-COURS###");
-      console.log(game.idGame);
-      
-    return this.apiService.post(RESOURCE + '/save', 
-      game
-    );
+    console.log('###SAVE-EN-COURS###');
+    console.log(game.idGame);
+
+    return this.apiService.post(RESOURCE + '/save', game);
   }
 
-  getGameByid(idGame:number):Game| any{
-    return this.apiService.get(RESOURCE+"/read/"+idGame);
+  getGameByid(idGame: number): Game | any {
+    return this.apiService.get(RESOURCE + '/read/' + idGame);
   }
 }
