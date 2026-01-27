@@ -7,6 +7,7 @@ import { Register } from './pages/register/register';
 import { ScenarioImport } from './pages/scenario-import/scenario-import';
 import { GameComponent } from './pages/game-component/game-component';
 import { SceneResolver } from './pages/scene-resolver/scene-resolver';
+import { Settings } from './pages/settings/settings';
 
 export const routes: Routes = [
   { path: '', component: StartGame },
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'scenario-import', component: ScenarioImport },
   { path: 'game-component', component: GameComponent },
   { path: 'scene-resolver', component: SceneResolver },
+  { path: 'settings', component: Settings },
   {path: 'bug-report',
     component: StartGame,
     canActivate: [

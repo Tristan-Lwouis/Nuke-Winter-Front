@@ -18,6 +18,7 @@ import { Scenario } from '../../core/models/scenario';
 import { Game } from '../../core/models/game';
 import { GameStatusEnum } from '../../core/models/enums/gameStatusEnum';
 import { GameService } from '../../core/services/game/game-service';
+import { AudioService } from '../../core/services/audio/audio-service';
 
 @Component({
   selector: 'app-game-config',
@@ -40,6 +41,7 @@ export class GameConfig implements OnInit {
   scenarios: Scenario[] = [];
 
   connectedAccount: Account | undefined;
+  private audioService = inject(AudioService);
 
   // Au chargement du composant je récupère les listes d'avatars et de scénarios
   ngOnInit(): void {
@@ -79,6 +81,7 @@ export class GameConfig implements OnInit {
    */
   nextAvatar(direction: number) {
     const len = this.avatars.length;
+    this.audioService.play(this.audioService.clickSoundPath);
 
     // Si liste recu est vide.
     if (len === 0) {
@@ -97,6 +100,7 @@ export class GameConfig implements OnInit {
    * Elle permet de déterminer quel scenario est selectionné pour pouvoir afficher sa description et son image
    */
   scenarioSelect(scenario: Scenario) {
+    this.audioService.play(this.audioService.clickSoundPath);
     if (this.selectedScenario === scenario) {
       this.selectedScenario = undefined;
     } else {

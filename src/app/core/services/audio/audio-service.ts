@@ -8,12 +8,17 @@ export class AudioService {
   cache = new Map<string, HTMLAudioElement>();
   backGroundMusic: HTMLAudioElement | undefined;
 
-  clickSoundPath = '/assets/sounds/click.mp3'
-  beepSoundPath = '/assets/sounds/beep.mp3'
-  openPath = '/assets/sounds/open.mp3'
-  errorPath = '/assets/sounds/error.mp3'
-  mainMusicPath = '/assets/musics/post-apocalypse-music-piano-238596.mp3'
+  // Master volumes (0.0 to 1.0)
+  masterMusicVolume: number = 0.5;
+  masterSoundVolume: number = 0.5;
 
+  private currentBackgroundBaseVolume: number = 0.2;
+
+  clickSoundPath = '/assets/sounds/click.mp3';
+  beepSoundPath = '/assets/sounds/beep.mp3';
+  openPath = '/assets/sounds/open.mp3';
+  errorPath = '/assets/sounds/error.mp3';
+  mainMusicPath = '/assets/musics/post-apocalypse-music-piano-238596.mp3';
 
   // permet de precharger des son
   preload(src: string) {
@@ -21,7 +26,7 @@ export class AudioService {
     this.cache.set(src, audio);
   }
 
-  play(src: string, loop: boolean = false) {
+  play(src: string, loop: boolean = false, volume: number = 0.5) {
     let audio = this.cache.get(src);
 
     if (!audio) {
@@ -30,6 +35,7 @@ export class AudioService {
     }
 
     audio.loop = loop;
+    audio.volume = Math.min(Math.max(volume * this.masterSoundVolume, 0), 1);
     audio.play();
     console.log(this.cache);
   }
@@ -68,17 +74,46 @@ export class AudioService {
   }
 
   playBackground(src: string, volume: number = 0.2) {
-    if (this.backGroundMusic && !this.backGroundMusic.paused) return;
+    if (
+      this.backGroundMusic &&
+      !this.backGroundMusic.paused &&
+      this.backGroundMusic.src.includes(src)
+    )
+      return;
 
+    // Stop previous if exists
+    if (this.backGroundMusic) {
+      this.backGroundMusic.pause();
+    }
+
+    this.currentBackgroundBaseVolume = volume;
     this.backGroundMusic = new Audio(src);
     this.backGroundMusic.loop = true;
-    this.backGroundMusic.volume = volume;
+    this.updateBackgroundVolume();
     this.backGroundMusic.play();
   }
 
   stopBackground() {
     if (this.backGroundMusic) {
       this.backGroundMusic.pause();
+    }
+  }
+
+  setMusicVolume(volume: number) {
+    this.masterMusicVolume = Math.min(Math.max(volume, 0), 1);
+    this.updateBackgroundVolume();
+  }
+
+  setSoundVolume(volume: number) {
+    this.masterSoundVolume = Math.min(Math.max(volume, 0), 1);
+  }
+
+  private updateBackgroundVolume() {
+    if (this.backGroundMusic) {
+      this.backGroundMusic.volume = Math.min(
+        Math.max(this.currentBackgroundBaseVolume * this.masterMusicVolume, 0),
+        1,
+      );
     }
   }
 }
