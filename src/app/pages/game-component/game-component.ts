@@ -169,9 +169,12 @@ export class GameComponent implements OnInit {
 
       //sinon débuter la next scene
       console.log('Fetching scene details for ID:', idScene);
-      this.sceneService.read(idScene).subscribe((scene: any) => {
-        this.startScene(scene);
-      });
+    this.sceneService.read(idScene).subscribe((scene: Scene) => {
+      this.game!.currentScene = scene;
+      this.game!.status = GameStatusEnum.PENDING;
+      this.gameService.save().subscribe()        
+      this.startScene();
+    });
     }
   }
 

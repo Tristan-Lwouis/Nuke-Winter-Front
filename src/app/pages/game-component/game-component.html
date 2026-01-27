@@ -32,7 +32,7 @@
       }
 
       @case (typeSceneEnum.MATCH){
-        <app-response-match [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-match>
+        <app-response-match [scene]="game!.currentScene!" (selectedResponse)="selectResponse($event)"></app-response-match>
       }
       
 
