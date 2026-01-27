@@ -57,6 +57,9 @@ export class GameService {
     this.router.navigate(["/game-component"]);
   }
 
+  getGameByid(idGame:number):Game| any{
+    return this.apiService.get(RESOURCE+"/read/"+idGame);
+  }
 
   setGame(game:Game){
     this.game =game;

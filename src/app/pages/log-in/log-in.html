@@ -14,16 +14,15 @@
             <h2 class="title-font">CONNEXION</h2>
             <input type="text" placeholder="Username" formControlName="pseudo" (keydown.enter)="submitLogin()">
             <!-- on fonction des validation qu'on a décidé de mettre en place sur notre champ on affiche des erreurs -->
-            @if(authForm.controls.pseudo.touched && authForm.controls.pseudo.invalid){
-            @if(authForm.controls.pseudo.errors?.['required']){
-            <small class="error">Le pseudo est obligatoire</small>
-
-            }
-            @if(authForm.controls.pseudo.errors?.['notFound']){
-            <small class="error">Le compte n'existe pas</small>
-
-            }
-            }
+            <small class="error">
+                @if(authForm.controls.pseudo.touched && authForm.controls.pseudo.errors?.['required']){
+                Le pseudo est obligatoire
+                } @else if(authForm.controls.pseudo.errors?.['notFound']){
+                Le compte n'existe pas
+                } @else {
+                <span style="opacity: 0">A</span>
+                }
+            </small>
             <!-- <input type="password" placeholder="Password" formControlName="password"> -->
         </div>
 

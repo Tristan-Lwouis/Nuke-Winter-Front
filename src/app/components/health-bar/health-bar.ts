@@ -13,6 +13,7 @@ export class HealthBar {
   get clipStyle() {
     return {
       'clip-path': `inset(0 ${this.damage}% 0 0)`,
+      filter: `hue-rotate(-${this.damage * 1.2}deg)`,
     };
   }
 }

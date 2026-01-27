@@ -6,9 +6,10 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { pseudoInterceptor } from './core/middleware/pseudo-interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [// pour injecter les interceptors dans toutes les requetes
+  providers: [
+    // pour injecter les interceptors dans toutes les requetes
     provideHttpClient(withInterceptors([pseudoInterceptor])),
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes)
-  ]
+    provideRouter(routes),
+  ],
 };

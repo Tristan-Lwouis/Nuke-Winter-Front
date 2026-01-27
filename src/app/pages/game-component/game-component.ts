@@ -20,6 +20,7 @@ import { Game } from '../../core/models/game';
 import { environment } from '../../../environments/environment';
 import { TypeSceneEnum } from '../../core/models/enums/TypeSceneEnum';
 import { HealthBar } from '../../components/health-bar/health-bar';
+import { Router } from '@angular/router';
 
 @Component({
   imports: [MenuModal, ResponseMulti, ResponseMatch, ResponseCode, HealthBar],
@@ -32,6 +33,7 @@ export class GameComponent implements OnInit {
   game: Game | undefined;
   // Attributs
   healthDamage = 0;
+  private startTimeout: any;
   selectedResponse: Response | undefined;
   scene: Scene | undefined;
   showResumeModal: boolean = false;
@@ -42,7 +44,7 @@ export class GameComponent implements OnInit {
 
   // Gestion de l'écriture de la description
   displayedDescription = '';
-  speed = 30;
+  speed = 20;
   index = 0;
 
   isQuestionResponseDisplayed = false;
@@ -53,30 +55,11 @@ export class GameComponent implements OnInit {
   cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
-    //TODO: reflechir à la maniere dont on récupère la premiere scene
-    // this.sceneService.read('s1s1').subscribe({
-    //   next: (scene: Scene) => {
-    //     if (scene) {
-    //       this.startScene(scene);
-    //     }
-    //   },
-    //   error: (err) => console.error(err),
-    // });
-    //
-
     const newGame = this.gameService.getGame();
     if (newGame) {
       this.startScene(newGame.currentScene);
       this.game = newGame;
     }
-  }
-
-  toggleUI() {
-    this.isUIDisplayed = !this.isUIDisplayed;
-  }
-
-  toggleMenu() {
-    this.showResumeModal = true;
   }
 
   onMenuChoice(choice: 'resume' | 'giveUp' | 'options' | 'saveAndExit' | 'close'): void {
@@ -106,12 +89,27 @@ export class GameComponent implements OnInit {
     this.displayedDescription = '';
     this.isQuestionResponseDisplayed = false;
     this.index = 0;
-    this.typeWriter();
+    this.isUIDisplayed = false;
+
+    // Permet d'afficher l'UI au bout de 2 secondes
+    if (this.startTimeout) {
+      clearTimeout(this.startTimeout);
+    }
+    this.startTimeout = setTimeout(() => {
+      this.isUIDisplayed = true;
+      this.typeWriter();
+      this.cdr.detectChanges();
+    }, 1000);
   }
 
   skipDescription() {
+    if (this.startTimeout) {
+      clearTimeout(this.startTimeout);
+    }
+    this.isUIDisplayed = true;
     this.displayedDescription = this.scene!.description;
     this.isQuestionResponseDisplayed = true;
+    this.index = this.scene!.description.length;
   }
 
   selectResponse(response: Response) {
@@ -130,13 +128,13 @@ export class GameComponent implements OnInit {
     console.log('Fetching scene details for ID:', idScene);
     this.sceneService.read(idScene).subscribe((scene: any) => {
       // Mise a jour de la vie
+
       this.healthDamage = this.healthDamage + response.damage;
-      console.log("Damages : " + response.damage)
-      console.log("CurrentHealth :" + this.healthDamage)
       this.startScene(scene);
     });
   }
 
+  // ============= UI =============
   // pour ecrire la description en mode lettre par lettre
   private typeWriter() {
     if (!this.scene) return;
@@ -169,5 +167,13 @@ export class GameComponent implements OnInit {
   onTypingFinished() {
     this.isQuestionResponseDisplayed = true;
     this.cdr.markForCheck();
+  }
+
+  toggleUI() {
+    this.isUIDisplayed = !this.isUIDisplayed;
+  }
+
+  toggleMenu() {
+    this.showResumeModal = true;
   }
 }

@@ -22,6 +22,7 @@
       {{ displayedDescription }}
     </div>
   </div>
+
   @if (isQuestionResponseDisplayed) {
   <div class="question-responses">
     @if (scene?.question) {
@@ -30,13 +31,18 @@
     </div>
     }
     @if (scene?.responses) { <!-- ? Pourquoi .lenght ? -->
-    <div class="card-reponses" style="width: 100%">
+    <div class="card card-reponses" style="width: 100%">
       @switch (scene?.typeScene) {
 
       <!-- * Va couvrir le cas multichoice, description et binaires -->
       @case (typeSceneEnum.MULTICHOICE){
       <app-response-multi [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-multi>
       }
+
+      @case (typeSceneEnum.MATCH){
+        <app-response-match [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-match>
+      }
+      
 
       <!-- @case (typeSceneEnum.MULTICHOICE){ -->
       <!-- <app-response-match style="width: 100%" [scene]="scene" -->
@@ -61,5 +67,5 @@
     }
   </div>
   }
-  }
+}
 </main>

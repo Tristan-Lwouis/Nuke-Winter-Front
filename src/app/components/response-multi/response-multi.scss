@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  background: hsl(from var(--color-secondary) h s l / 0.8);
-  border: solid var(--color-primary) var(--border-width);
+  // background: hsl(from var(--color-secondary) h s l / 0.8);
+  // border: solid var(--color-primary) var(--border-width);
   border-radius: var(--radius);
   padding: 20px;
   box-sizing: border-box;
@@ -11,7 +11,7 @@
 
 .response{
   p{
-    margin: 0;
+    margin: 3px;
   }
 }
 
