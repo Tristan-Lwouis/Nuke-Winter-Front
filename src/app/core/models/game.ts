@@ -6,7 +6,7 @@ import { Scene } from "./scene";
 
 
 export interface Game {
-    id: number;
+    idGame: number;
     account:Account;
     avatar:Avatar;
     scenario:Scenario;
