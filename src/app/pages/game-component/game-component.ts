@@ -19,6 +19,7 @@ import { GameService } from '../../core/services/game/game-service';
 import { Game } from '../../core/models/game';
 import { environment } from '../../../environments/environment';
 import { TypeSceneEnum } from '../../core/models/enums/TypeSceneEnum';
+import { GameStatusEnum } from '../../core/models/enums/gameStatusEnum';
 
 @Component({
   imports: [MenuModal, ResponseMulti, ResponseMatch, ResponseCode],
@@ -28,10 +29,11 @@ import { TypeSceneEnum } from '../../core/models/enums/TypeSceneEnum';
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class GameComponent implements OnInit {
-  game: Game | undefined;
+  game!: Game | null;
   // Attributs
-  selectedResponse: Response | undefined;
-  scene: Scene | undefined;
+  //old
+  //selectedResponse: Response | undefined;
+  //scene: Scene | undefined;
   showResumeModal: boolean = false;
   imageApiUrl = environment.imageApiUrl;
   typeSceneEnum = TypeSceneEnum;
@@ -51,26 +53,25 @@ export class GameComponent implements OnInit {
   cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
-    //TODO: reflechir à la maniere dont on récupère la premiere scene
-    // this.sceneService.read('s1s1').subscribe({
-    //   next: (scene: Scene) => {
-    //     if (scene) {
-    //       this.startScene(scene);
-    //     }
-    //   },
-    //   error: (err) => console.error(err),
-    // });
-    //
+    this.gameService.game$.subscribe((game:Game | null)=>{
+      console.log("##########GAMECOPONENT#########");
+      console.log(game);
+      this.game = game;
+      this.startScene()
+    })
+    
 
-    const newGame = this.gameService.getGame();
-    if (newGame) {
-      this.startScene(newGame.currentScene);
-      this.game = newGame;
-    }
+    // const newGame = this.gameService.getGame();
+    // if (newGame) {
+    //   this.startScene(newGame.currentScene);
+    //   this.game = newGame;
+    // }
   }
 
+  // gestion de l'inetrface
   toggleUI() {
     this.isUIDisplayed = !this.isUIDisplayed;
+    console.log(this.gameService.currentGame?.status);
   }
 
   toggleMenu() {
@@ -83,6 +84,7 @@ export class GameComponent implements OnInit {
       case 'giveUp':
         //TODO: implementer la methode giveUp
         // Update game status failed
+        this.giveUp()
         break;
       case 'options':
         //TODO: implementer la methode options
@@ -96,11 +98,17 @@ export class GameComponent implements OnInit {
   }
 
   //TODO: Methode de giveUp
-  giveUp() {}
+  giveUp() {
+    this.game!.status = GameStatusEnum.FAILED;
+    console.log(this.gameService.currentGame?.status);
+    
+    this.gameService.save().subscribe();
+  }
 
   // nous permet de lancer une scene
-  startScene(scene: Scene) {
-    this.scene = scene;
+  startScene() {
+    //old: this.scene = scene;
+    //this.game!.currentScene = scene;
     this.displayedDescription = '';
     this.isQuestionResponseDisplayed = false;
     this.index = 0;
@@ -108,7 +116,9 @@ export class GameComponent implements OnInit {
   }
 
   skipDescription() {
-    this.displayedDescription = this.scene!.description;
+    //old: 
+    //this.displayedDescription = this.scene!.description;
+    this.displayedDescription = this.game!.currentScene!.description;
     this.isQuestionResponseDisplayed = true;
   }
 
@@ -126,16 +136,19 @@ export class GameComponent implements OnInit {
     }
 
     console.log('Fetching scene details for ID:', idScene);
-    this.sceneService.read(idScene).subscribe((scene: any) => {
-      this.startScene(scene);
+    this.sceneService.read(idScene).subscribe((scene: Scene) => {
+      this.game!.currentScene = scene;
+      this.game!.status = GameStatusEnum.PENDING;
+      this.gameService.save().subscribe()        
+      this.startScene();
     });
   }
 
   // pour ecrire la description en mode lettre par lettre
   private typeWriter() {
-    if (!this.scene) return;
-    const description = this.scene.description;
-    console.log('Description :', description);
+    if (!this.game?.currentScene) return;
+    const description = this.game?.currentScene.description;
+    //console.log('Description :', description);
     // const description = this.scene.description || '';
 
     if (this.index < description.length) {

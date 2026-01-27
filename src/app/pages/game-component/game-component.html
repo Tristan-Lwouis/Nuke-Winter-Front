@@ -1,4 +1,4 @@
-<main class="scene scene-multi text-md" [style.background-image]="'url(' + imageApiUrl + scene?.background + ')'">
+<main class="scene scene-multi text-md" [style.background-image]="'url(' + imageApiUrl + game?.currentScene?.background + ')'">
   @if (showResumeModal) {
   <app-menu-modal (choice)="onMenuChoice($event)"></app-menu-modal>
   }
@@ -17,18 +17,18 @@
   </div>
   @if (isQuestionResponseDisplayed) {
   <div class="question-responses">
-    @if (scene?.question) {
+    @if (game?.currentScene?.question) {
     <div class="card card-question">
-      <div class="question">{{ scene?.question }}</div>
+      <div class="question">{{ game?.currentScene?.question }}</div>
     </div>
     }
-    @if (scene?.responses) { <!-- ? Pourquoi .lenght ? -->
+    @if (game?.currentScene?.responses) { <!-- ? Pourquoi .lenght ? -->
     <div class="card-reponses" style="width: 100%">
-      @switch (scene?.typeScene) {
+      @switch (game?.currentScene?.typeScene) {
 
       <!-- * Va couvrir le cas multichoice, description et binaires -->
       @case (typeSceneEnum.MULTICHOICE){
-      <app-response-multi [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-multi>
+      <app-response-multi [scene]="game?.currentScene!" (selectedResponse)="selectResponse($event)"></app-response-multi>
       }
 
       <!-- @case (typeSceneEnum.MULTICHOICE){ -->
@@ -46,7 +46,7 @@
       <!-- } -->
 
       @default {
-      <p style="color: red;">Type de scène inconnu : {{scene?.typeScene}}</p>
+      <p style="color: red;">Type de scène inconnu : {{game?.currentScene}}</p>
       }
 
       }

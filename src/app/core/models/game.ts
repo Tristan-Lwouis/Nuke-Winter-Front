@@ -6,12 +6,12 @@ import { Scene } from "./scene";
 
 
 export interface Game {
-    id: number;
+    idGame: number;
     account:Account;
     avatar:Avatar;
     scenario:Scenario;
     health : number;
-    currentScene : Scene;
+    currentScene : Scene |null;
     status:GameStatusEnum;
     // nbTry : int (calculable);
     // nbSucces : int (calculable);
