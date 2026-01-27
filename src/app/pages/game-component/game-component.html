@@ -42,7 +42,10 @@
       @case (typeSceneEnum.MATCH){
         <app-response-match [scene]="game!.currentScene!" (selectedResponse)="selectResponse($event)"></app-response-match>
       }
-      
+
+      @case (typeSceneEnum.CODE){
+        <app-response-code [scene]="game!.currentScene!" (selectedResponse)="selectResponse($event)"></app-response-code>
+      }
 
       <!-- @case (typeSceneEnum.MULTICHOICE){ -->
       <!-- <app-response-match style="width: 100%" [scene]="scene" -->
@@ -59,7 +62,7 @@
       <!-- } -->
 
       @default {
-      <p style="color: red;">Type de scène inconnu : {{game?.currentScene}}</p>
+      <p style="color: red;">Type de scène inconnu : {{game?.currentScene?.typeScene?.toString()}}</p>
       }
 
       }

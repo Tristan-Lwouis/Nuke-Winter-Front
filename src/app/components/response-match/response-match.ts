@@ -38,18 +38,13 @@ export class ResponseMatch {
         }else{
           transferedResponse = "*";
         }
-        
       
         for(let responseChoice of this.scene!.responses){
           if(transferedResponse == responseChoice.name){
             this.selectedResponse.emit(responseChoice);
           }
         }
-
-        
     }
-
-
   }
 
  

@@ -9,7 +9,11 @@ export class AudioService {
   backGroundMusic: HTMLAudioElement | undefined;
 
   clickSoundPath = '/assets/sounds/click.mp3'
+  beepSoundPath = '/assets/sounds/beep.mp3'
+  openPath = '/assets/sounds/open.mp3'
+  errorPath = '/assets/sounds/error.mp3'
   mainMusicPath = '/assets/musics/post-apocalypse-music-piano-238596.mp3'
+
 
   // permet de precharger des son
   preload(src: string) {

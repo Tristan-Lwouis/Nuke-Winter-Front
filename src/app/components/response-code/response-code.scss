@@ -1,0 +1,105 @@
+@import '../../../styles.scss';
+
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    margin: 0 auto;
+}
+
+.code-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1vw;
+    padding: 2vw;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 0.2vw solid var(--element-border-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow) var(--secondary-color);
+    width: 60%;
+}
+
+.screen {
+    background-color: #1a1a1a;
+    border: 2px inset var(--element-border-color);
+    padding: 1%;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    border-radius: 4px;
+
+    .code-text {
+        font-family: 'Pixel', sans-serif;
+        font-size: 2vw;
+        color: var(--primary-color);
+        letter-spacing: 1vw;
+        text-shadow: 0 0 5px var(--primary-color);
+    }
+}
+
+.error-message {
+    color: #ff4444;
+    font-family: 'Pixel';
+    font-size: 0.8vw;
+    margin: 0;
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3%;
+    width: 100%;
+}
+
+.key {
+    background-color: var(--element-primary-color);
+    border: 3px solid var(--element-border-color);
+    color: var(--element-border-color);
+    font-family: 'Pixel', sans-serif;
+    font-size: 1vw;
+    padding: 15% 0;
+    // cursor: pointer;
+    box-shadow: 3px 3px 0 var(--element-border-color);
+    transition: transform 0.1s, box-shadow 0.1s;
+    border-radius: 4px;
+
+    &:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 5px 5px 0 var(--element-border-color);
+        filter: brightness(1.1);
+        cursor: var(--cursor-hand);
+    }
+
+    &:active {
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0 var(--element-border-color);
+    }
+}
+
+.action {
+    font-size: 1.5rem;
+    font-weight: bold;
+
+    &.clear {
+        background-color: var(--secondary-color);
+        color: var(--font-primary-color);
+    }
+
+    &.validate {
+        background-color: #558b2f;
+        /* Vert pour valider */
+        color: white;
+        border-color: #2e5c1a;
+        box-shadow: 3px 3px 0 #2e5c1a;
+
+        &:hover {
+            box-shadow: 5px 5px 0 #2e5c1a;
+        }
+
+        &:active {
+            box-shadow: 1px 1px 0 #2e5c1a;
+        }
+    }
+}
