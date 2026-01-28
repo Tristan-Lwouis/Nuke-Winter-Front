@@ -14,7 +14,7 @@
   <img src="/assets/images/menu.png" alt="bouton menu" (click)="toggleMenu()" id="menu" />
 
   <!-- Barre de vie -->
-  <app-health-bar [damage]="healthDamage"></app-health-bar>
+  <app-health-bar [damage]=" 100 - (game!.health)"></app-health-bar>
 
   <!-- TEST ET DUBG -->
   <!-- <p style="color: red;">{{scene?.idScene}}</p>
@@ -50,21 +50,7 @@
       @case (typeSceneEnum.CODE){
       <app-response-code [scene]="game!.currentScene!" (selectedResponse)="selectResponse($event)"></app-response-code>
       }
-
-      <!-- @case (typeSceneEnum.MULTICHOICE){ -->
-      <!-- <app-response-match style="width: 100%" [scene]="scene" -->
-      <!-- (selectedResponse)="selectResponse($event)"></app-response-match> -->
-      <!-- }  -->
-
-      <!-- @case ("IMAGEMATCH"){ -->
-      <!-- <app-response-imagematch style="width: 100%" [scene]="scene" -->
-      <!-- (selectedResponse)="selectResponse($event)"></app-response-imagematch> -->
-      <!-- } -->
-
-      <!-- @case (typeSceneEnum.MULTICHOICE){ -->
-      <!-- <app-response-code [scene]="scene" (selectedResponse)="selectResponse($event)"></app-response-code> -->
-      <!-- } -->
-
+      
       @default {
       <p style="color: red;">Type de scène inconnu : {{game?.currentScene?.typeScene?.toString()}}</p>
       }

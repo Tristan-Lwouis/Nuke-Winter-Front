@@ -5,7 +5,7 @@
     <div class="layer near_distance" aria-hidden="true"></div>
 
     @if (showResumeModal) {
-        <app-resume-modal (choice)="onResumeChoice($event)"></app-resume-modal>
+        <app-resume-modal [src]="imageApiUrl + gameService.currentGame!.currentScene!.background" (choice)="onResumeChoice($event)"></app-resume-modal>
     }
 
     <div id="logo-title-container">
@@ -17,7 +17,7 @@
         <section class="avatar-section">
             <div class="config-title" id="avatar-title">
                 <a (click)="nextAvatar(-1)"><img src="/assets/images/previous.png" alt="fleche-avatar-precedent"></a>
-                <p>{{currentAvatar?.name}}</p>
+                <p>{{currentAvatar!.name}}</p>
                 <a (click)="nextAvatar(1)"><img src="/assets/images/next.png" alt="fleche-avatar-suivant"></a>
             </div>
             @if (currentAvatar != undefined) {

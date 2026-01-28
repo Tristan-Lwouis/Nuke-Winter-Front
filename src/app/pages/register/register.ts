@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { SnowEffect } from "../../components/snow-effect/snow-effect";
 import { NukeButton } from "../../components/nuke-button/nuke-button";
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ParallaxDirective } from '../../shared/directives/parallax.directive';
 import { AccountService } from '../../core/services/account/account-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -10,7 +10,7 @@ import { Account } from '../../core/models/account';
 
 @Component({
   selector: 'app-register',
-  imports: [SnowEffect, NukeButton, RouterLink, ReactiveFormsModule, ParallaxDirective],
+  imports: [SnowEffect, NukeButton, ReactiveFormsModule, ParallaxDirective],
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NukeButton } from "../nuke-button/nuke-button";
 
@@ -10,6 +10,7 @@ import { NukeButton } from "../nuke-button/nuke-button";
 })
 export class ResumeModal {
   @Output() choice = new EventEmitter<'continue' | 'restart' | 'close'>();
+  @Input() src= "";
 
   resume(): void {
     this.choice.emit('continue');

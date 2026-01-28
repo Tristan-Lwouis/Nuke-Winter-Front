@@ -4,12 +4,12 @@ import { ApiService } from '../api/api-service';
 import { Account } from '../../models/account';
 import { Scenario } from '../../models/scenario';
 import { Avatar } from '../../models/avatar';
-import { Scene } from '../../models/scene';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
 import { SceneService } from '../scene/scene-service';
 import { Game } from '../../models/game';
-import { LogIn } from '../../../pages/log-in/log-in';
+import { Response } from '../../models/response';
+import { GameStatusEnum } from '../../models/enums/gameStatusEnum';
 
 const RESOURCE = 'game';
 
@@ -18,10 +18,10 @@ const RESOURCE = 'game';
 })
 export class GameService {
   private apiService = inject(ApiService);
-  private sceneservice = inject(SceneService);
   private router = inject(Router);
   private audioService = inject(AudioService);
 
+  // un observable pour barder la game à jour
   private gameSubject = new BehaviorSubject<Game | null>(null);
   game$ = this.gameSubject.asObservable();
 
@@ -30,35 +30,15 @@ export class GameService {
   }
 
   updateGame(game: Game) {
-    console.log('GAMESERVICE-UPDATE#####');
-    console.log(game);
     this.gameSubject.next(game);
   }
 
   startGame() {
-    this.audioService.stopBackground();
+    //this.audioService.stopBackground();
     this.router.navigate(['/game-component']);
   }
 
-  /**
-   * Création d'un Json de type Game et envoi au backend
-   * @param numberIdAvatar
-   * @param numberIdScenario
-   * @param pseudo
-   * @returns
-   */
-  readGame(avatar: Avatar, scenario: Scenario, account: Account): Game | any {
-    // (DTO)
-    const JsonGame: any = {
-      avatar: avatar,
-      scenario: scenario,
-      account: account,
-    };
-
-    return this.apiService.post(RESOURCE + '/read', JsonGame);
-  }
-
-  // route pour récupérr un game ou en créer une si elle n'existe pas
+  // route pour récupérr une game ou en créer une si elle n'existe pas
   readOrSave(avatar: Avatar, scenario: Scenario, account: Account): Game | any {
     // (DTO)
     const jsonGame: any = {
@@ -74,31 +54,27 @@ export class GameService {
     );
   }
 
-  // route pour sauvegarder un game
-  save(): Game | any {
-    const game = {
-      account: {
-        idAccount: this.currentGame?.account.idAccount,
-      },
-      avatar: {
-        idAvatar: this.currentGame?.avatar.idAvatar,
-      },
-      currentScene: {
-        idScene: this.currentGame?.currentScene?.idScene,
-      },
-      health: this.currentGame?.health,
+  calculResponse(response: Response) {
+    const data = {
       idGame: this.currentGame?.idGame,
-      scenario: { idScenario: this.currentGame?.scenario.idScenario },
-      status: this.currentGame?.status,
+      idResponse: response.idResponse,
     };
-
-    console.log('###SAVE-EN-COURS###');
-    console.log(game.idGame);
-
-    return this.apiService.post(RESOURCE + '/save', game);
+    return this.apiService.post(RESOURCE + '/calcul-response', data).pipe(tap((game: Game) => {
+        this.updateGame(game);
+      }));
   }
 
-  getGameByid(idGame: number): Game | any {
-    return this.apiService.get(RESOURCE + '/read/' + idGame);
+  giveUp(newGame:boolean = false) {
+    return this.apiService.post(RESOURCE + '/' + this.currentGame?.idGame + '/give-up' + '?newGame=' + newGame, {}).pipe(
+      tap((game: Game) => {
+        this.updateGame(game);
+
+        if (newGame) {
+         this.startGame()
+        }
+        else this.router.navigate(['/game-resolver',  { queryParams: { status:game.status } }]);
+        
+      }),
+    );
   }
 }
