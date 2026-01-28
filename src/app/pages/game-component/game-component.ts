@@ -12,6 +12,7 @@ import {
 import { SceneService } from '../../core/services/scene/scene-service';
 import { Response } from '../../core/models/response';
 import { MenuModal } from '../../components/menu-modal/menu-modal';
+import { SettingsModal } from '../../components/settings-modal/settings-modal';
 import { ResponseMulti } from '../../components/response-multi/response-multi';
 import { ResponseMatch } from '../../components/response-match/response-match';
 import { ResponseCode } from '../../components/response-code/response-code';
@@ -25,7 +26,7 @@ import { GameStatusEnum } from '../../core/models/enums/gameStatusEnum';
 import { AudioService } from '../../core/services/audio/audio-service';
 
 @Component({
-  imports: [MenuModal, ResponseMulti, ResponseMatch, ResponseCode, HealthBar],
+  imports: [MenuModal, SettingsModal, ResponseMulti, ResponseMatch, ResponseCode, HealthBar],
   templateUrl: './game-component.html',
   styleUrl: './game-component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -35,6 +36,9 @@ export class GameComponent implements OnInit {
   // === Attributs
   game!: Game | null;
   showResumeModal: boolean = false;
+  showSettingsModal: boolean = false;
+  healthDamage = 0; // a supprimer
+  private startTimeout: any;
   imageApiUrl = environment.imageApiUrl;
   audioApiUrl = environment.audioApiUrl;
   typeSceneEnum = TypeSceneEnum;
@@ -70,13 +74,17 @@ export class GameComponent implements OnInit {
         this.giveUp();
         break;
       case 'options':
-        //TODO: implementer la methode options
-        // Affichage modale options
+        this.showSettingsModal = true;
         break;
       case 'saveAndExit':
         this.router.navigate(['/game-config']);
         break;
     }
+  }
+
+  onSettingsClose(): void {
+    this.showSettingsModal = false;
+    this.showResumeModal = true;
   }
 
   giveUp() {
@@ -87,20 +95,15 @@ export class GameComponent implements OnInit {
 
   // nous permet de lancer une scene
   startScene() {
-     if(this.game!.currentScene!.audio){
-      this.audioService.stopBackground();
-      this.audioService.playBackground(this.audioApiUrl + this.game!.currentScene!.audio);
-
-    }
-    else{
-      //console.log("INFO : Pas de musique sur cette scene")
-    }
-
     this.displayedDescription = '';
     this.isQuestionResponseDisplayed = false;
     this.index = 0;
-    
     this.isUIDisplayed = true;
+
+    if (this.game!.currentScene!.audio) {
+      this.audioService.playBackground(this.audioApiUrl + this.game!.currentScene!.audio);
+    }
+
     this.typeWriter();
     this.cdr.detectChanges();
 

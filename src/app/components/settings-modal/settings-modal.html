@@ -1,0 +1,34 @@
+<div class="modal-background">
+    <div class="modal-box">
+        <h2>SETTINGS</h2>
+        <span id="close-button" (click)="back()">X</span>
+
+        <div class="settings-content">
+            <div class="volume-control">
+                <p>Music volume</p>
+                <div class="controls-row">
+                    <img src="/assets/images/volumeOff.png" alt="Mute" (click)="setMusicMute()">
+                    <input type="range" min="0" max="100" [value]="musicVolumePercentage"
+                        (input)="updateMusicVolume($event)">
+                    <img src="/assets/images/volumeOn.png" alt="Max Volume" (click)="setMusicMax()">
+                </div>
+                <p>{{ musicVolumePercentage }}%</p>
+            </div>
+
+            <div class="volume-control">
+                <p>Sounds volume</p>
+                <div class="controls-row">
+                    <img src="/assets/images/volumeOff.png" alt="Mute" (click)="setSoundMute()">
+                    <input type="range" min="0" max="100" [value]="soundVolumePercentage"
+                        (input)="updateSoundVolume($event)">
+                    <img src="/assets/images/volumeOn.png" alt="Max Volume" (click)="setSoundMax()">
+                </div>
+                <p>{{ soundVolumePercentage }}%</p>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <app-nuke-button label="BACK" (click)="back()" [fontSize]="1.2"></app-nuke-button>
+        </div>
+    </div>
+</div>
