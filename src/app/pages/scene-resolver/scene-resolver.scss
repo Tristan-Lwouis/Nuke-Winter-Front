@@ -45,6 +45,13 @@
     padding: 1vw;
 }
 
+.textResolver {
+  font-family: Pixel;
+  font-size: 2vw;
+  color: var(--color-primary);
+  text-align: center;
+}
+
 /*
 .card-resolver{
     visibility:hidden;
@@ -64,9 +71,10 @@
 
 .resolver{
     margin-bottom: 2%;
+
 }
 
 .couleur{
-    color: black;
+    color: var(--color-primary);
     opacity: 0.75;
 }
