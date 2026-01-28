@@ -1,5 +1,5 @@
 <!--quand on enlève un if ça s'affiche car pour l'instant il nous manque l'observable du game-->
-@if(game!.health<=0){
+@if(game?.status == gameStatusenum.FAILED){
               
     <main class="scene scene-resolver loose">
         <div class="layer far_distance" aria-hidden="true"></div>
@@ -12,17 +12,17 @@
         </section>
 
         <div class="resolver">
-            <h3 class="couleur sub-title-font ">Sorry, but you loose...</h3>
+            <h3 class="couleur sub-title-font ">Sorry, but you lose...</h3>
         </div>
 
         <div class="card button">
-            <app-nuke-button label="CONTINUER" width="10vw" route="/" [fontSize]="1.1"></app-nuke-button>
+            <app-nuke-button label="CONTINUER" width="10vw" route="/game-config" [fontSize]="1.1"></app-nuke-button>
         </div>
     </main>
 }
 
 
-@if(game!.health>0){
+@if(game?.status == gameStatusenum.SUCCEED){
 <main class="scene scene-resolver victory">
   <div class="layer far_distance" aria-hidden="true"></div>
   <div class="layer med_distance" aria-hidden="true"></div>

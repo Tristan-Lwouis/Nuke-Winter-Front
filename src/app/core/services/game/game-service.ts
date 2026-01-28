@@ -69,7 +69,7 @@ export class GameService {
         if (newGame) {
          this.startGame()
         }
-        else this.router.navigate(['/',  { queryParams: { status:game.status } }]);
+        else this.router.navigate(['/game-resolver',  { queryParams: { status:game.status } }]);
         
       }),
     );

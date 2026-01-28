@@ -78,7 +78,7 @@ export class GameComponent implements OnInit {
 
   giveUp() {
     this.gameService.giveUp().subscribe(() => {
-      this.router.navigate(['/game-config']);
+      this.router.navigate(['/scene-resolver']);
     });
   }
 
@@ -110,8 +110,11 @@ export class GameComponent implements OnInit {
 
   selectResponse(response: Response) {
     this.gameService.calculResponse(response).subscribe((game: Game) => {      
-      this.game = game;
-      if (game.status == GameStatusEnum.FAILED || game.status == GameStatusEnum.SUCCEED) {
+      this.gameService.updateGame(game);
+      console.log("##RESOLVER");
+      console.log(game.status);
+      if (game.status == GameStatusEnum.FAILED || game.status == GameStatusEnum.SUCCEED || game.currentScene?.typeScene == TypeSceneEnum.RESOLVER) {
+        
         this.router.navigate(['/scene-resolver']);
       } else this.startScene();
     });
