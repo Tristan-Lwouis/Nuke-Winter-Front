@@ -2,10 +2,7 @@ import { ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/co
 import { NukeButton } from '../../components/nuke-button/nuke-button';
 import { Game } from '../../core/models/game';
 import { GameService } from '../../core/services/game/game-service';
-import { Scene } from '../../core/models/scene';
-import { SceneService } from '../../core/services/scene/scene-service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TypeSceneEnum } from '../../core/models/enums/TypeSceneEnum';
+import { Router } from '@angular/router';
 import { GameStatusEnum } from '../../core/models/enums/gameStatusEnum';
 
 @Component({
@@ -15,37 +12,23 @@ import { GameStatusEnum } from '../../core/models/enums/gameStatusEnum';
   styleUrl: './scene-resolver.scss',
 })
 export class SceneResolver implements OnInit {
-
   private router = inject(Router);
-  private route = inject(ActivatedRoute);
   private gameService = inject(GameService);
-  game: Game|null = null;
+  game: Game | null = null;
   cdr = inject(ChangeDetectorRef);
-  typeSceneEnum = TypeSceneEnum;
-  gameStatusenum = GameStatusEnum;
+  GameStatusenum = GameStatusEnum;
 
   ngOnInit(): void {
-    
-    //récupérer l'id de game dans l'url qui vient de game-component (en passant par app-route)
-    //const gameId = Number(this.route.snapshot.paramMap.get('gameId'));
-
     //récupérer la game en cours
-    //this.game = this.gameService.getGameByid(gameId)!;
-    this.gameService.game$.subscribe((game : Game|null)=>{
+    this.gameService.game$.subscribe((game: Game | null) => {
       this.game = game;
-      console.log("##SCENERESOLVER");
-      console.log(game?.status);
-      
+      // console.log("##SCENERESOLVER");
+      // console.log(game?.status);
     });
 
     if (!this.game) {
       this.router.navigate(['/']); // retour à la page d'accueil si jamais pas de game
       return;
-      }
-
-      
+    }
   }
-
-
-  
 }

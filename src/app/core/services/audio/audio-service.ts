@@ -37,7 +37,7 @@ export class AudioService {
     audio.loop = loop;
     audio.volume = Math.min(Math.max(volume * this.masterSoundVolume, 0), 1);
     audio.play();
-    console.log(this.cache);
+    //console.log(this.cache);
   }
 
   pause(src: string) {

@@ -125,7 +125,7 @@ export class ScenarioImport {
     this.scenarioImportService.loadImages(this.imageFiles).subscribe({
       next: (response: any) => {
         this.addLog('Success: ✅ images imported successfully!');
-        console.log(response);
+        //console.log(response);
         
       },
       error: (err: any) => {

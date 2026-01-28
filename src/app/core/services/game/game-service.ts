@@ -9,6 +9,7 @@ import { BehaviorSubject, tap } from 'rxjs';
 import { SceneService } from '../scene/scene-service';
 import { Game } from '../../models/game';
 import { Response } from '../../models/response';
+import { GameStatusEnum } from '../../models/enums/gameStatusEnum';
 
 const RESOURCE = 'game';
 
@@ -58,7 +59,9 @@ export class GameService {
       idGame: this.currentGame?.idGame,
       idResponse: response.idResponse,
     };
-    return this.apiService.post(RESOURCE + '/calcul-response', data);
+    return this.apiService.post(RESOURCE + '/calcul-response', data).pipe(tap((game: Game) => {
+        this.updateGame(game);
+      }));
   }
 
   giveUp(newGame:boolean = false) {

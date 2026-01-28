@@ -19,7 +19,7 @@ import { Game } from '../../core/models/game';
 import { GameService } from '../../core/services/game/game-service';
 import { AudioService } from '../../core/services/audio/audio-service';
 import { environment } from '../../../environments/environment';
-
+import { GameStatusEnum } from '../../core/models/enums/gameStatusEnum';
 
 @Component({
   selector: 'app-game-config',
@@ -40,7 +40,7 @@ export class GameConfig implements OnInit {
   currentAvatarIndex = 0;
   showResumeModal: boolean = false;
   //currentGame: Game | undefined;
-  avatars: Avatar[] = [{ idAvatar: 0, name: 'KURT', image: '/assets/images/avatar-kurt.webp'}];
+  avatars: Avatar[] = [{ idAvatar: 0, name: 'KURT', image: '/assets/images/avatar-kurt.webp' }];
   scenarios: Scenario[] = [];
 
   connectedAccount: Account | undefined;
@@ -59,7 +59,6 @@ export class GameConfig implements OnInit {
     this.avatarService.getAllAvatars().subscribe({
       next: (data: Avatar[]) => {
         this.avatarService.addPathToImages(data);
-        console.log('Avatars récupérés :', data);
         this.avatars = data;
         this.cdr.detectChanges(); // Force le rechargement de la vue
       },
@@ -68,7 +67,6 @@ export class GameConfig implements OnInit {
     this.scenarioService.getAllScenarios().subscribe({
       next: (data: Scenario[]) => {
         this.scenarioService.addPathToImages(data);
-        console.log('Scénarios récupérés :', data);
         this.scenarios = data;
         this.cdr.detectChanges(); // Force le rechargement de la vue
       },
@@ -127,7 +125,7 @@ export class GameConfig implements OnInit {
         this.gameService.startGame();
         break;
       case 'restart':
-       // Redirige ver la scene courante d'une nouvelle partie
+        // Redirige ver la scene courante d'une nouvelle partie
         this.gameService.giveUp(true).subscribe();
         break;
       case 'close':
@@ -155,36 +153,15 @@ export class GameConfig implements OnInit {
     // Appel de la méthode de création de partie dans le game service
     console.log('TRY STARTING GAME', selectedScenario);
 
-    this.gameService.readOrSave(selectedAvatar!, selectedScenario!, connectedAccount).subscribe({
-      next: (response: Game) => {
-        this.gameService.updateGame(response);
-        // console.log("🔥response.status = " + response.status)
-        // console.log('#######CONFIG-ROS########');
-
-        if (response.status.toString() == 'NEW') {
-          // console.log('Nouvelle partie, redirection vers la première scène du scénario.', response);
-          // console.log('FirstSceneId : ' + response.scenario.firstScene.idScene);
+    this.gameService
+      .readOrSave(selectedAvatar!, selectedScenario!, connectedAccount)
+      .subscribe((game: Game) => {
+        if (game.status == GameStatusEnum.NEW) {
           this.gameService.startGame();
         } else {
-
           this.resumeOrRestartGame();
           this.cdr.detectChanges();
         }
-      },
-    });
-
-    // TODO : Creation d'un objet game
-    // - avec l'avatar selectionné ✅
-    // - avec le scenario selectionné ✅
-    // - avec l'id de l'account courant ✅
-    //     - Le back crée la game ou la récupere si elle existe déja ✅
-    //     - Le back me renvoi cet objet game ✅
-    // - Verifier si la game est nouvelle grace a son status (NEW ou PENDING)✅
-    //     - Si nouvelle game, aller a la premiere scene du scenario ⛔
-    //     - Si la game est en cours, afficher une modale pour demander si on veut reprendre la partie ou recommencer✅
-    //        - Si reprise de la partie
-    //            - Aller a la scene courante de l'objet game reçu
-    //     - Sinon aller a la premiere scene du scenario
-    // Aller chercher un Monster white a Intermarché 🦖
+      });
   }
 }

@@ -37,6 +37,7 @@ export class GameComponent implements OnInit {
   imageApiUrl = environment.imageApiUrl;
   audioApiUrl = environment.audioApiUrl;
   typeSceneEnum = TypeSceneEnum;
+  GameStatusEnum = GameStatusEnum;
   private router = inject(Router);
   private audioService = inject(AudioService);
 
@@ -90,7 +91,7 @@ export class GameComponent implements OnInit {
 
     }
     else{
-      console.log("INFO : Pas de musique sur cette scene")
+      //console.log("INFO : Pas de musique sur cette scene")
     }
 
     this.displayedDescription = '';
@@ -110,9 +111,9 @@ export class GameComponent implements OnInit {
 
   selectResponse(response: Response) {
     this.gameService.calculResponse(response).subscribe((game: Game) => {      
-      this.gameService.updateGame(game);
-      console.log("##RESOLVER");
-      console.log(game.status);
+      
+      // console.log("##RESOLVER");
+      // console.log(game.status);
       if (game.status == GameStatusEnum.FAILED || game.status == GameStatusEnum.SUCCEED || game.currentScene?.typeScene == TypeSceneEnum.RESOLVER) {
         
         this.router.navigate(['/scene-resolver']);
@@ -125,7 +126,7 @@ export class GameComponent implements OnInit {
   private typeWriter() {
     if (!this.game?.currentScene) return;
     const description = this.game?.currentScene.description;
-    console.log('Description :', description);
+    //console.log('Description :', description);
     // const description = this.scene.description || '';
 
     if (this.index < description.length) {
