@@ -1,6 +1,10 @@
-<main class="scene scene-multi text-md" [style.background-image]="'url(' + imageApiUrl + game?.currentScene?.background + ')'">
+<main class="scene scene-multi text-md"
+  [style.background-image]="'url(' + imageApiUrl + game?.currentScene?.background + ')'">
   @if (showResumeModal) {
   <app-menu-modal (choice)="onMenuChoice($event)"></app-menu-modal>
+  }
+  @if (showSettingsModal) {
+  <app-settings-modal (close)="onSettingsClose()"></app-settings-modal>
   }
 
   <!-- Bouton clear UI -->
@@ -13,7 +17,7 @@
   <app-health-bar [damage]="healthDamage"></app-health-bar>
 
   <!-- TEST ET DUBG -->
-   <!-- <p style="color: red;">{{scene?.idScene}}</p>
+  <!-- <p style="color: red;">{{scene?.idScene}}</p>
    <p style="color: red;">{{scene?.responses?.length}} </p> -->
 
   @if (isUIDisplayed) {
@@ -44,7 +48,7 @@
       }
 
       @case (typeSceneEnum.CODE){
-        <app-response-code [scene]="game!.currentScene!" (selectedResponse)="selectResponse($event)"></app-response-code>
+      <app-response-code [scene]="game!.currentScene!" (selectedResponse)="selectResponse($event)"></app-response-code>
       }
 
       <!-- @case (typeSceneEnum.MULTICHOICE){ -->
@@ -70,5 +74,5 @@
     }
   </div>
   }
-}
+  }
 </main>

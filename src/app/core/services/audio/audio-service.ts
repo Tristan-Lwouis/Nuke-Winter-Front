@@ -45,6 +45,10 @@ export class AudioService {
     audio!.pause();
   }
 
+  getCurrentBackgroundMusic() {
+    return this.backGroundMusic?.src;
+  }
+
   stop(src: string, fadeOut: boolean = false) {
     const audio = this.cache.get(src);
     if (!audio) return;
