@@ -175,18 +175,13 @@ export class GameConfig implements OnInit {
       next: (response: Game) => {
         this.gameService.updateGame(response);
         // console.log("🔥response.status = " + response.status)
-        console.log('#######CONFIG-ROS########');
+        // console.log('#######CONFIG-ROS########');
 
         if (response.status.toString() == 'NEW') {
-          console.log('Nouvelle partie, redirection vers la première scène du scénario.', response);
-          console.log('FirstSceneId : ' + response.scenario.firstScene.idScene);
-          //TODO : Rediriger vers la première scène du scénario
+          // console.log('Nouvelle partie, redirection vers la première scène du scénario.', response);
+          // console.log('FirstSceneId : ' + response.scenario.firstScene.idScene);
           this.gameService.startGame();
         } else {
-          console.log(
-            'Partie en cours, afficher une modale pour demander si on veut reprendre ou recommencer.',
-            response,
-          );
 
           this.resumeOrRestartGame();
           this.cdr.detectChanges();
