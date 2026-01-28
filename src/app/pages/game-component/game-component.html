@@ -1,60 +1,78 @@
-<main class="scene scene-multi text-md" [style.background-image]="'url(' + imageApiUrl + game?.currentScene?.background + ')'">
-  @if (showResumeModal) {
-  <app-menu-modal (choice)="onMenuChoice($event)"></app-menu-modal>
-  }
+@if (game?.status == GameStatusEnum.NEW || game?.status == GameStatusEnum.PENDING) {
+  <main
+    class="scene scene-multi text-md"
+    [style.background-image]="'url(' + imageApiUrl + game?.currentScene?.background + ')'"
+  >
+    @if (showResumeModal) {
+      <app-menu-modal (choice)="onMenuChoice($event)"></app-menu-modal>
+    }
 
-  <!-- Bouton clear UI -->
-  <img src="/assets/images/clearUI.png" alt="bouton clearUI" (click)="toggleUI()" id="clearUI" />
+    <!-- Bouton clear UI -->
+    <img src="/assets/images/clearUI.png" alt="bouton clearUI" (click)="toggleUI()" id="clearUI" />
 
-  <!-- Bouton menu -->
-  <img src="/assets/images/menu.png" alt="bouton menu" (click)="toggleMenu()" id="menu" />
+    <!-- Bouton menu -->
+    <img src="/assets/images/menu.png" alt="bouton menu" (click)="toggleMenu()" id="menu" />
 
-  <!-- Barre de vie -->
-  <app-health-bar [damage]=" 100 - (game!.health)"></app-health-bar>
+    <!-- Barre de vie -->
+    <app-health-bar [damage]="100 - game!.health"></app-health-bar>
 
-  <!-- TEST ET DUBG -->
-   <!-- <p style="color: red;">{{scene?.idScene}}</p>
+    <!-- TEST ET DUBG -->
+    <!-- <p style="color: red;">{{scene?.idScene}}</p>
    <p style="color: red;">{{scene?.responses?.length}} </p> -->
 
-  @if (isUIDisplayed) {
-  <div class="card card-description">
-    <div class="description" #descriptionContainer (click)="skipDescription()">
-      {{ displayedDescription }}
-    </div>
-  </div>
+    @if (isUIDisplayed) {
+      <div class="card card-description">
+        <div class="description" #descriptionContainer (click)="skipDescription()">
+          {{ displayedDescription }}
+        </div>
+      </div>
 
-  @if (isQuestionResponseDisplayed) {
-  <div class="question-responses">
-    @if (game?.currentScene?.question) {
-    <div class="card card-question">
-      <div class="question">{{ game?.currentScene?.question }}</div>
-    </div>
+      @if (isQuestionResponseDisplayed) {
+        <div class="question-responses">
+          @if (game?.currentScene?.question) {
+            <div class="card card-question">
+              <div class="question">{{ game?.currentScene?.question }}</div>
+            </div>
+          }
+          @if (game?.currentScene?.responses) {
+            <!-- ? Pourquoi .lenght ? -->
+            <div class="card card-reponses" style="width: 100%">
+              @switch (game?.currentScene?.typeScene) {
+                <!-- * Va couvrir le cas multichoice, description et binaires -->
+                @case (typeSceneEnum.MULTICHOICE) {
+                  <app-response-multi
+                    [scene]="game?.currentScene!"
+                    (selectedResponse)="selectResponse($event)"
+                  ></app-response-multi>
+                }
+
+                @case (typeSceneEnum.MATCH) {
+                  <app-response-match
+                    [scene]="game!.currentScene!"
+                    (selectedResponse)="selectResponse($event)"
+                  ></app-response-match>
+                }
+
+                @case (typeSceneEnum.CODE) {
+                  <app-response-code
+                    [scene]="game!.currentScene!"
+                    (selectedResponse)="selectResponse($event)"
+                  ></app-response-code>
+                }
+
+                @default {
+                  <p style="color: red">
+                    Type de scène inconnu : {{ game?.currentScene?.typeScene?.toString() }}
+                  </p>
+                }
+              }
+            </div>
+          }
+        </div>
+      }
     }
-    @if (game?.currentScene?.responses) { <!-- ? Pourquoi .lenght ? -->
-    <div class=" card card-reponses" style="width: 100%">
-      @switch (game?.currentScene?.typeScene) {
-
-      <!-- * Va couvrir le cas multichoice, description et binaires -->
-      @case (typeSceneEnum.MULTICHOICE){
-      <app-response-multi [scene]="game?.currentScene!" (selectedResponse)="selectResponse($event)"></app-response-multi>
-      }
-
-      @case (typeSceneEnum.MATCH){
-        <app-response-match [scene]="game!.currentScene!" (selectedResponse)="selectResponse($event)"></app-response-match>
-      }
-
-      @case (typeSceneEnum.CODE){
-        <app-response-code [scene]="game!.currentScene!" (selectedResponse)="selectResponse($event)"></app-response-code>
-      }
-      
-      @default {
-      <p style="color: red;">Type de scène inconnu : {{game?.currentScene?.typeScene?.toString()}}</p>
-      }
-
-      }
-    </div>
-    }
-  </div>
-  }
+  </main>
 }
-</main>
+@else {
+  <p>Pas de scène à vous proposer</p>
+}
