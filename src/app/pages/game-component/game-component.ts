@@ -84,9 +84,11 @@ export class GameComponent implements OnInit {
 
   giveUp() {
     this.game!.status = GameStatusEnum.FAILED;
-    console.log(this.gameService.currentGame?.status);
+    // console.log(this.gameService.currentGame?.status);
+    this.game!.health = 0;
     this.gameService.save().subscribe();
-    this.router.navigate(['/game-config']);
+    this.router.navigate(['/scene-resolver']);
+    // this.router.navigate(['/game-config']);
   }
 
   // nous permet de lancer une scene
@@ -122,6 +124,10 @@ export class GameComponent implements OnInit {
       this.game!.health -= response.damage;
       this.healthDamage += response.damage;
     }
+    // else {
+    //   this.game!.status = GameStatusEnum.FAILED;
+    //   this.gameService.save().subscribe();
+    // } 
   }
 
   selectResponse(response: Response) {

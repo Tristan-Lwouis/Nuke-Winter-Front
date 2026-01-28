@@ -13,11 +13,11 @@
 }
 
 .victory{
-  background-image: url('/assets/images-scene/image-victory.jpeg');
+  background-image: url('/assets/images-scene/youWin.webp');
 }
 
 .loose{
-  background-image: url('/assets/images-scene/image-loose.jpeg');
+  background-image: url('/assets/images-scene/youLose.jpeg');
 }
 
 .scene {
@@ -36,7 +36,7 @@
 }
 
 .card{
-    background: #D89A73;
+    // background: #D89A73;
     border: solid var(--color-primary) var(--border-width);
 }
 
