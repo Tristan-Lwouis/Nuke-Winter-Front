@@ -34,7 +34,7 @@ export class GameService {
   }
 
   startGame() {
-    this.audioService.stopBackground();
+    //this.audioService.stopBackground();
     this.router.navigate(['/game-component']);
   }
 

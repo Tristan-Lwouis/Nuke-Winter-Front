@@ -120,11 +120,11 @@ export class GameConfig implements OnInit {
 
   onResumeChoice(choice: 'continue' | 'restart' | 'close'): void {
     switch (choice) {
-      case 'continue':
+      case 'continue': // bouton reprendre
         // Redirige vers la scene courante
         this.gameService.startGame();
         break;
-      case 'restart':
+      case 'restart': // bouton recommencer
         // Redirige ver la scene courante d'une nouvelle partie
         this.gameService.giveUp(true).subscribe();
         break;

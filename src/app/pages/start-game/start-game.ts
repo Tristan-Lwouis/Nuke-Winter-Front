@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { ParallaxDirective } from '../../shared/directives/parallax.directive';
 import { NukeButton } from "../../components/nuke-button/nuke-button";
 import { SnowEffect } from "../../components/snow-effect/snow-effect";
@@ -7,7 +6,7 @@ import { AudioService } from '../../core/services/audio/audio-service';
 
 @Component({
   selector: 'app-start-game',
-  imports: [RouterLink, ParallaxDirective, NukeButton, SnowEffect],
+  imports: [ParallaxDirective, NukeButton, SnowEffect],
   templateUrl: './start-game.html',
   styleUrl: './start-game.scss',
 })

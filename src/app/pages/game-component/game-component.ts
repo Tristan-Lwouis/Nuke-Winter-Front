@@ -7,6 +7,7 @@ import {
   ViewChild,
   ElementRef,
   ChangeDetectionStrategy,
+  OnChanges,
 } from '@angular/core';
 import { SceneService } from '../../core/services/scene/scene-service';
 import { Response } from '../../core/models/response';
@@ -43,6 +44,7 @@ export class GameComponent implements OnInit {
 
   @ViewChild('descriptionContainer') descriptionContainer!: ElementRef;
 
+  // tODO: A objecté
   displayedDescription = '';
   speed = 20;
   index = 0;
