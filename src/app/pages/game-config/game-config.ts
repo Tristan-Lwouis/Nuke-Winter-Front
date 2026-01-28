@@ -16,9 +16,10 @@ import { ScenarioService } from '../../core/services/scenario/scenario-service';
 import { Scenario } from '../../core/models/scenario';
 
 import { Game } from '../../core/models/game';
-import { GameStatusEnum } from '../../core/models/enums/gameStatusEnum';
 import { GameService } from '../../core/services/game/game-service';
 import { AudioService } from '../../core/services/audio/audio-service';
+import { environment } from '../../../environments/environment';
+
 
 @Component({
   selector: 'app-game-config',
@@ -33,11 +34,13 @@ export class GameConfig implements OnInit {
   cdr = inject(ChangeDetectorRef);
   storageService = inject(StorageService);
 
+  imageApiUrl = environment.imageApiUrl;
+
   // Variables
   currentAvatarIndex = 0;
   showResumeModal: boolean = false;
   //currentGame: Game | undefined;
-  avatars: Avatar[] = [{ idAvatar: 0, name: 'KURT', image: '/assets/images/avatar-kurt.webp' }];
+  avatars: Avatar[] = [{ idAvatar: 0, name: 'KURT', image: '/assets/images/avatar-kurt.webp'}];
   scenarios: Scenario[] = [];
 
   connectedAccount: Account | undefined;
@@ -108,8 +111,8 @@ export class GameConfig implements OnInit {
       this.selectedScenario = undefined;
     } else {
       this.selectedScenario = scenario;
-      console.log('Scénario sélectionné :', this.selectedScenario);
-      console.log('Id du scénario sélectionné :', this.selectedScenario.idScenario);
+      // console.log('Scénario sélectionné :', this.selectedScenario);
+      // console.log('Id du scénario sélectionné :', this.selectedScenario.idScenario);
     }
   }
 
@@ -120,34 +123,15 @@ export class GameConfig implements OnInit {
   onResumeChoice(choice: 'continue' | 'restart' | 'close'): void {
     switch (choice) {
       case 'continue':
-        console.log('Reprise de la partie, redirection vers la scène courante.');
-        console.log('CurrentSceneId :', this.gameService.currentGame!.currentScene!.idScene);
-        // TODO: Rediriger vers la scène courante
-        console.log('#######CONFIG########');
-        console.log(this.gameService.currentGame);
+        // Redirige vers la scene courante
         this.gameService.startGame();
         break;
       case 'restart':
-        console.log('Recommencer la partie, redirection vers la première scène.');
-        console.log('FirstSceneId :', this.gameService.currentGame?.scenario.firstScene.idScene);
-        // TODO: Rediriger vers la première scène
-        // mettre le status de la game à fail pour la sortir des games trouvé
-        this.gameService.currentGame!.status = GameStatusEnum.FAILED;
-        // console.log('###GAME-TROUVE###');
-        // console.log(this.gameService.currentGame!.status);
-
-        this.gameService.save().subscribe(() => {
-          this.gameService
-            .readOrSave(this.currentAvatar, this.selectedScenario!, this.connectedAccount!)
-            .subscribe({
-              next: (game: Game) => {
-                this.gameService.updateGame(game);
-                this.gameService.startGame();
-              },
-            });
-        });
+       // Redirige ver la scene courante d'une nouvelle partie
+        this.gameService.giveUp(true).subscribe();
         break;
       case 'close':
+        this.showResumeModal = false;
         break;
     }
   }

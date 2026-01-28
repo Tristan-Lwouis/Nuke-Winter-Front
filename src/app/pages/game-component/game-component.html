@@ -10,7 +10,7 @@
   <img src="/assets/images/menu.png" alt="bouton menu" (click)="toggleMenu()" id="menu" />
 
   <!-- Barre de vie -->
-  <app-health-bar [damage]="healthDamage"></app-health-bar>
+  <app-health-bar [damage]=" 100 - (game!.health)"></app-health-bar>
 
   <!-- TEST ET DUBG -->
    <!-- <p style="color: red;">{{scene?.idScene}}</p>

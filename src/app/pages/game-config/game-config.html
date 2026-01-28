@@ -5,7 +5,7 @@
     <div class="layer near_distance" aria-hidden="true"></div>
 
     @if (showResumeModal) {
-        <app-resume-modal (choice)="onResumeChoice($event)"></app-resume-modal>
+        <app-resume-modal [src]="imageApiUrl + gameService.currentGame!.currentScene!.background" (choice)="onResumeChoice($event)"></app-resume-modal>
     }
 
     <div id="logo-title-container">

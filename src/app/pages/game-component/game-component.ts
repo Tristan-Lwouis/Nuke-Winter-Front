@@ -8,7 +8,6 @@ import {
   ElementRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Scene } from '../../core/models/scene';
 import { SceneService } from '../../core/services/scene/scene-service';
 import { Response } from '../../core/models/response';
 import { MenuModal } from '../../components/menu-modal/menu-modal';
@@ -32,13 +31,9 @@ import { AudioService } from '../../core/services/audio/audio-service';
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class GameComponent implements OnInit {
+  // === Attributs
   game!: Game | null;
-  // Attributs
-  // selectedResponse: Response | undefined;
-  // scene: Scene | undefined;
   showResumeModal: boolean = false;
-  healthDamage = 0; // a supprimer
-  private startTimeout: any;
   imageApiUrl = environment.imageApiUrl;
   audioApiUrl = environment.audioApiUrl;
   typeSceneEnum = TypeSceneEnum;
@@ -47,7 +42,6 @@ export class GameComponent implements OnInit {
 
   @ViewChild('descriptionContainer') descriptionContainer!: ElementRef;
 
-  // Gestion de l'écriture de la description
   displayedDescription = '';
   speed = 20;
   index = 0;
@@ -77,35 +71,33 @@ export class GameComponent implements OnInit {
         // Affichage modale options
         break;
       case 'saveAndExit':
-          this.router.navigate(['/game-config']);
+        this.router.navigate(['/game-config']);
         break;
     }
   }
 
   giveUp() {
-    this.game!.status = GameStatusEnum.FAILED;
-    console.log(this.gameService.currentGame?.status);
-    this.gameService.save().subscribe();
-    this.router.navigate(['/game-config']);
+    this.gameService.giveUp().subscribe(() => {
+      this.router.navigate(['/game-config']);
+    });
   }
 
   // nous permet de lancer une scene
   startScene() {
-    this.displayedDescription = '';
-    this.isQuestionResponseDisplayed = false;
-    this.index = 0;
-    this.isUIDisplayed = true;
-
-    if(this.game!.currentScene!.audio){
-      console.log("INFO : Musuique trouvé sur cette scene")
+     if(this.game!.currentScene!.audio){
       this.audioService.stopBackground();
       this.audioService.playBackground(this.audioApiUrl + this.game!.currentScene!.audio);
-      // this.audioService.playBackground(this.audioApiUrl + this.game!.currentScene!.music);
+
     }
     else{
       console.log("INFO : Pas de musique sur cette scene")
     }
+
+    this.displayedDescription = '';
+    this.isQuestionResponseDisplayed = false;
+    this.index = 0;
     
+    this.isUIDisplayed = true;
     this.typeWriter();
     this.cdr.detectChanges();
   }
@@ -116,45 +108,13 @@ export class GameComponent implements OnInit {
     this.isQuestionResponseDisplayed = true;
   }
 
-  //compter les points de vie
-  healthCount(response: Response) {
-    if (this.game!.health > 0) {
-      this.game!.health -= response.damage;
-      this.healthDamage += response.damage;
-    }
-  }
-
   selectResponse(response: Response) {
-    console.log('Next Script Info :', response.nextScene);
-
-    let idScene: string;
-
-    if (typeof response.nextScene === 'string') {
-      // console.log("response.nextScene est un string")
-      idScene = response.nextScene;
-    } else {
-      // console.log("response.nextScene est un object")
-      idScene = response.nextScene.idScene;
-    }
-
-    //actualise les points de vie du game
-    this.healthCount(response);
-
-    //si la next scene est de type resolver ou si health <=0
-    //redirect to la page scène resolver
-    if (response.nextScene.typeScene == 'RESOLVER' || this.game!.health <= 0) {
-      //passe le gameId dans app-route
-      this.router.navigate(['/scene-resolver']);
-    } else {
-      //sinon débuter la next scene
-      console.log('Fetching scene details for ID:', idScene);
-      this.sceneService.read(idScene).subscribe((scene: Scene) => {
-        this.game!.currentScene = scene;
-        this.game!.status = GameStatusEnum.PENDING;
-        this.gameService.save().subscribe();
-        this.startScene();
-      });
-    }
+    this.gameService.calculResponse(response).subscribe((game: Game) => {      
+      this.game = game;
+      if (game.status == GameStatusEnum.FAILED || game.status == GameStatusEnum.SUCCEED) {
+        this.router.navigate(['/scene-resolver']);
+      } else this.startScene();
+    });
   }
 
   // ============= UI =============
