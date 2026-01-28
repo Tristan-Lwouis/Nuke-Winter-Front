@@ -18,6 +18,7 @@ import { Scenario } from '../../core/models/scenario';
 import { Game } from '../../core/models/game';
 import { GameStatusEnum } from '../../core/models/enums/gameStatusEnum';
 import { GameService } from '../../core/services/game/game-service';
+import { AudioService } from '../../core/services/audio/audio-service';
 
 @Component({
   selector: 'app-game-config',
@@ -40,9 +41,13 @@ export class GameConfig implements OnInit {
   scenarios: Scenario[] = [];
 
   connectedAccount: Account | undefined;
+  private audioService = inject(AudioService);
 
   // Au chargement du composant je récupère les listes d'avatars et de scénarios
   ngOnInit(): void {
+    // Lancer la musique de fond
+    this.audioService.playBackground(this.audioService.mainMusicPath);
+
     const account = this.storageService.read('account');
     if (account) {
       this.connectedAccount = JSON.parse(account);
@@ -79,6 +84,7 @@ export class GameConfig implements OnInit {
    */
   nextAvatar(direction: number) {
     const len = this.avatars.length;
+    this.audioService.play(this.audioService.clickSoundPath);
 
     // Si liste recu est vide.
     if (len === 0) {
@@ -97,6 +103,7 @@ export class GameConfig implements OnInit {
    * Elle permet de déterminer quel scenario est selectionné pour pouvoir afficher sa description et son image
    */
   scenarioSelect(scenario: Scenario) {
+    this.audioService.play(this.audioService.clickSoundPath);
     if (this.selectedScenario === scenario) {
       this.selectedScenario = undefined;
     } else {
@@ -122,24 +129,24 @@ export class GameConfig implements OnInit {
         break;
       case 'restart':
         console.log('Recommencer la partie, redirection vers la première scène.');
-        console.log('FirstSceneId :',this.gameService.currentGame?.scenario.firstScene.idScene);
+        console.log('FirstSceneId :', this.gameService.currentGame?.scenario.firstScene.idScene);
         // TODO: Rediriger vers la première scène
-        // mettre le status de la game à fail pour la sortir des games trouvé 
-      this.gameService.currentGame!.status = GameStatusEnum.FAILED;
-      console.log("###GAME-TROUVE###");
-      console.log(this.gameService.currentGame!.status);
-      
-      this.gameService.save().subscribe(()=>{
-        this.gameService
-          .readOrSave(this.currentAvatar, this.selectedScenario!, this.connectedAccount!)
-          .subscribe({
-            next: (game: Game) => {
-              this.gameService.updateGame(game);
-              this.gameService.startGame()
-            },
-          });
-      });
-                break;
+        // mettre le status de la game à fail pour la sortir des games trouvé
+        this.gameService.currentGame!.status = GameStatusEnum.FAILED;
+        // console.log('###GAME-TROUVE###');
+        // console.log(this.gameService.currentGame!.status);
+
+        this.gameService.save().subscribe(() => {
+          this.gameService
+            .readOrSave(this.currentAvatar, this.selectedScenario!, this.connectedAccount!)
+            .subscribe({
+              next: (game: Game) => {
+                this.gameService.updateGame(game);
+                this.gameService.startGame();
+              },
+            });
+        });
+        break;
       case 'close':
         break;
     }
@@ -168,18 +175,13 @@ export class GameConfig implements OnInit {
       next: (response: Game) => {
         this.gameService.updateGame(response);
         // console.log("🔥response.status = " + response.status)
-        console.log('#######CONFIG-ROS########');
-        
-        if (response.status.toString() == "NEW") {
-          console.log('Nouvelle partie, redirection vers la première scène du scénario.', response);
-          console.log('FirstSceneId : ' + response.scenario.firstScene.idScene);
-          //TODO : Rediriger vers la première scène du scénario
+        // console.log('#######CONFIG-ROS########');
+
+        if (response.status.toString() == 'NEW') {
+          // console.log('Nouvelle partie, redirection vers la première scène du scénario.', response);
+          // console.log('FirstSceneId : ' + response.scenario.firstScene.idScene);
           this.gameService.startGame();
         } else {
-          console.log(
-            'Partie en cours, afficher une modale pour demander si on veut reprendre ou recommencer.',
-            response,
-          );
 
           this.resumeOrRestartGame();
           this.cdr.detectChanges();

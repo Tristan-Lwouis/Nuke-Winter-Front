@@ -5,7 +5,7 @@ import { Response } from './response';
 export interface Scene {
   idScene: string;
   background: string;
-  //music:string; //v2
+  audio:string;
   description: string;
   question: string;
   responses: Array<Response>;

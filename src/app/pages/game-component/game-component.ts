@@ -22,6 +22,7 @@ import { TypeSceneEnum } from '../../core/models/enums/TypeSceneEnum';
 import { HealthBar } from '../../components/health-bar/health-bar';
 import { Router } from '@angular/router';
 import { GameStatusEnum } from '../../core/models/enums/gameStatusEnum';
+import { AudioService } from '../../core/services/audio/audio-service';
 
 @Component({
   imports: [MenuModal, ResponseMulti, ResponseMatch, ResponseCode, HealthBar],
@@ -39,8 +40,10 @@ export class GameComponent implements OnInit {
   healthDamage = 0; // a supprimer
   private startTimeout: any;
   imageApiUrl = environment.imageApiUrl;
+  audioApiUrl = environment.audioApiUrl;
   typeSceneEnum = TypeSceneEnum;
   private router = inject(Router);
+  private audioService = inject(AudioService);
 
   @ViewChild('descriptionContainer') descriptionContainer!: ElementRef;
 
@@ -93,6 +96,16 @@ export class GameComponent implements OnInit {
     this.index = 0;
     this.isUIDisplayed = true;
 
+    if(this.game!.currentScene!.audio){
+      console.log("INFO : Musuique trouvé sur cette scene")
+      this.audioService.stopBackground();
+      this.audioService.playBackground(this.audioApiUrl + this.game!.currentScene!.audio);
+      // this.audioService.playBackground(this.audioApiUrl + this.game!.currentScene!.music);
+    }
+    else{
+      console.log("INFO : Pas de musique sur cette scene")
+    }
+    
     this.typeWriter();
     this.cdr.detectChanges();
   }

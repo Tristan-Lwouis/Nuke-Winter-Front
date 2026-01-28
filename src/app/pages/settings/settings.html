@@ -1,0 +1,37 @@
+<main class="scene" aria-label="Parallax scene" appParallax [parallaxRatios]="{ far: 0.8, med: 0.35, near: 0.15 }">
+    <app-snow-effect />
+    <div class="layer far_distance" aria-hidden="true"></div>
+    <div class="layer med_distance" aria-hidden="true"></div>
+    <div class="layer near_distance" aria-hidden="true"></div>
+
+    <div class="scenario-import-containers">
+        <section class="load-section">
+            <div id="load-title-container">
+                <p class="config-title">SETTINGS</p>
+            </div>
+            <div id="load-content-container">
+                <h2 class="sub-title">Audio parameters</h2>
+                <div>
+                    <p>Music volume</p>
+                    <img src="/assets/images/volumeOn.png" alt="Max Volume" (click)="setMusicMax()">
+                    <img src="/assets/images/volumeOff.png" alt="Mute" (click)="setMusicMute()">
+                    <input type="range" min="0" max="100" [value]="musicVolumePercentage"
+                        (input)="updateMusicVolume($event)">
+                    <p>{{ musicVolumePercentage }}%</p>
+                </div>
+                <div>
+                    <p>Sounds volume</p>
+                    <img src="/assets/images/volumeOn.png" alt="Max Volume" (click)="setSoundMax()">
+                    <img src="/assets/images/volumeOff.png" alt="Mute" (click)="setSoundMute()">
+                    <input type="range" min="0" max="100" [value]="soundVolumePercentage"
+                        (input)="updateSoundVolume($event)">
+                    <p>{{ soundVolumePercentage }}%</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="button-containers">
+        <app-nuke-button label="BACK" route="/menu" width="10vw" [fontSize]="1.3"></app-nuke-button>
+    </div>
+
+</main>
