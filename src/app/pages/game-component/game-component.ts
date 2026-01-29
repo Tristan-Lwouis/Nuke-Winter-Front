@@ -106,9 +106,15 @@ export class GameComponent implements OnInit {
 
     this.typeWriter();
     this.cdr.detectChanges();
+
+    if (this.game!.status == GameStatusEnum.FAILED || this.game!.status == GameStatusEnum.SUCCEED || this.game!.currentScene?.typeScene == TypeSceneEnum.RESOLVER) {
+        
+        this.router.navigate(['/scene-resolver']);
+      }
   }
 
   skipDescription() {
+    this.displayedDescription = '';
     this.isUIDisplayed = true;
     this.displayedDescription = this.game!.currentScene!.description;
     this.isQuestionResponseDisplayed = true;
@@ -119,10 +125,7 @@ export class GameComponent implements OnInit {
       
       // console.log("##RESOLVER");
       // console.log(game.status);
-      if (game.status == GameStatusEnum.FAILED || game.status == GameStatusEnum.SUCCEED || game.currentScene?.typeScene == TypeSceneEnum.RESOLVER) {
-        
-        this.router.navigate(['/scene-resolver']);
-      } else this.startScene();
+       this.startScene();
     });
   }
 

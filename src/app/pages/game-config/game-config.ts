@@ -151,17 +151,24 @@ export class GameConfig implements OnInit {
     const connectedAccount: Account = accountJson ? JSON.parse(accountJson) : null;
 
     // Appel de la méthode de création de partie dans le game service
-    console.log('TRY STARTING GAME', selectedScenario);
+    // console.log('### TRY STARTING GAME ###');
+    // console.log(connectedAccount);
+    // console.log(selectedAvatar);
+    // console.log(selectedScenario);
 
-    this.gameService
-      .readOrSave(selectedAvatar!, selectedScenario!, connectedAccount)
-      .subscribe((game: Game) => {
-        if (game.status == GameStatusEnum.NEW) {
-          this.gameService.startGame();
-        } else {
-          this.resumeOrRestartGame();
-          this.cdr.detectChanges();
-        }
-      });
+    if (connectedAccount == null || selectedAvatar == null || selectedAvatar == null) {
+      alert('Les paramètres de la game ne sont pas valide, veuillez selectionner un Avatar et un scénario');
+    } else {
+      this.gameService
+        .readOrSave(selectedAvatar!, selectedScenario!, connectedAccount)
+        .subscribe((game: Game) => {
+          if (game.status == GameStatusEnum.NEW) {
+            this.gameService.startGame();
+          } else {
+            this.resumeOrRestartGame();
+            this.cdr.detectChanges();
+          }
+        });
+    }
   }
 }
