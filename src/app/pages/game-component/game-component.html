@@ -6,6 +6,9 @@
     @if (showResumeModal) {
       <app-menu-modal (choice)="onMenuChoice($event)"></app-menu-modal>
     }
+    @if (showSettingsModal) {
+      <app-settings-modal (close)="onSettingsClose()"></app-settings-modal>
+    }
 
     <!-- Bouton clear UI -->
     <img src="/assets/images/clearUI.png" alt="bouton clearUI" (click)="toggleUI()" id="clearUI" />
